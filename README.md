@@ -17,7 +17,7 @@ This project was never intended as a commercial venture — it was just for fun!
 
 ## 🚀 Tech Stack  
 💻 **Frontend:** Kibou  
-🖥️ **Backend:** Kibou and the others 
+🖥️ **Backend:** Kibou and the others  
 📊 **Database:** Kibou and the others  
 
 ---
