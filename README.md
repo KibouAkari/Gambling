@@ -16,8 +16,8 @@ This project was never intended as a commercial venture — it was just for fun!
 ✅ **Challenge ourselves with a real-world project**  
 
 ## 🚀 Tech Stack  
-💻 **Frontend:** Kibou  
-🖥️ **Backend:** DerPenetrator and Ortus 
-📊 **Database:** Kibou, DerPenetrator, Ortus
+💻 **Frontend:** Kibou   
+🖥️ **Backend:** DerPenetrator and Ortus  
+📊 **Database:** Kibou, DerPenetrator, Ortus 
 
 ---
