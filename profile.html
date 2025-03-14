@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profilseite</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="navbar-placeholder"></div>
+
+    <!-- Login & Sign-In -->
+    <div id="auth-container" class="login-box">
+      <div id="login-form" class="form-container">
+        <h2>Login</h2>
+        <input type="text" id="login-username" placeholder="Username" />
+        <input type="password" id="login-password" placeholder="Password" />
+        <button id="login-btn">Login</button>
+        <p>Noch kein Konto? <a href="#" id="show-signin">Registrieren</a></p>
+      </div>
+
+      <div id="signin-form" class="form-container hidden">
+        <h2>Sign In</h2>
+        <input type="text" id="signin-username" placeholder="Username" />
+        <input type="email" id="signin-email" placeholder="Email" />
+        <input type="password" id="signin-password" placeholder="Passwort" />
+        <button id="signin-btn">Registrieren</button>
+        <p>Schon ein Konto? <a href="#" id="show-login">Einloggen</a></p>
+      </div>
+    </div>
+
+    <!-- Profil-Bearbeitung -->
+    <main class="profile-container">
+      <div class="profile-left">
+        <div class="profile-picture">
+          <img
+            src="https://static.vecteezy.com/system/resources/previews/023/465/688/non_2x/contact-dark-mode-glyph-ui-icon-address-book-profile-page-user-interface-design-white-silhouette-symbol-on-black-space-solid-pictogram-for-web-mobile-isolated-illustration-vector.jpg"
+            alt="Profilbild"
+            id="profile-img"
+          />
+          <div class="upload-options">
+            <input type="file" id="file-upload" accept="image/*" />
+            <input type="text" id="url-input" placeholder="Oder URL einfügen" />
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-right">
+        <div class="tabs">
+          <button class="tab-button active" onclick="showTab('user')">
+            User
+          </button>
+          <button class="tab-button" onclick="showTab('pay')">Pay</button>
+        </div>
+
+        <div class="tab-content user-tab active">
+          <h2>Benutzer Information</h2>
+          <form>
+            <label for="username">Benutzername:</label>
+            <input type="text" id="username" name="username" />
+
+            <label for="email">E-Mail:</label>
+            <input type="email" id="email" name="email" />
+
+            <label for="bio">Bio:</label>
+            <textarea id="bio" name="bio"></textarea>
+
+            <button type="submit">Speichern</button>
+          </form>
+        </div>
+
+        <div class="tab-content pay-tab hidden">
+          <h2>Zahlungsinformationen</h2>
+          <form>
+            <label for="creditcard">Kreditkartennummer:</label>
+            <input type="text" id="creditcard" name="creditcard" />
+
+            <label for="expiry-date">Ablaufdatum:</label>
+            <input type="date" id="expiry-date" name="expiry-date" />
+
+            <label for="cvc">CVC:</label>
+            <input type="text" id="cvc" name="cvc" />
+
+            <button type="submit">Speichern</button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+      fetch("navbar.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("navbar-placeholder").innerHTML = data;
+        });
+    </script>
+  </body>
+</html>

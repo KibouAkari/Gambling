@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buy Coins - Mongo Casino</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="navbar-placeholder"></div>
+
+    <main>
+      <h2 class="centered-title">Buy Mongocoins</h2>
+      <div class="coin-packages">
+        <div class="package">
+          <h3>Starter Pack</h3>
+          <p>₥ 1,000</p>
+          <button>Buy for $4.99</button>
+        </div>
+        <div class="package">
+          <h3>Silver Pack</h3>
+          <p>₥ 5,000</p>
+          <button>Buy for $19.99</button>
+        </div>
+        <div class="package">
+          <h3>Gold Pack</h3>
+          <p>₥ 12,000</p>
+          <button>Buy for $39.99</button>
+        </div>
+        <div class="package">
+          <h3>Platinum Pack</h3>
+          <p>₥ 50,000</p>
+          <button>Buy for $99.99</button>
+        </div>
+      </div>
+    </main>
+
+    <footer>© 2025 Mongo Casino</footer>
+
+    <script>
+      fetch("navbar.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("navbar-placeholder").innerHTML = data;
+        });
+    </script>
+  </body>
+</html>
