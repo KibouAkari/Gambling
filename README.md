@@ -17,7 +17,7 @@ This project was never intended as a commercial venture — it was just for fun!
 
 ## 🚀 Tech Stack  
 💻 **Frontend:** Kibou  
-🖥️ **Backend:** The others  
-📊 **Database:** Kibou and the others  
+🖥️ **Backend:** DerPenetrator and Ortus 
+📊 **Database:** Kibou, DerPenetrator, Ortus
 
 ---
