@@ -18,6 +18,6 @@ This project was never intended as a commercial venture — it was just for fun!
 ## 🚀 Tech Stack  
 💻 **Frontend:** Kibou   
 🖥️ **Backend:** DerPenetrator and Ortus  
-📊 **Database:** Kibou, DerPenetrator, Ortus 
+📊 **Database:** Kibou
 
 ---
