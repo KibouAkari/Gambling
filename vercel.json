@@ -2,5 +2,6 @@
   "rewrites": [
     { "source": "/(.*)", "destination": "/public/index.html" },
     { "source": "/navbar.html", "destination": "/src/components/navbar.html" }
-  ]
+  ],
+  "public": "public"
 }
