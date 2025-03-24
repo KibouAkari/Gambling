@@ -38,8 +38,8 @@
     <footer>© 2025 Mongo Casino</footer>
 
     <script>
-      fetch("/src/components/navbar.html")
-        .then((response) => response.text())
+      fetch("navbar.html")
+      .then((response) => response.text())
         .then((data) => {
           document.getElementById("navbar-placeholder").innerHTML = data;
         });

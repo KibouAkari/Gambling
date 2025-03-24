@@ -94,7 +94,7 @@
 
     <script src="scripts/main.js"></script>
     <script>
-      fetch("/src/components/navbar.html")
+      fetch("navbar.html")
         .then((response) => response.text())
         .then((data) => {
           document.getElementById("navbar-placeholder").innerHTML = data;
