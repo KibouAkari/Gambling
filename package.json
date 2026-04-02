@@ -1,0 +1,12 @@
+{
+  "name": "gambling",
+  "version": "1.0.0",
+  "description": "Fun Casino Project",
+  "scripts": {
+    "test": "echo \"No tests specified\" && exit 0",
+    "lint": "echo \"No linter configured\" && exit 0"
+  },
+  "dependencies": {
+    "@vercel/speed-insights": "^1.0.0"
+  }
+}
