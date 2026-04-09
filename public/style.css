@@ -834,6 +834,47 @@ button,
   margin: 0;
 }
 
+.games-hero {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: minmax(340px, 1.2fr) minmax(260px, 0.9fr);
+  gap: 0.7rem;
+  background:
+    radial-gradient(circle at 88% 15%, rgba(245, 197, 79, 0.24), transparent 34%),
+    linear-gradient(150deg, rgba(10, 18, 33, 0.95), rgba(7, 12, 22, 0.97));
+}
+
+.games-hero h2 {
+  margin: 0;
+  font-size: clamp(1.8rem, 3vw, 2.7rem);
+}
+
+.games-hero-side {
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(6, 12, 22, 0.78);
+  padding: 0.8rem;
+}
+
+.games-hero-side h3 {
+  margin: 0;
+}
+
+.games-hero-side p {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+}
+
+.games-title {
+  margin-top: 1.2rem;
+}
+
+.game-studio--enhanced {
+  background:
+    radial-gradient(circle at 12% 16%, rgba(255, 119, 79, 0.24), transparent 45%),
+    linear-gradient(160deg, rgba(13, 23, 39, 0.95), rgba(7, 12, 21, 0.96));
+}
+
 .provider-row {
   margin-top: 0.5rem;
   display: flex;
@@ -1771,6 +1812,7 @@ footer {
   }
 
   .hero-stage,
+  .games-hero,
   .store-hero,
   .store-highlight-grid,
   .hero-metrics,

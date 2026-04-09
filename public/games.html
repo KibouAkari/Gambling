@@ -11,13 +11,25 @@
     <div id="navbar-placeholder"></div>
 
     <main>
-      <section class="hero surface fade-in">
-        <h2>Mongo Casino Games</h2>
-        <p>
-          Spielbare Titel plus kommende Kategorien. Account erforderlich für echte Runden und
-          Coin-Einsatz.
-        </p>
-        <div class="account-chip">Player: <strong data-user-view>Gast</strong></div>
+      <section class="games-hero surface fade-in">
+        <article>
+          <p class="eyebrow">All Games Floor</p>
+          <h2>Mongo Casino Games</h2>
+          <p>
+            Spielbare Titel plus kommende Kategorien. Account erforderlich für echte Runden und
+            Coin-Einsatz.
+          </p>
+          <div class="account-chip">Player: <strong data-user-view>Gast</strong></div>
+        </article>
+        <article class="games-hero-side">
+          <h3>Floor Status</h3>
+          <div class="provider-row">
+            <span>124 aktive Tische</span>
+            <span>Live Jackpot Timer</span>
+            <span>Fast Wallet Sync</span>
+          </div>
+          <p>Direkt aus der Lobby in jedes Spiel wechseln - ohne Seitenbrüche.</p>
+        </article>
       </section>
 
       <section class="providers surface fade-in">
@@ -30,7 +42,7 @@
         </div>
       </section>
 
-      <h2 class="centered-title">Live Now</h2>
+      <h2 class="centered-title games-title">Live Now</h2>
       <input type="text" id="search" placeholder="Spiel suchen..." oninput="searchGames()" />
 
       <div class="game-grid fade-in" id="game-list">
@@ -79,7 +91,7 @@
         </article>
       </div>
 
-      <section class="game-studio surface fade-in">
+      <section class="game-studio game-studio--enhanced surface fade-in">
         <h3>Mongo Game Studio</h3>
         <p>Öffne ein Spiel im eingebetteten Fenster und wechsle darunter direkt zum nächsten Titel.</p>
         <div class="studio-launch-row">
@@ -90,7 +102,7 @@
         </div>
       </section>
 
-      <h2 class="centered-title">Coming Soon Wall</h2>
+      <h2 class="centered-title games-title">Coming Soon Wall</h2>
       <div class="game-grid fade-in" id="coming-soon-list">
         <article class="game">
           <img

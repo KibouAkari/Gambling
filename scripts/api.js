@@ -35,7 +35,7 @@ const FALLBACK_NAVBAR_HTML = `
 		<a href="/games/plinko.html"><span class="rail-icon">●</span> Plinko</a>
 		<a href="/games.html" data-route="games"><span class="rail-icon">▦</span> All Games</a>
 		<a href="/buy-coins.html" data-route="buy-coins"><span class="rail-icon">₥</span> Buy MongoCoins</a>
-		<a href="/profile.html" data-route="profile"><span class="rail-icon">◍</span> Account Center</a>
+		<a href="#" data-auth="guest" data-open-auth="signup"><span class="rail-icon">◍</span> Create Account</a>
 	</nav>
 </aside>
 
@@ -60,7 +60,7 @@ const FALLBACK_NAVBAR_HTML = `
 				<p class="muted-line" id="dropdown-payment">Kein Zahlungsweg gespeichert</p>
 				<label class="avatar-upload-btn" for="top-avatar-upload">Profilbild andern</label>
 				<input id="top-avatar-upload" type="file" accept="image/*" class="hidden" />
-				<a href="/profile.html" class="dropdown-link">Zum Account Center</a>
+				<a href="#" class="dropdown-link" data-open-auth="login">Account offnen</a>
 			</div>
 		</div>
 
@@ -473,7 +473,7 @@ const CasinoStore = {
 					<div class="access-gate-card">
 						<h2>Account erforderlich</h2>
 						<p>Bitte erstelle zuerst einen Account, bevor du Coins kaufen oder Games spielen kannst.</p>
-						<a class="btn" href="/profile.html">Jetzt registrieren</a>
+						<button class="btn" type="button" data-open-auth="signup">Jetzt registrieren</button>
 					</div>
 				`;
 				root.appendChild(gate);
@@ -570,7 +570,8 @@ async function loadNavbar() {
 	ensureAuthModal();
 
 	document.querySelectorAll("[data-open-auth]").forEach((button) => {
-		button.addEventListener("click", () => {
+		button.addEventListener("click", (event) => {
+			event.preventDefault();
 			const mode = button.getAttribute("data-open-auth") || "signup";
 			if (window.openAuthModal) {
 				window.openAuthModal(mode);
@@ -620,7 +621,10 @@ async function loadNavbar() {
 		logoutButton.addEventListener("click", async (event) => {
 			event.preventDefault();
 			await CasinoStore.logout();
-			window.location.href = "/profile.html";
+			updateCoinViews();
+			if (window.openAuthModal) {
+				window.openAuthModal("login");
+			}
 		});
 	}
 }
@@ -629,12 +633,16 @@ document.addEventListener("casino:state-change", updateCoinViews);
 
 document.addEventListener("DOMContentLoaded", async () => {
 	const isEmbed = new URLSearchParams(window.location.search).get("embed") === "1";
+	const authMode = new URLSearchParams(window.location.search).get("auth");
 	if (isEmbed) {
 		document.body.classList.add("embed-mode");
 	} else {
 		await loadNavbar();
 		await CasinoStore.refreshSession();
 		updateCoinViews();
+		if (authMode === "login" || authMode === "signup") {
+			window.openAuthModal?.(authMode);
+		}
 	}
 
 	if (window.CasinoFX && !isEmbed) {
