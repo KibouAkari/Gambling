@@ -5,76 +5,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Buy Coins - Mongo Casino</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   </head>
   <body data-page="buy-coins">
     <div id="navbar-placeholder"></div>
 
     <main>
-      <section class="hero surface fade-in">
-        <h2>MongoCoin Store</h2>
-        <p>Schnelle Aufladung mit flexiblen Paketen, Bonus-Stacks und VIP-orientierten Stufen.</p>
-        <div class="account-chip">Aktueller Stand: <strong data-coins-view>Account nötig</strong></div>
+      <section class="store-hero fade-in">
+        <article class="store-hero-main surface">
+          <p class="eyebrow">MongoCoin Exchange</p>
+          <h2>Top up in seconds and jump straight back into the action.</h2>
+          <p>
+            Flexible packs, instant wallet sync and premium bundles for marathon sessions,
+            tournaments and high-roller nights.
+          </p>
+          <div class="account-chip">Aktueller Stand: <strong data-coins-view>Account nötig</strong></div>
+        </article>
+
+        <article class="store-hero-side surface">
+          <h3>Store Pulse</h3>
+          <ul class="store-side-list">
+            <li>Average credit time: under 2 seconds</li>
+            <li>Weekend bundles include bonus stacks</li>
+            <li>All packages are account bound and secure</li>
+          </ul>
+          <div class="store-pulse">
+            <strong>VIP Window Active</strong>
+            <span>Premium packages trigger visual jackpot effects.</span>
+          </div>
+        </article>
       </section>
 
-      <section class="promo-panels fade-in">
-        <article class="surface promo-item">
-          <h3>Welcome Package</h3>
-          <p>Neue Accounts erhalten mehr Value über gestaffelte Starter-Bundles.</p>
+      <section class="store-highlight-grid fade-in">
+        <article class="store-highlight surface">
+          <h3>Starter Boosts</h3>
+          <p>Balanced entries for new players who want quick access to real rounds.</p>
         </article>
-        <article class="surface promo-item">
-          <h3>Cashback Vibe</h3>
-          <p>Hohe Pakete triggern visuelle Bonus-Effekte für High-Roller Sessions.</p>
+        <article class="store-highlight surface">
+          <h3>Session Control</h3>
+          <p>Predictable progression from micro stakes to deep tournament bankrolls.</p>
         </article>
-        <article class="surface promo-item">
-          <h3>Fast Credit</h3>
-          <p>Coins landen sofort im Konto und stehen direkt in den Games bereit.</p>
+        <article class="store-highlight surface">
+          <h3>High-Roller Vault</h3>
+          <p>Massive reserves tuned for roulette ladders and long slot streaks.</p>
         </article>
       </section>
 
       <h2 class="centered-title">Buy MongoCoins</h2>
-      <div class="coin-packages fade-in">
-        <article class="package">
+      <section class="store-package-grid fade-in">
+        <article class="store-package">
+          <span class="store-pack-tier">Entry</span>
           <h3>Starter Pack</h3>
-          <p>₥ 1,000</p>
-          <p class="package-note">Ideal für erste Spins und kleine Sessions.</p>
-          <button data-pack="1000">Buy for $4.99</button>
+          <p class="store-amount">₥ 1,000</p>
+          <p class="store-note">Ideal für erste Spins und kleine Sessions.</p>
+          <button class="store-price-btn" data-pack="1000">Buy for $4.99</button>
         </article>
 
-        <article class="package">
+        <article class="store-package">
+          <span class="store-pack-tier">Popular</span>
           <h3>Silver Pack</h3>
-          <p>₥ 5,000</p>
-          <p class="package-note">Mehr Spielraum für längere Runden.</p>
-          <button data-pack="5000">Buy for $19.99</button>
+          <p class="store-amount">₥ 5,000</p>
+          <p class="store-note">Mehr Spielraum für längere Runden.</p>
+          <button class="store-price-btn" data-pack="5000">Buy for $19.99</button>
         </article>
 
-        <article class="package">
+        <article class="store-package">
+          <span class="store-pack-tier">Advanced</span>
           <h3>Gold Pack</h3>
-          <p>₥ 12,000</p>
-          <p class="package-note">Beliebt bei ambitionierten Players.</p>
-          <button data-pack="12000">Buy for $39.99</button>
+          <p class="store-amount">₥ 12,000</p>
+          <p class="store-note">Beliebt bei ambitionierten Players.</p>
+          <button class="store-price-btn" data-pack="12000">Buy for $39.99</button>
         </article>
 
-        <article class="package">
+        <article class="store-package">
+          <span class="store-pack-tier">Pro</span>
           <h3>Platinum Pack</h3>
-          <p>₥ 50,000</p>
-          <p class="package-note">High roller Mode mit starkem Vorrat.</p>
-          <button data-pack="50000">Buy for $99.99</button>
+          <p class="store-amount">₥ 50,000</p>
+          <p class="store-note">High roller Mode mit starkem Vorrat.</p>
+          <button class="store-price-btn" data-pack="50000">Buy for $99.99</button>
         </article>
 
-        <article class="package">
+        <article class="store-package">
+          <span class="store-pack-tier">Elite</span>
           <h3>Diamond Vault</h3>
-          <p>₥ 150,000</p>
-          <p class="package-note">Für Turnier- und Premium-Sessions.</p>
-          <button data-pack="150000">Buy for $249.99</button>
+          <p class="store-amount">₥ 150,000</p>
+          <p class="store-note">Für Turnier- und Premium-Sessions.</p>
+          <button class="store-price-btn" data-pack="150000">Buy for $249.99</button>
         </article>
 
-        <article class="package">
+        <article class="store-package">
+          <span class="store-pack-tier">Legend</span>
           <h3>Imperial Reserve</h3>
-          <p>₥ 500,000</p>
-          <p class="package-note">Maximaler Vorrat mit VIP-Level Feeling.</p>
-          <button data-pack="500000">Buy for $599.99</button>
+          <p class="store-amount">₥ 500,000</p>
+          <p class="store-note">Maximaler Vorrat mit VIP-Level Feeling.</p>
+          <button class="store-price-btn" data-pack="500000">Buy for $599.99</button>
         </article>
-      </div>
+      </section>
     </main>
 
     <footer>© 2026 Mongo Casino. Coins werden nur für eingeloggte Accounts gutgeschrieben.</footer>

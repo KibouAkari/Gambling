@@ -226,9 +226,7 @@ a {
 }
 
 .rail-trust {
-  margin-top: 0.8rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: 0.7rem;
+  display: none;
 }
 
 .rail-trust p {
@@ -247,7 +245,7 @@ a {
   background: rgba(10, 14, 20, 0.93);
   backdrop-filter: blur(8px);
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   gap: 0.8rem;
   padding: 0.75rem 1.2rem;
@@ -906,6 +904,139 @@ button,
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 0.85rem;
+}
+
+.store-hero {
+  display: grid;
+  grid-template-columns: minmax(340px, 1.1fr) minmax(290px, 0.9fr);
+  gap: 0.7rem;
+}
+
+.store-hero-main,
+.store-hero-side,
+.store-highlight,
+.store-package {
+  padding: 1rem;
+}
+
+.store-hero-main {
+  background:
+    linear-gradient(120deg, rgba(7, 14, 25, 0.66), rgba(7, 14, 25, 0.9)),
+    url("https://images.unsplash.com/photo-1518131678677-aad2e2e5f08f?auto=format&fit=crop&w=1400&q=70") center/cover;
+}
+
+.store-hero-main h2 {
+  margin: 0;
+  font-size: clamp(1.6rem, 2.8vw, 2.5rem);
+}
+
+.store-hero-main p {
+  max-width: 48ch;
+  color: #dde6fb;
+}
+
+.store-side-list {
+  margin: 0.2rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.48rem;
+}
+
+.store-side-list li {
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(7, 13, 24, 0.8);
+  padding: 0.54rem 0.6rem;
+  color: #d2dcf4;
+}
+
+.store-pulse {
+  margin-top: 0.72rem;
+  border-radius: 12px;
+  border: 1px solid rgba(245, 197, 79, 0.3);
+  background: linear-gradient(160deg, rgba(28, 41, 66, 0.9), rgba(10, 15, 26, 0.92));
+  padding: 0.6rem;
+}
+
+.store-pulse strong {
+  display: block;
+  color: #ffd992;
+}
+
+.store-pulse span {
+  font-size: 0.84rem;
+  color: var(--muted);
+}
+
+.store-highlight-grid {
+  margin: 0.72rem 0 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(160px, 1fr));
+  gap: 0.58rem;
+}
+
+.store-highlight h3 {
+  margin: 0;
+}
+
+.store-highlight p {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+}
+
+.store-package-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.74rem;
+}
+
+.store-package {
+  position: relative;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background:
+    radial-gradient(circle at 90% 8%, rgba(245, 197, 79, 0.28), transparent 36%),
+    linear-gradient(160deg, rgba(20, 30, 49, 0.95), rgba(9, 14, 25, 0.97));
+  transition: transform 0.22s ease, border-color 0.22s ease;
+}
+
+.store-package:hover {
+  transform: translateY(-4px);
+  border-color: rgba(245, 197, 79, 0.58);
+}
+
+.store-pack-tier {
+  display: inline-flex;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.2rem 0.5rem;
+  font-size: 0.73rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #edf3ff;
+  margin-bottom: 0.5rem;
+}
+
+.store-package h3 {
+  margin: 0;
+}
+
+.store-amount {
+  margin: 0.45rem 0 0;
+  color: #ffd683;
+  font-weight: 800;
+  font-size: 1.3rem;
+}
+
+.store-note {
+  color: var(--muted);
+  min-height: 42px;
+}
+
+.store-price-btn {
+  width: 100%;
+  margin-top: 0.3rem;
 }
 
 .game,
@@ -1640,6 +1771,8 @@ footer {
   }
 
   .hero-stage,
+  .store-hero,
+  .store-highlight-grid,
   .hero-metrics,
   .home-control-grid,
   .story-ribbon,
