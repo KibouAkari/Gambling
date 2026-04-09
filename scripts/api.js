@@ -16,6 +16,81 @@ const defaultState = {
 	sessionToken: "",
 };
 
+const FALLBACK_NAVBAR_HTML = `
+<aside class="left-rail fade-in">
+	<a href="/index.html" class="rail-brand" aria-label="Mongo Casino Home">
+		<span class="rail-brand-mark">MC</span>
+		<strong>MONGO-CASINO</strong>
+	</a>
+
+	<div class="rail-search-wrap">
+		<input type="search" class="rail-search" placeholder="Search games..." aria-label="Search games" />
+	</div>
+
+	<nav class="rail-nav" aria-label="Sidebar navigation">
+		<a href="/index.html" data-route="index"><span class="rail-icon">◆</span> Casino</a>
+		<a href="/games/slot.html"><span class="rail-icon">◇</span> Slots</a>
+		<a href="/games/poker.html"><span class="rail-icon">♣</span> Poker</a>
+		<a href="/games/roulette.html"><span class="rail-icon">◎</span> Roulette</a>
+		<a href="/games/plinko.html"><span class="rail-icon">●</span> Plinko</a>
+		<a href="/games.html" data-route="games"><span class="rail-icon">▦</span> All Games</a>
+		<a href="/buy-coins.html" data-route="buy-coins"><span class="rail-icon">₥</span> Buy MongoCoins</a>
+		<a href="/profile.html" data-route="profile"><span class="rail-icon">◍</span> Account Center</a>
+	</nav>
+
+	<div class="rail-trust">
+		<p>SSL Encrypt</p>
+		<p>RNG Verified</p>
+		<p>24/7 Support</p>
+	</div>
+</aside>
+
+<header class="top-bar fade-in">
+	<div class="top-bar-copy brand-only">
+		<a href="/index.html" class="top-brand-link">Mongo Casino</a>
+	</div>
+
+	<div class="top-bar-actions">
+		<button class="header-btn ghost" data-auth="guest" data-open-auth="signup" type="button">Sign Up</button>
+		<button class="header-btn outline" data-auth="guest" data-open-auth="login" type="button">Log In</button>
+		<a href="/buy-coins.html" class="coins" id="coin-balance" title="Mongocoins" data-auth="user">₥ 1,000</a>
+
+		<div class="avatar-menu" data-auth="user">
+			<button class="avatar-button" id="avatar-menu-toggle" type="button" aria-label="Profile menu">
+				<img
+					id="top-avatar"
+					src="https://static.vecteezy.com/system/resources/previews/023/465/688/non_2x/contact-dark-mode-glyph-ui-icon-address-book-profile-page-user-interface-design-white-silhouette-symbol-on-black-space-solid-pictogram-for-web-mobile-isolated-illustration-vector.jpg"
+					alt="Profile Picture"
+					class="avatar"
+				/>
+			</button>
+			<div class="avatar-dropdown hidden" id="avatar-dropdown">
+				<p><strong data-user-view>Gast</strong></p>
+				<p class="muted-line" id="dropdown-email">Keine E-Mail hinterlegt</p>
+				<p class="muted-line" id="dropdown-payment">Kein Zahlungsweg gespeichert</p>
+				<label class="avatar-upload-btn" for="top-avatar-upload">Profilbild andern</label>
+				<input id="top-avatar-upload" type="file" accept="image/*" class="hidden" />
+				<a href="/profile.html" class="dropdown-link">Zum Account Center</a>
+			</div>
+		</div>
+
+		<a href="#" class="logout-link" id="logout-button" data-auth="user">Logout</a>
+	</div>
+</header>
+`;
+
+async function fetchTextIfOk(path) {
+	try {
+		const response = await fetch(path);
+		if (!response.ok) {
+			return null;
+		}
+		return await response.text();
+	} catch (_error) {
+		return null;
+	}
+}
+
 function readState() {
 	try {
 		const raw = localStorage.getItem(CASINO_STATE_KEY);
@@ -474,20 +549,12 @@ async function loadNavbar() {
 		return;
 	}
 
-	let response;
-	try {
-		response = await fetch("/navbar.html");
-		if (!response.ok) {
-			response = await fetch("/public/navbar.html");
-			if (!response.ok) {
-				response = await fetch("navbar.html");
-			}
-		}
-	} catch (_error) {
-		response = await fetch("navbar.html");
-	}
+	const markup =
+		(await fetchTextIfOk("/navbar.html")) ||
+		(await fetchTextIfOk("/public/navbar.html")) ||
+		(await fetchTextIfOk("navbar.html")) ||
+		FALLBACK_NAVBAR_HTML;
 
-	const markup = await response.text();
 	placeholder.innerHTML = markup;
 	highlightActiveRoute();
 	updateCoinViews();
