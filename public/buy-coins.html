@@ -6,43 +6,64 @@
     <title>Buy Coins - Mongo Casino</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
+  <body data-page="buy-coins">
     <div id="navbar-placeholder"></div>
 
     <main>
+      <section class="hero surface fade-in">
+        <h2>Coin Store</h2>
+        <p>Wähle ein Paket und lade dein Guthaben sofort auf. Keine Reloads, direktes Feedback.</p>
+      </section>
+
       <h2 class="centered-title">Buy Mongocoins</h2>
-      <div class="coin-packages">
-        <div class="package">
+      <div class="coin-packages fade-in">
+        <article class="package">
           <h3>Starter Pack</h3>
           <p>₥ 1,000</p>
-          <button>Buy for $4.99</button>
-        </div>
-        <div class="package">
+          <p class="package-note">Ideal für erste Spins und kleine Sessions.</p>
+          <button data-pack="1000">Buy for $4.99</button>
+        </article>
+
+        <article class="package">
           <h3>Silver Pack</h3>
           <p>₥ 5,000</p>
-          <button>Buy for $19.99</button>
-        </div>
-        <div class="package">
+          <p class="package-note">Mehr Spielraum für längere Runden.</p>
+          <button data-pack="5000">Buy for $19.99</button>
+        </article>
+
+        <article class="package">
           <h3>Gold Pack</h3>
           <p>₥ 12,000</p>
-          <button>Buy for $39.99</button>
-        </div>
-        <div class="package">
+          <p class="package-note">Beliebt bei ambitionierten Players.</p>
+          <button data-pack="12000">Buy for $39.99</button>
+        </article>
+
+        <article class="package">
           <h3>Platinum Pack</h3>
           <p>₥ 50,000</p>
-          <button>Buy for $99.99</button>
-        </div>
+          <p class="package-note">High roller Mode mit starkem Vorrat.</p>
+          <button data-pack="50000">Buy for $99.99</button>
+        </article>
       </div>
     </main>
 
-    <footer>© 2025 Mongo Casino</footer>
+    <footer>© 2026 Mongo Casino. Instant coin top-up simulation.</footer>
 
+    <script src="../scripts/api.js"></script>
     <script>
-      fetch("navbar.html")
-        .then((response) => response.text())
-        .then((data) => {
-          document.getElementById("navbar-placeholder").innerHTML = data;
+      loadNavbar();
+
+      document.querySelectorAll("[data-pack]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const amount = Number(button.dataset.pack || 0);
+          CasinoStore.addCoins(amount);
+          button.textContent = "Added!";
+          setTimeout(() => {
+            button.textContent = button.dataset.originalText || button.textContent;
+          }, 900);
         });
+        button.dataset.originalText = button.textContent;
+      });
     </script>
   </body>
 </html>

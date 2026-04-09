@@ -6,82 +6,79 @@
     <title>Games - Mongo Casino</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
+  <body data-page="games">
     <div id="navbar-placeholder"></div>
 
     <main>
+      <section class="hero surface fade-in">
+        <h2>Game Lobby</h2>
+        <p>Finde schnell dein Spiel und springe ohne Ladefrust direkt in die Action.</p>
+      </section>
+
       <h2 class="centered-title">All Games</h2>
       <input
         type="text"
         id="search"
         placeholder="Search games..."
-        onkeyup="searchGames()"
+        oninput="searchGames()"
       />
 
-      <div class="game-grid" id="game-list">
-        <div class="game">
-          <a href="games/Slot_Machine/slot.html">
+      <div class="game-grid fade-in" id="game-list">
+        <article class="game">
+          <a href="/games/Slot_Machine/slot.html">
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKLImqlhsXljBytSwyEX2BpIzEQLXsXVqPow&s"
               alt="Slot Machine"
             />
             <p>Slot Machine</p>
+            <span class="badge">Playable</span>
           </a>
-        </div>
-        <div class="game">
+        </article>
+
+        <article class="game">
           <img
             src="https://media.istockphoto.com/id/538355056/vector/pocker-cards-flush-hearts-hand.jpg?s=612x612&w=0&k=20&c=5uLrcrC_criJK1LvhOZfQdTId0HUD9qlZXKBWn90Sd8="
             alt="Poker"
           />
           <p>Poker</p>
-        </div>
-        <div class="game">
+          <span class="badge">Soon</span>
+        </article>
+
+        <article class="game">
           <img
             src="https://gamblebase.com/wp-content/uploads/2022/03/Roulette-Tisch.webp"
             alt="Roulette"
           />
           <p>Roulette</p>
-        </div>
-        <div class="game">
+          <span class="badge">Soon</span>
+        </article>
+
+        <article class="game">
           <img
             src="https://iconstyle.al/wp-content/uploads/2024/09/6CED10EC-3212-4532-BA8E-F330CF895BD3.jpeg"
             alt="Plinko"
           />
           <p>Plinko</p>
-        </div>
-        <!-- Add more games here -->
+          <span class="badge">Soon</span>
+        </article>
       </div>
     </main>
 
-    <footer>© 2025 Mongo Casino</footer>
+    <footer>© 2026 Mongo Casino. New games are dropping soon.</footer>
 
+    <script src="../scripts/api.js"></script>
     <script>
-      // Debounced search function
-      let searchTimeout;
-
       function searchGames() {
-        // Clear previous timeout to debounce the search
-        clearTimeout(searchTimeout);
+        const input = document.getElementById("search").value.trim().toLowerCase();
+        const games = document.querySelectorAll("#game-list .game");
 
-        // Set timeout to delay search execution
-        searchTimeout = setTimeout(function () {
-          let input = document.getElementById("search").value.toLowerCase();
-          let games = document.querySelectorAll(".game");
-
-          // Loop through the games and hide/show based on search query
-          games.forEach((game) => {
-            let title = game.querySelector("p").innerText.toLowerCase();
-            game.style.display = title.includes(input) ? "block" : "none";
-          });
-        }, 500); // Wait 500ms after typing stops
+        games.forEach((game) => {
+          const title = game.querySelector("p").textContent.toLowerCase();
+          game.style.display = title.includes(input) ? "block" : "none";
+        });
       }
 
-      // Fetch navbar content dynamically
-      fetch("navbar.html")
-        .then((response) => response.text())
-        .then((data) => {
-          document.getElementById("navbar-placeholder").innerHTML = data;
-        });
+      loadNavbar();
     </script>
   </body>
 </html>

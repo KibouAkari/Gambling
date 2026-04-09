@@ -1,33 +1,195 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
+    <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slot Machine</title>
+        <title>Mongo Casino - Slot Machine</title>
+        <link rel="stylesheet" href="../../public/style.css" />
     <style>
-        body {
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #000;
-            color: #FFF;
-            font-family: 'Segoe UI Emoji', sans-serif;
-            overflow: hidden; /* Verhindert das Scrollen */
-        }
+            body {
+                margin: 0;
+            }
 
-        canvas {
-            background-color: #000;
-        }
+            .slot-page {
+                width: min(1140px, 94%);
+                margin: 1.2rem auto 2rem;
+            }
 
-        #gameCanvas {
-            border: 5px solid #FFF;
-        }
+            .slot-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 0.8rem;
+                margin-bottom: 1rem;
+                padding: 1rem;
+            }
+
+            .slot-header h1 {
+                margin: 0;
+                font-family: "Syne", sans-serif;
+                font-size: clamp(1.3rem, 2vw, 1.9rem);
+            }
+
+            .slot-shell {
+                border-radius: 22px;
+                border: 1px solid rgba(145, 178, 255, 0.25);
+                background: rgba(8, 16, 33, 0.85);
+                padding: 1rem;
+                box-shadow: 0 20px 45px rgba(2, 7, 22, 0.65);
+            }
+
+            .reels {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                gap: 0.7rem;
+            }
+
+            .reel {
+                border-radius: 16px;
+                border: 1px solid rgba(157, 184, 255, 0.2);
+                background: linear-gradient(180deg, rgba(18, 30, 59, 0.8), rgba(8, 13, 25, 0.92));
+                min-height: 270px;
+                padding: 0.65rem;
+                display: grid;
+                grid-template-rows: repeat(3, 1fr);
+                gap: 0.45rem;
+            }
+
+            .symbol {
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: clamp(1.4rem, 2.1vw, 2rem);
+                font-weight: 700;
+                color: #ecf3ff;
+                border: 1px solid rgba(167, 192, 255, 0.2);
+                background: rgba(7, 13, 26, 0.78);
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            .symbol.win {
+                box-shadow: 0 0 0 2px rgba(255, 203, 76, 0.65), 0 0 20px rgba(255, 203, 76, 0.5);
+                transform: translateY(-1px);
+            }
+
+            .reel.spinning .symbol {
+                animation: reelPulse 0.18s linear infinite;
+            }
+
+            .slot-controls {
+                display: grid;
+                grid-template-columns: 1fr auto auto auto;
+                gap: 0.7rem;
+                align-items: center;
+                margin-top: 0.9rem;
+            }
+
+            .status {
+                border-radius: 12px;
+                border: 1px solid rgba(160, 186, 255, 0.2);
+                background: rgba(9, 14, 26, 0.78);
+                padding: 0.7rem 0.85rem;
+                color: #a7b7df;
+            }
+
+            .bet-wrapper {
+                display: inline-flex;
+                align-items: center;
+                border-radius: 999px;
+                border: 1px solid rgba(145, 178, 255, 0.25);
+                overflow: hidden;
+            }
+
+            .bet-wrapper button {
+                border-radius: 0;
+                min-width: 44px;
+            }
+
+            .bet-display {
+                min-width: 88px;
+                text-align: center;
+                font-weight: 600;
+            }
+
+            .payout {
+                margin-top: 0.9rem;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 0.5rem;
+            }
+
+            .payout div {
+                border-radius: 10px;
+                border: 1px solid rgba(147, 179, 255, 0.2);
+                padding: 0.55rem 0.7rem;
+                background: rgba(9, 16, 31, 0.82);
+                color: #d0dbf9;
+                font-size: 0.9rem;
+            }
+
+            @keyframes reelPulse {
+                from {
+                    transform: translateY(0);
+                }
+
+                to {
+                    transform: translateY(3px);
+                }
+            }
+
+            @media (max-width: 850px) {
+                .reels {
+                    grid-template-columns: repeat(3, 1fr);
+                }
+
+                .slot-controls {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            @media (max-width: 560px) {
+                .reels {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
     </style>
-</head>
-<body>
-    <canvas id="gameCanvas"></canvas>
+    </head>
+    <body>
+        <main class="slot-page">
+            <section class="slot-header surface fade-in">
+                <h1>Neon Fortune Slot</h1>
+                <a class="secondary-btn btn" href="/games.html">Zur Lobby</a>
+            </section>
+
+            <section class="slot-shell fade-in">
+                <div class="reels" id="reels"></div>
+
+                <div class="slot-controls">
+                    <div class="status" id="status">Drücke Spin und starte deine Runde.</div>
+
+                    <div class="bet-wrapper">
+                        <button id="bet-down" type="button">-</button>
+                        <span class="bet-display" id="bet-display">₥ 10</span>
+                        <button id="bet-up" type="button">+</button>
+                    </div>
+
+                    <button id="spin-button" type="button">Spin</button>
+                    <button id="auto-button" type="button" class="secondary-btn">Auto x10</button>
+                </div>
+
+                <div class="payout">
+                    <div>7: x16 | x65 | x240</div>
+                    <div>BAR: x10 | x32 | x120</div>
+                    <div>Diamond: x8 | x24 | x90</div>
+                    <div>Bell: x6 | x18 | x70</div>
+                    <div>Cherry: x3 | x10 | x40</div>
+                    <div>Line wins ab 3 gleiche Symbole</div>
+                </div>
+            </section>
+        </main>
+
+        <script src="../../scripts/api.js"></script>
     <script src="slotmachine.js"></script>
-</body>
+    </body>
 </html>

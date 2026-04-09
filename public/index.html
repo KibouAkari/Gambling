@@ -6,53 +6,80 @@
     <title>Mongo Casino</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
+  <body data-page="index">
     <div id="navbar-placeholder"></div>
 
     <main>
+      <section class="hero surface fade-in">
+        <h1>High Stakes. Smooth Gameplay. Premium Casino Vibe.</h1>
+        <p>
+          Willkommen bei Mongo Casino. Spiele mit schnell reagierendem Interface, klaren Effekten und stabiler
+          Performance, egal ob mobil oder desktop.
+        </p>
+        <div class="metrics">
+          <div class="metric">
+            <strong>24/7</strong>
+            <span>Live Action Feeling</span>
+          </div>
+          <div class="metric">
+            <strong>0 Lag</strong>
+            <span>Optimized UI Flow</span>
+          </div>
+          <div class="metric">
+            <strong data-coins-view>₥ 1,000</strong>
+            <span>Startguthaben</span>
+          </div>
+        </div>
+      </section>
+
       <h2 class="centered-title">Top Games</h2>
-      <div class="game-grid">
-        <div class="game">
-          <a href="games/Slot_Machine/slot.html">
+      <p class="section-subtitle">Polierte Mini-Games mit realistischerem Casino-Feeling und sauberem Gameplay.</p>
+      <div class="game-grid fade-in">
+        <article class="game">
+          <a href="/games/Slot_Machine/slot.html">
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKLImqlhsXljBytSwyEX2BpIzEQLXsXVqPow&s"
               alt="Slot Machine"
             />
             <p>Slot Machine</p>
+            <span class="badge">Play Now</span>
           </a>
-        </div>
-        <div class="game">
+        </article>
+
+        <article class="game">
           <img
             src="https://media.istockphoto.com/id/538355056/vector/pocker-cards-flush-hearts-hand.jpg?s=612x612&w=0&k=20&c=5uLrcrC_criJK1LvhOZfQdTId0HUD9qlZXKBWn90Sd8="
             alt="Poker"
           />
           <p>Poker</p>
-        </div>
-        <div class="game">
+          <span class="badge">Coming Soon</span>
+        </article>
+
+        <article class="game">
           <img
             src="https://gamblebase.com/wp-content/uploads/2022/03/Roulette-Tisch.webp"
             alt="Roulette"
           />
           <p>Roulette</p>
-        </div>
-        <div class="game">
+          <span class="badge">Coming Soon</span>
+        </article>
+
+        <article class="game">
           <img
             src="https://iconstyle.al/wp-content/uploads/2024/09/6CED10EC-3212-4532-BA8E-F330CF895BD3.jpeg"
             alt="Plinko"
           />
           <p>Plinko</p>
-        </div>
+          <span class="badge">Coming Soon</span>
+        </article>
       </div>
     </main>
 
-    <footer>© 2025 Mongo Casino</footer>
+    <footer>© 2026 Mongo Casino. Crafted for a premium demo experience.</footer>
 
+    <script src="../scripts/api.js"></script>
     <script>
-      fetch("navbar.html")
-        .then((response) => response.text())
-        .then((data) => {
-          document.getElementById("navbar-placeholder").innerHTML = data;
-        });
+      loadNavbar();
     </script>
   </body>
 </html>
