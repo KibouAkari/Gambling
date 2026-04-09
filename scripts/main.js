@@ -3,8 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  loadNavbar();
-
   const authContainer = document.getElementById("auth-container");
   const profileContainer = document.getElementById("profile-edit-container");
   const loginForm = document.getElementById("login-form");

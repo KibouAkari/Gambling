@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Poker - Mongo Casino</title>
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body data-page="games">
+    <div id="navbar-placeholder"></div>
+
+    <main>
+      <section class="hero surface">
+        <h2>High Roller Video Poker</h2>
+        <p>Deal und Draw mit Hold-Funktion, klassischem Paytable und Echtzeit-Auszahlung.</p>
+      </section>
+
+      <section class="game-shell">
+        <div class="game-toolbar compact">
+          <div class="status-pill" id="poker-status">Lade Poker...</div>
+          <div class="status-pill">Coins: <strong id="poker-coins">0</strong></div>
+          <div class="bet-pill">
+            <button id="poker-bet-down" type="button">-</button>
+            <strong id="poker-bet">0</strong>
+            <button id="poker-bet-up" type="button">+</button>
+          </div>
+          <button id="poker-deal" type="button">Deal</button>
+          <button id="poker-draw" class="secondary-btn" type="button">Draw</button>
+        </div>
+
+        <div id="poker-cards" class="poker-cards"></div>
+
+        <div class="paytable">
+          <span>Royal Flush x250</span>
+          <span>Straight Flush x50</span>
+          <span>Four of a Kind x25</span>
+          <span>Full House x9</span>
+          <span>Flush x6</span>
+          <span>Straight x4</span>
+          <span>Three of a Kind x3</span>
+          <span>Two Pair x2</span>
+          <span>Jacks or Better x1</span>
+        </div>
+      </section>
+    </main>
+
+    <footer>© 2026 Mongo Casino - Poker Lounge</footer>
+    <script src="../../scripts/fx.js"></script>
+    <script src="../../scripts/api.js"></script>
+    <script src="../../scripts/games/poker.js"></script>
+  </body>
+</html>

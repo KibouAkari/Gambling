@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Roulette - Mongo Casino</title>
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body data-page="games">
+    <div id="navbar-placeholder"></div>
+
+    <main>
+      <section class="hero surface">
+        <h2>Imperial Roulette</h2>
+        <p>Setze auf Farbe, Zahl oder Gerade/Ungerade und beobachte das drehende Wheel.</p>
+      </section>
+
+      <section class="game-shell">
+        <div class="roulette-layout">
+          <div class="roulette-wheel-wrap">
+            <div id="roulette-wheel" class="roulette-wheel"></div>
+          </div>
+
+          <div class="roulette-panel">
+            <div id="roulette-status" class="status-pill">Lade Roulette...</div>
+            <div class="status-pill">Coins: <strong id="roulette-coins">0</strong></div>
+            <label for="roulette-bet-type">Bet Type</label>
+            <select id="roulette-bet-type">
+              <option value="red">Red</option>
+              <option value="black">Black</option>
+              <option value="odd">Odd</option>
+              <option value="even">Even</option>
+              <option value="number">Number</option>
+            </select>
+            <label for="roulette-number">Number (0-36)</label>
+            <input id="roulette-number" type="number" min="0" max="36" value="17" />
+            <label for="roulette-bet-amount">Einsatz</label>
+            <input id="roulette-bet-amount" type="number" min="10" step="10" value="50" />
+            <button id="roulette-spin" type="button">Spin Wheel</button>
+            <div class="result-pill">Result: <strong id="roulette-result">-</strong></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>© 2026 Mongo Casino - Roulette Floor</footer>
+    <script src="../../scripts/fx.js"></script>
+    <script src="../../scripts/api.js"></script>
+    <script src="../../scripts/games/roulette.js"></script>
+  </body>
+</html>

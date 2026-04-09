@@ -92,7 +92,10 @@ async function loadNavbar() {
 	try {
 		response = await fetch("/navbar.html");
 		if (!response.ok) {
-			response = await fetch("navbar.html");
+			response = await fetch("/public/navbar.html");
+			if (!response.ok) {
+				response = await fetch("navbar.html");
+			}
 		}
 	} catch (_error) {
 		response = await fetch("navbar.html");
@@ -105,6 +108,13 @@ async function loadNavbar() {
 }
 
 document.addEventListener("casino:state-change", updateCoinViews);
+
+document.addEventListener("DOMContentLoaded", () => {
+	loadNavbar();
+	if (window.CasinoFX) {
+		window.CasinoFX.initAmbient();
+	}
+});
 
 window.CasinoStore = CasinoStore;
 window.loadNavbar = loadNavbar;

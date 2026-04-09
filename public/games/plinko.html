@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plinko - Mongo Casino</title>
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body data-page="games">
+    <div id="navbar-placeholder"></div>
+
+    <main>
+      <section class="hero surface">
+        <h2>Neon Plinko</h2>
+        <p>Dynamischer Ball-Drop mit Multiplikator-Feldern und visueller Win-Inszenierung.</p>
+      </section>
+
+      <section class="game-shell">
+        <div class="game-toolbar compact">
+          <div id="plinko-status" class="status-pill">Lade Plinko...</div>
+          <div class="status-pill">Coins: <strong id="plinko-coins">0</strong></div>
+          <label for="plinko-bet">Einsatz</label>
+          <input id="plinko-bet" type="number" min="10" step="10" value="40" />
+          <button id="plinko-drop" type="button">Drop Ball</button>
+        </div>
+
+        <canvas id="plinko-canvas" class="plinko-canvas"></canvas>
+      </section>
+    </main>
+
+    <footer>© 2026 Mongo Casino - Plinko Hall</footer>
+    <script src="../../scripts/fx.js"></script>
+    <script src="../../scripts/api.js"></script>
+    <script src="../../scripts/games/plinko.js"></script>
+  </body>
+</html>

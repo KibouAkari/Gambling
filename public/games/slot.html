@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slot Machine - Mongo Casino</title>
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body data-page="games">
+    <div id="navbar-placeholder"></div>
+
+    <main>
+      <section class="hero surface">
+        <h2>Crimson Crown Slots</h2>
+        <p>5 Walzen, 5 Paylines, Auto-Spin, Jackpot-Inszenierung und Sound-Effekte.</p>
+      </section>
+
+      <section class="game-shell">
+        <div id="slot-reels" class="slot-reels"></div>
+
+        <div class="game-toolbar">
+          <div id="slot-status" class="status-pill">Bereit fur den Spin.</div>
+          <div class="bet-pill">
+            <button id="slot-bet-down" type="button">-</button>
+            <strong id="slot-bet">0</strong>
+            <button id="slot-bet-up" type="button">+</button>
+          </div>
+          <button id="slot-spin" type="button">Spin</button>
+          <button id="slot-auto" class="secondary-btn" type="button">Auto x10</button>
+        </div>
+      </section>
+    </main>
+
+    <footer>© 2026 Mongo Casino - Slot Experience</footer>
+    <script src="../../scripts/fx.js"></script>
+    <script src="../../scripts/api.js"></script>
+    <script src="../../scripts/games/slot.js"></script>
+  </body>
+</html>

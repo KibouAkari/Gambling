@@ -11,8 +11,8 @@
 
     <main>
       <section class="hero surface fade-in">
-        <h2>Game Lobby</h2>
-        <p>Finde schnell dein Spiel und springe ohne Ladefrust direkt in die Action.</p>
+        <h2>Grand Game Lobby</h2>
+        <p>Live spielbare Games plus kommende Titel in einer volleren Casino-Lobby mit klaren Status-Tags.</p>
       </section>
 
       <h2 class="centered-title">All Games</h2>
@@ -25,7 +25,7 @@
 
       <div class="game-grid fade-in" id="game-list">
         <article class="game">
-          <a href="/games/Slot_Machine/slot.html">
+          <a href="/games/slot.html">
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKLImqlhsXljBytSwyEX2BpIzEQLXsXVqPow&s"
               alt="Slot Machine"
@@ -36,36 +36,79 @@
         </article>
 
         <article class="game">
-          <img
-            src="https://media.istockphoto.com/id/538355056/vector/pocker-cards-flush-hearts-hand.jpg?s=612x612&w=0&k=20&c=5uLrcrC_criJK1LvhOZfQdTId0HUD9qlZXKBWn90Sd8="
-            alt="Poker"
-          />
-          <p>Poker</p>
-          <span class="badge">Soon</span>
+          <a href="/games/poker.html">
+            <img
+              src="https://media.istockphoto.com/id/538355056/vector/pocker-cards-flush-hearts-hand.jpg?s=612x612&w=0&k=20&c=5uLrcrC_criJK1LvhOZfQdTId0HUD9qlZXKBWn90Sd8="
+              alt="Poker"
+            />
+            <p>Poker</p>
+            <span class="badge">Playable</span>
+          </a>
+        </article>
+
+        <article class="game">
+          <a href="/games/roulette.html">
+            <img
+              src="https://gamblebase.com/wp-content/uploads/2022/03/Roulette-Tisch.webp"
+              alt="Roulette"
+            />
+            <p>Roulette</p>
+            <span class="badge">Playable</span>
+          </a>
+        </article>
+
+        <article class="game">
+          <a href="/games/plinko.html">
+            <img
+              src="https://iconstyle.al/wp-content/uploads/2024/09/6CED10EC-3212-4532-BA8E-F330CF895BD3.jpeg"
+              alt="Plinko"
+            />
+            <p>Plinko</p>
+            <span class="badge">Playable</span>
+          </a>
         </article>
 
         <article class="game">
           <img
-            src="https://gamblebase.com/wp-content/uploads/2022/03/Roulette-Tisch.webp"
-            alt="Roulette"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Blackjackinsession.jpg/640px-Blackjackinsession.jpg"
+            alt="Blackjack"
           />
-          <p>Roulette</p>
-          <span class="badge">Soon</span>
+          <p>Blackjack</p>
+          <span class="badge">Coming Soon</span>
         </article>
 
         <article class="game">
           <img
-            src="https://iconstyle.al/wp-content/uploads/2024/09/6CED10EC-3212-4532-BA8E-F330CF895BD3.jpeg"
-            alt="Plinko"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Craps_game.jpg/640px-Craps_game.jpg"
+            alt="Craps"
           />
-          <p>Plinko</p>
-          <span class="badge">Soon</span>
+          <p>Craps</p>
+          <span class="badge">Coming Soon</span>
+        </article>
+
+        <article class="game">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Baccarat_cards.jpg/640px-Baccarat_cards.jpg"
+            alt="Baccarat"
+          />
+          <p>Baccarat</p>
+          <span class="badge">Coming Soon</span>
+        </article>
+
+        <article class="game">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Sic_Bo_dice.jpg/640px-Sic_Bo_dice.jpg"
+            alt="Sic Bo"
+          />
+          <p>Sic Bo</p>
+          <span class="badge">Coming Soon</span>
         </article>
       </div>
     </main>
 
-    <footer>© 2026 Mongo Casino. New games are dropping soon.</footer>
+    <footer>© 2026 Mongo Casino. Daily content updates planned.</footer>
 
+    <script src="../scripts/fx.js"></script>
     <script src="../scripts/api.js"></script>
     <script>
       function searchGames() {
@@ -77,8 +120,6 @@
           game.style.display = title.includes(input) ? "block" : "none";
         });
       }
-
-      loadNavbar();
     </script>
   </body>
 </html>

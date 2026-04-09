@@ -11,8 +11,8 @@
 
     <main>
       <section class="hero surface fade-in">
-        <h2>Coin Store</h2>
-        <p>Wähle ein Paket und lade dein Guthaben sofort auf. Keine Reloads, direktes Feedback.</p>
+        <h2>MongoCoin Store</h2>
+        <p>Mehr Pakete, bessere Staffelungen und sofortige Gutschrift fur deinen Account.</p>
       </section>
 
       <h2 class="centered-title">Buy Mongocoins</h2>
@@ -44,19 +44,37 @@
           <p class="package-note">High roller Mode mit starkem Vorrat.</p>
           <button data-pack="50000">Buy for $99.99</button>
         </article>
+
+        <article class="package">
+          <h3>Diamond Vault</h3>
+          <p>₥ 150,000</p>
+          <p class="package-note">Fur Turnier- und Premium-Sessions.</p>
+          <button data-pack="150000">Buy for $249.99</button>
+        </article>
+
+        <article class="package">
+          <h3>Imperial Reserve</h3>
+          <p>₥ 500,000</p>
+          <p class="package-note">Maximaler Vorrat mit VIP-Level Feeling.</p>
+          <button data-pack="500000">Buy for $599.99</button>
+        </article>
       </div>
     </main>
 
-    <footer>© 2026 Mongo Casino. Instant coin top-up simulation.</footer>
+    <footer>© 2026 Mongo Casino. Store linked with your local account balance.</footer>
 
+    <script src="../scripts/fx.js"></script>
     <script src="../scripts/api.js"></script>
     <script>
-      loadNavbar();
-
       document.querySelectorAll("[data-pack]").forEach((button) => {
         button.addEventListener("click", () => {
           const amount = Number(button.dataset.pack || 0);
           CasinoStore.addCoins(amount);
+          if (amount >= 150000) {
+            CasinoFX.celebrateJackpot();
+          } else {
+            CasinoFX.celebrateWin();
+          }
           button.textContent = "Added!";
           setTimeout(() => {
             button.textContent = button.dataset.originalText || button.textContent;
