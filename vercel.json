@@ -3,15 +3,6 @@
   "functions": {
     "api/**/*.js": {
       "maxDuration": 30
-    },
-    "api/**/*.mjs": {
-      "maxDuration": 30
-    },
-    "api/**/*.cjs": {
-      "maxDuration": 30
-    },
-    "api/**/*.ts": {
-      "maxDuration": 30
     }
   }
 }
