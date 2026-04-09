@@ -1,4 +1,4 @@
-const CASINO_STATE_KEY = "mongo-casino-state-v1";
+const CASINO_STATE_KEY = "mongo-casino-state-v2";
 
 const defaultState = {
 	coins: 1000,
@@ -10,6 +10,8 @@ const defaultState = {
 	hasAccount: false,
 	isLoggedIn: false,
 	password: "",
+	authProvider: "local",
+	sessionToken: "",
 };
 
 function readState() {
@@ -29,6 +31,37 @@ function readState() {
 function writeState(nextState) {
 	localStorage.setItem(CASINO_STATE_KEY, JSON.stringify(nextState));
 	document.dispatchEvent(new CustomEvent("casino:state-change", { detail: nextState }));
+}
+
+async function requestApi(path, options = {}) {
+	const state = readState();
+	const response = await fetch(path, {
+		method: options.method || "GET",
+		headers: {
+			"Content-Type": "application/json",
+			...(options.token || state.sessionToken
+				? { Authorization: `Bearer ${options.token || state.sessionToken}` }
+				: {}),
+		},
+		body: options.body ? JSON.stringify(options.body) : undefined,
+	});
+
+	const payload = await response.json().catch(() => ({}));
+	if (!response.ok || payload.ok === false) {
+		throw new Error(payload.message || "API-Fehler");
+	}
+
+	return payload;
+}
+
+function normalizeRemoteUser(user) {
+	return {
+		username: user?.username || "",
+		email: user?.email || "",
+		bio: user?.bio || "",
+		profileImage: user?.profileImage || defaultState.profileImage,
+		coins: typeof user?.coins === "number" ? user.coins : 1000,
+	};
 }
 
 const CasinoStore = {
@@ -51,8 +84,10 @@ const CasinoStore = {
 	},
 
 	addCoins(amount) {
-		const coins = readState().coins + Math.max(0, amount);
-		return this.setState({ coins });
+		const state = readState();
+		const next = this.setState({ coins: state.coins + Math.max(0, amount) });
+		this.syncProfile({ coins: next.coins }).catch(() => {});
+		return next;
 	},
 
 	spendCoins(amount) {
@@ -61,7 +96,9 @@ const CasinoStore = {
 			return null;
 		}
 
-		return this.setState({ coins: state.coins - amount });
+		const next = this.setState({ coins: state.coins - amount });
+		this.syncProfile({ coins: next.coins }).catch(() => {});
+		return next;
 	},
 
 	isAccountReady() {
@@ -69,44 +106,141 @@ const CasinoStore = {
 		return state.hasAccount && state.isLoggedIn;
 	},
 
-	registerAccount(payload) {
-		const username = (payload.username || "").trim();
-		const email = (payload.email || "").trim();
-		const password = (payload.password || "").trim();
+	async registerAccount(payload) {
+		const username = String(payload.username || "").trim();
+		const email = String(payload.email || "").trim();
+		const password = String(payload.password || "").trim();
 
 		if (!username || !email || !password) {
 			return { ok: false, message: "Bitte alle Felder ausfüllen." };
 		}
 
-		this.setState({
-			hasAccount: true,
-			isLoggedIn: true,
-			username,
-			email,
-			password,
-		});
-		return { ok: true };
+		try {
+			const response = await requestApi("/api/auth/register", {
+				method: "POST",
+				body: { username, email, password },
+			});
+
+			const remoteUser = normalizeRemoteUser(response.user);
+			this.setState({
+				...remoteUser,
+				hasAccount: true,
+				isLoggedIn: true,
+				authProvider: "blob",
+				sessionToken: response.token || "",
+				password: "",
+			});
+			return { ok: true };
+		} catch (_error) {
+			// Fallback for local preview/dev without serverless deployment.
+			this.setState({
+				hasAccount: true,
+				isLoggedIn: true,
+				username,
+				email,
+				password,
+				authProvider: "local",
+			});
+			return { ok: true };
+		}
 	},
 
-	loginAccount(payload) {
+	async loginAccount(payload) {
 		const state = readState();
-		const username = (payload.username || "").trim();
-		const password = (payload.password || "").trim();
+		const username = String(payload.username || "").trim();
+		const password = String(payload.password || "").trim();
 
-		if (!state.hasAccount) {
-			return { ok: false, message: "Bitte zuerst einen Account erstellen." };
+		if (!username || !password) {
+			return { ok: false, message: "Bitte Username und Passwort eingeben." };
 		}
 
-		if (username !== state.username || password !== state.password) {
-			return { ok: false, message: "Login fehlgeschlagen. Bitte Daten prüfen." };
-		}
+		try {
+			const response = await requestApi("/api/auth/login", {
+				method: "POST",
+				body: { username, password },
+			});
 
-		this.setState({ isLoggedIn: true });
-		return { ok: true };
+			const remoteUser = normalizeRemoteUser(response.user);
+			this.setState({
+				...remoteUser,
+				hasAccount: true,
+				isLoggedIn: true,
+				authProvider: "blob",
+				sessionToken: response.token || "",
+				password: "",
+			});
+			return { ok: true };
+		} catch (_error) {
+			if (!state.hasAccount) {
+				return { ok: false, message: "Bitte zuerst einen Account erstellen." };
+			}
+			if (username !== state.username || password !== state.password) {
+				return { ok: false, message: "Login fehlgeschlagen. Bitte Daten prüfen." };
+			}
+
+			this.setState({ isLoggedIn: true, authProvider: "local" });
+			return { ok: true };
+		}
 	},
 
-	logout() {
-		this.setState({ isLoggedIn: false });
+	async logout() {
+		const state = readState();
+		if (state.authProvider === "blob" && state.sessionToken) {
+			try {
+				await requestApi("/api/auth/login", {
+					method: "POST",
+					body: { action: "logout" },
+					token: state.sessionToken,
+				});
+			} catch (_error) {
+				// Ignore remote logout failures and still clear local session.
+			}
+		}
+
+		this.setState({ isLoggedIn: false, sessionToken: "" });
+	},
+
+	async refreshSession() {
+		const state = readState();
+		if (!state.sessionToken) {
+			return false;
+		}
+
+		try {
+			const response = await requestApi("/api/auth/me", {
+				method: "GET",
+				token: state.sessionToken,
+			});
+			const remoteUser = normalizeRemoteUser(response.user);
+			this.setState({
+				...remoteUser,
+				hasAccount: true,
+				isLoggedIn: true,
+				authProvider: "blob",
+			});
+			return true;
+		} catch (_error) {
+			this.setState({ isLoggedIn: false, sessionToken: "" });
+			return false;
+		}
+	},
+
+	async syncProfile(patch) {
+		const state = this.setState(patch);
+		if (state.authProvider !== "blob" || !state.sessionToken) {
+			return { ok: true };
+		}
+
+		try {
+			await requestApi("/api/auth/me", {
+				method: "POST",
+				body: patch,
+				token: state.sessionToken,
+			});
+			return { ok: true };
+		} catch (_error) {
+			return { ok: false };
+		}
 	},
 
 	requireAccount(options) {
@@ -121,11 +255,11 @@ const CasinoStore = {
 				const gate = document.createElement("section");
 				gate.className = "access-gate";
 				gate.innerHTML = `
-				  <div class="access-gate-card">
-				    <h2>🔒 Account erforderlich</h2>
-				    <p>Bitte erstelle zuerst einen Account, bevor du Coins kaufen oder Games spielen kannst.</p>
-				    <a class="btn" href="/profile.html">Jetzt Account erstellen</a>
-				  </div>
+					<div class="access-gate-card">
+						<h2>Account erforderlich</h2>
+						<p>Bitte erstelle zuerst einen Account, bevor du Coins kaufen oder Games spielen kannst.</p>
+						<a class="btn" href="/profile.html">Jetzt registrieren</a>
+					</div>
 				`;
 				root.appendChild(gate);
 			}
@@ -149,13 +283,23 @@ function highlightActiveRoute() {
 
 function updateCoinViews() {
 	const state = CasinoStore.getState();
-	const text = state.hasAccount ? CasinoStore.formatCoins(state.coins) : "Account nötig";
+	const isReady = state.hasAccount && state.isLoggedIn;
+	const text = isReady ? CasinoStore.formatCoins(state.coins) : "Account nötig";
+
 	document.querySelectorAll("#coin-balance, [data-coins-view]").forEach((node) => {
 		node.textContent = text;
 	});
 
 	document.querySelectorAll("[data-user-view]").forEach((node) => {
-		node.textContent = state.username || "Gast";
+		node.textContent = isReady ? state.username : "Gast";
+	});
+
+	document.querySelectorAll('[data-auth="guest"]').forEach((node) => {
+		node.style.display = isReady ? "none" : "inline-flex";
+	});
+
+	document.querySelectorAll('[data-auth="user"]').forEach((node) => {
+		node.style.display = isReady ? "inline-flex" : "none";
 	});
 }
 
@@ -185,9 +329,9 @@ async function loadNavbar() {
 
 	const logoutButton = document.getElementById("logout-button");
 	if (logoutButton) {
-		logoutButton.addEventListener("click", (event) => {
+		logoutButton.addEventListener("click", async (event) => {
 			event.preventDefault();
-			CasinoStore.logout();
+			await CasinoStore.logout();
 			window.location.href = "/profile.html";
 		});
 	}
@@ -195,8 +339,11 @@ async function loadNavbar() {
 
 document.addEventListener("casino:state-change", updateCoinViews);
 
-document.addEventListener("DOMContentLoaded", () => {
-	loadNavbar();
+document.addEventListener("DOMContentLoaded", async () => {
+	await loadNavbar();
+	await CasinoStore.refreshSession();
+	updateCoinViews();
+
 	if (window.CasinoFX) {
 		window.CasinoFX.initAmbient();
 	}

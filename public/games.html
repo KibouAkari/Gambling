@@ -11,18 +11,26 @@
 
     <main>
       <section class="hero surface fade-in">
-        <h2>Casino Game Hall</h2>
-        <p>Alle aktiven Spiele in einem Bereich mit direktem Einstieg und klaren Live-Status.</p>
+        <h2>Mongo Casino Games</h2>
+        <p>
+          Spielbare Titel plus kommende Kategorien. Account erforderlich für echte Runden und
+          Coin-Einsatz.
+        </p>
         <div class="account-chip">Player: <strong data-user-view>Gast</strong></div>
       </section>
 
-      <h2 class="centered-title">Live Jetzt</h2>
-      <input
-        type="text"
-        id="search"
-        placeholder="Spiel suchen..."
-        oninput="searchGames()"
-      />
+      <section class="providers surface fade-in">
+        <h3>Trusted Provider Style</h3>
+        <div class="provider-row">
+          <span>Pragmatic Play</span>
+          <span>Evolution Inspired</span>
+          <span>Hacksaw Style</span>
+          <span>Mongo Originals</span>
+        </div>
+      </section>
+
+      <h2 class="centered-title">Live Now</h2>
+      <input type="text" id="search" placeholder="Spiel suchen..." oninput="searchGames()" />
 
       <div class="game-grid fade-in" id="game-list">
         <article class="game">
@@ -32,7 +40,7 @@
               alt="Slot Machine"
             />
             <p>Slot Machine</p>
-            <span class="badge">Playable</span>
+            <span class="badge">Playable Now</span>
           </a>
         </article>
 
@@ -43,7 +51,7 @@
               alt="Poker"
             />
             <p>Poker</p>
-            <span class="badge">Playable</span>
+            <span class="badge">Playable Now</span>
           </a>
         </article>
 
@@ -54,7 +62,7 @@
               alt="Roulette"
             />
             <p>Roulette</p>
-            <span class="badge">Playable</span>
+            <span class="badge">Playable Now</span>
           </a>
         </article>
 
@@ -65,10 +73,9 @@
               alt="Plinko"
             />
             <p>Plinko</p>
-            <span class="badge">Playable</span>
+            <span class="badge">Playable Now</span>
           </a>
         </article>
-
       </div>
 
       <h2 class="centered-title">Coming Soon Wall</h2>
@@ -109,6 +116,21 @@
           <span class="badge">Coming Soon</span>
         </article>
       </div>
+
+      <section class="criteria-grid fade-in">
+        <article class="criteria-card surface">
+          <h3>Fast Withdraw Feel</h3>
+          <p>Store und Spiele reagieren direkt auf Coin-Änderungen.</p>
+        </article>
+        <article class="criteria-card surface">
+          <h3>Fair Game Logic</h3>
+          <p>Deterministische Auswertungen und transparente Gewinn-Events in jedem Modus.</p>
+        </article>
+        <article class="criteria-card surface">
+          <h3>Support Ready</h3>
+          <p>Account Center als zentrale Stelle für Profil, Auth und Session-Kontrolle.</p>
+        </article>
+      </section>
     </main>
 
     <footer>© 2026 Mongo Casino. Neue Spiele werden laufend erweitert.</footer>

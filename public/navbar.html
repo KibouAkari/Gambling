@@ -1,27 +1,42 @@
-<header class="site-header fade-in">
-  <a href="/index.html" class="logo" aria-label="Mongo Casino Home">
-    <h1>Mongo Casino</h1>
+<aside class="left-rail fade-in">
+  <a href="/index.html" class="rail-brand" aria-label="Mongo Casino Home">
+    <span class="rail-brand-mark">MC</span>
+    <strong>Mongo Casino</strong>
   </a>
 
-  <nav aria-label="Main navigation">
-    <ul>
-      <li><a href="/index.html" data-route="index">Home</a></li>
-      <li><a href="/games.html" data-route="games">Games</a></li>
-      <li><a href="/buy-coins.html" data-route="buy-coins">Buy Coins</a></li>
-      <li><a href="/profile.html" data-route="profile">Account</a></li>
-    </ul>
+  <div class="rail-search-wrap">
+    <input type="search" class="rail-search" placeholder="Search games..." aria-label="Search games" />
+  </div>
+
+  <nav class="rail-nav" aria-label="Sidebar navigation">
+    <a href="/index.html" data-route="index">Casino Lobby</a>
+    <a href="/games.html" data-route="games">All Games</a>
+    <a href="/buy-coins.html" data-route="buy-coins">Buy MongoCoins</a>
+    <a href="/profile.html" data-route="profile">Account Center</a>
+    <a href="/games/slot.html">Slots</a>
+    <a href="/games/poker.html">Poker</a>
+    <a href="/games/roulette.html">Roulette</a>
+    <a href="/games/plinko.html">Plinko</a>
   </nav>
 
-  <div class="profile">
-    <a href="/buy-coins.html" class="coins" id="coin-balance" title="Mongocoins">₥ 1,000</a>
-    <span class="nav-user" data-user-view>Gast</span>
-    <a href="/profile.html" aria-label="Profile page">
-      <img
-        src="https://static.vecteezy.com/system/resources/previews/023/465/688/non_2x/contact-dark-mode-glyph-ui-icon-address-book-profile-page-user-interface-design-white-silhouette-symbol-on-black-space-solid-pictogram-for-web-mobile-isolated-illustration-vector.jpg"
-        alt="Profile Picture"
-        class="avatar"
-      />
-    </a>
-    <a href="#" class="logout-link" id="logout-button">Logout</a>
+  <div class="rail-trust">
+    <p>SSL Encrypt</p>
+    <p>RNG Verified</p>
+    <p>24/7 Support</p>
+  </div>
+</aside>
+
+<header class="top-bar fade-in">
+  <div class="top-bar-copy">
+    <span>Crypto-ready, fast and transparent</span>
+    <h1>Mongo Casino</h1>
+  </div>
+
+  <div class="top-bar-actions">
+    <a href="/profile.html" class="header-btn ghost" data-auth="guest">Sign Up</a>
+    <a href="/profile.html" class="header-btn outline" data-auth="guest">Log In</a>
+    <a href="/buy-coins.html" class="coins" id="coin-balance" title="Mongocoins" data-auth="user">₥ 1,000</a>
+    <span class="nav-user" data-user-view data-auth="user">Gast</span>
+    <a href="#" class="logout-link" id="logout-button" data-auth="user">Logout</a>
   </div>
 </header>

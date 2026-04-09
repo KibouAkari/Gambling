@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   if (!window.CasinoStore) {
     return;
   }
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function saveProfileImage(src) {
     profileImg.src = src;
-    CasinoStore.setState({ profileImage: src });
+    CasinoStore.syncProfile({ profileImage: src }).catch(() => {});
   }
 
   showSignIn.addEventListener("click", (event) => {
@@ -57,10 +57,10 @@ document.addEventListener("DOMContentLoaded", () => {
     loginForm.classList.remove("hidden");
   });
 
-  loginBtn.addEventListener("click", () => {
+  loginBtn.addEventListener("click", async () => {
     const loginUsername = document.getElementById("login-username").value.trim();
     const loginPassword = document.getElementById("login-password").value.trim();
-    const response = CasinoStore.loginAccount({
+    const response = await CasinoStore.loginAccount({
       username: loginUsername,
       password: loginPassword,
     });
@@ -80,12 +80,12 @@ document.addEventListener("DOMContentLoaded", () => {
     openProfileEditor();
   });
 
-  signInBtn.addEventListener("click", () => {
+  signInBtn.addEventListener("click", async () => {
     const signInUsername = document.getElementById("signin-username").value.trim();
     const signInEmail = document.getElementById("signin-email").value.trim();
     const signInPassword = document.getElementById("signin-password").value.trim();
 
-    const response = CasinoStore.registerAccount({
+    const response = await CasinoStore.registerAccount({
       username: signInUsername,
       email: signInEmail,
       password: signInPassword,
@@ -122,9 +122,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  userForm.addEventListener("submit", (event) => {
+  userForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    CasinoStore.setState({
+    await CasinoStore.syncProfile({
       username: usernameInput.value.trim(),
       email: emailInput.value.trim(),
       bio: bioInput.value.trim(),
@@ -157,8 +157,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  if (stored.hasAccount && stored.isLoggedIn) {
+  await CasinoStore.refreshSession();
+  const current = CasinoStore.getState();
+
+  if (current.hasAccount && current.isLoggedIn) {
     openProfileEditor();
+    usernameInput.value = current.username || "";
+    emailInput.value = current.email || "";
+    bioInput.value = current.bio || "";
+    profileImg.src = current.profileImage;
   } else {
     openAuthView();
   }
