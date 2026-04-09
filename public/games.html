@@ -148,6 +148,13 @@
         });
       }
 
+      const query = new URLSearchParams(window.location.search).get("q");
+      if (query) {
+        const searchInput = document.getElementById("search");
+        searchInput.value = query;
+        searchGames();
+      }
+
       CasinoStore.requireAccount({ withOverlay: true });
     </script>
   </body>

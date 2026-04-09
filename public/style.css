@@ -138,6 +138,11 @@ a {
   padding: 0.35rem 0.35rem 0.8rem;
 }
 
+.rail-brand strong {
+  letter-spacing: 0.02em;
+  font-size: 0.98rem;
+}
+
 .rail-brand-mark {
   width: 36px;
   height: 36px;
@@ -168,12 +173,21 @@ a {
 }
 
 .rail-nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
   text-decoration: none;
   padding: 0.53rem 0.58rem;
   border-radius: 9px;
   border: 1px solid transparent;
   color: var(--muted);
   font-size: 0.92rem;
+}
+
+.rail-icon {
+  width: 16px;
+  text-align: center;
+  color: #8f9bc0;
 }
 
 .rail-nav a:hover,
@@ -221,6 +235,7 @@ a {
   margin: 0.1rem 0 0;
   font-size: 1.3rem;
   font-family: "Cinzel", serif;
+  letter-spacing: 0.02em;
 }
 
 .top-bar-actions {
@@ -239,6 +254,10 @@ a {
 .header-btn.ghost {
   background: linear-gradient(140deg, #ffd370, #efa916);
   color: #312000;
+}
+
+.header-btn.ghost:hover {
+  box-shadow: 0 0 18px rgba(255, 176, 41, 0.45);
 }
 
 .header-btn.outline {
@@ -286,17 +305,274 @@ a {
   border: 2px solid rgba(255, 221, 130, 0.72);
 }
 
-.lobby-hero {
+
+.hero-stage {
   display: grid;
-  grid-template-columns: minmax(380px, 1.45fr) minmax(260px, 0.95fr);
-  gap: 1rem;
+  grid-template-columns: minmax(380px, 1.25fr) minmax(320px, 1fr);
+  gap: 0;
+  padding: 0;
+  border-radius: 20px;
+  min-height: 330px;
+  background: linear-gradient(115deg, rgba(7, 10, 19, 0.96) 0%, rgba(12, 18, 31, 0.9) 40%, rgba(6, 10, 18, 0.8) 100%);
 }
 
-.promo-banner {
-  padding: 1.25rem;
+.hero-copy-block {
+  padding: 1.45rem 1.65rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-title-outline {
+  margin: 0;
+  font-family: "Cinzel", serif;
+  font-size: clamp(1.95rem, 4vw, 3.5rem);
+  line-height: 0.95;
+  max-width: 14ch;
+  color: transparent;
+  -webkit-text-stroke: 1.5px #ffb53c;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 18px rgba(255, 98, 53, 0.35);
+}
+
+.hero-subline {
+  margin: 0.9rem 0 0;
+  color: #e7edf9;
+  font-size: 1.15rem;
+  max-width: 36ch;
+}
+
+.hero-dots {
+  margin-top: 0.95rem;
+  display: inline-flex;
+  gap: 0.4rem;
+}
+
+.hero-dots span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.34);
+}
+
+.hero-dots span.is-active {
+  background: var(--gold);
+}
+
+.hero-visual-block {
+  position: relative;
+  min-height: 320px;
+}
+
+.hero-visual-block img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.hero-visual-block::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(7, 10, 19, 0.52), transparent 32%);
+}
+
+.hero-visual-label {
+  position: absolute;
+  left: 0.8rem;
+  bottom: 0.8rem;
+  border-radius: 999px;
+  padding: 0.3rem 0.62rem;
+  background: rgba(9, 14, 24, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.78rem;
+  z-index: 2;
+}
+
+.hot-games-row {
+  margin-top: 0.8rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(190px, 1fr));
+  gap: 0.62rem;
+}
+
+.mini-game-tile {
+  text-decoration: none;
+  border-radius: 11px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(160deg, rgba(25, 34, 54, 0.96), rgba(11, 17, 31, 0.96));
+  padding: 0.45rem;
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.mini-game-tile img {
+  width: 44px;
+  height: 44px;
+  border-radius: 7px;
+  object-fit: cover;
+}
+
+.mini-game-tile strong {
+  display: block;
+  font-size: 0.78rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.mini-game-tile span {
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.mini-game-tile em {
+  font-style: normal;
+  font-size: 0.72rem;
+  color: #081208;
+  background: #35d35a;
+  border-radius: 999px;
+  padding: 0.18rem 0.45rem;
+  font-weight: 800;
+}
+
+.section-headline {
+  margin: 1.45rem 0 0.8rem;
+  font-family: "Cinzel", serif;
+  text-align: center;
+  font-size: clamp(1.2rem, 2.3vw, 2rem);
+  letter-spacing: 0.02em;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: 1.55fr repeat(3, minmax(170px, 1fr));
+  gap: 0.72rem;
+}
+
+.why-feature {
+  padding: 1.15rem;
   background:
-    linear-gradient(110deg, rgba(18, 29, 52, 0.9) 0%, rgba(13, 22, 39, 0.7) 52%, rgba(17, 28, 49, 0.4) 100%),
-    url("https://images.unsplash.com/photo-1596838132731-3301c3fd4317?auto=format&fit=crop&w=1200&q=70") center/cover;
+    linear-gradient(115deg, rgba(13, 20, 35, 0.88), rgba(9, 14, 24, 0.8)),
+    url("https://images.unsplash.com/photo-1518131678677-aad2e2e5f08f?auto=format&fit=crop&w=1200&q=70") center/cover;
+}
+
+.why-feature h3 {
+  margin: 0;
+  font-size: clamp(1.35rem, 2.2vw, 2.1rem);
+  max-width: 18ch;
+  line-height: 1.05;
+}
+
+.why-feature p {
+  max-width: 46ch;
+  color: var(--muted);
+}
+
+.bank-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.7rem;
+}
+
+.bank-row span {
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.28rem 0.6rem;
+  font-size: 0.8rem;
+  background: rgba(9, 14, 25, 0.62);
+}
+
+.why-small {
+  padding: 1rem 0.8rem;
+  text-align: center;
+  display: grid;
+  align-content: center;
+  background:
+    radial-gradient(circle at 50% 10%, rgba(255, 104, 64, 0.22), transparent 55%),
+    linear-gradient(155deg, rgba(22, 31, 50, 0.94), rgba(8, 13, 24, 0.96));
+}
+
+.why-small h4 {
+  margin: 0;
+  font-size: 1.55rem;
+  line-height: 1.05;
+}
+
+.why-small p {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.experience-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(130px, 1fr));
+  gap: 0.64rem;
+}
+
+.exp-card {
+  text-decoration: none;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 184, 74, 0.32);
+  min-height: 126px;
+  display: grid;
+  align-items: end;
+  padding: 0.7rem;
+  color: #ffffff;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  background:
+    linear-gradient(180deg, rgba(7, 10, 18, 0.24), rgba(8, 11, 20, 0.82)),
+    url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=700&q=70") center/cover;
+}
+
+.exp-card:nth-child(2) {
+  background:
+    linear-gradient(180deg, rgba(7, 10, 18, 0.24), rgba(8, 11, 20, 0.82)),
+    url("https://images.unsplash.com/photo-1606167668584-78701c57f13d?auto=format&fit=crop&w=700&q=70") center/cover;
+}
+
+.exp-card:nth-child(3) {
+  background:
+    linear-gradient(180deg, rgba(7, 10, 18, 0.24), rgba(8, 11, 20, 0.82)),
+    url("https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=700&q=70") center/cover;
+}
+
+.exp-card:nth-child(4) {
+  background:
+    linear-gradient(180deg, rgba(7, 10, 18, 0.24), rgba(8, 11, 20, 0.82)),
+    url("https://images.unsplash.com/photo-1516534775068-ba3e7458af70?auto=format&fit=crop&w=700&q=70") center/cover;
+}
+
+.exp-card:nth-child(5) {
+  background:
+    linear-gradient(180deg, rgba(7, 10, 18, 0.24), rgba(8, 11, 20, 0.82)),
+    url("https://images.unsplash.com/photo-1518131678677-aad2e2e5f08f?auto=format&fit=crop&w=700&q=70") center/cover;
+}
+
+.exp-card:nth-child(6) {
+  background:
+    linear-gradient(180deg, rgba(7, 10, 18, 0.24), rgba(8, 11, 20, 0.82)),
+    url("https://images.unsplash.com/photo-1606166325683-e6deb697d301?auto=format&fit=crop&w=700&q=70") center/cover;
+}
+
+.exp-card span {
+  display: inline-flex;
+  padding: 0.22rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(5, 10, 20, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.exp-card:hover {
+  transform: translateY(-3px);
 }
 
 .eyebrow {
@@ -1105,8 +1381,17 @@ footer {
   }
 
   .lobby-hero,
-  .live-strip {
+  .live-strip,
+  .hero-stage,
+  .why-grid,
+  .hot-games-row,
+  .experience-grid {
     grid-template-columns: 1fr;
+  }
+
+  .hero-visual-block img {
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 20px;
   }
 
   .profile-container,
@@ -1140,6 +1425,23 @@ footer {
 
   .coins {
     min-width: 98px;
+  }
+
+  .hero-title-outline {
+    font-size: 1.8rem;
+  }
+
+  .why-feature h3 {
+    font-size: 1.18rem;
+  }
+
+  .mini-game-tile {
+    grid-template-columns: 38px 1fr auto;
+  }
+
+  .mini-game-tile img {
+    width: 38px;
+    height: 38px;
   }
 
   .nav-user,

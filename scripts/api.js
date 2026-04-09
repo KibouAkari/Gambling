@@ -327,6 +327,23 @@ async function loadNavbar() {
 	highlightActiveRoute();
 	updateCoinViews();
 
+	const railSearch = document.querySelector(".rail-search");
+	if (railSearch) {
+		railSearch.addEventListener("keydown", (event) => {
+			if (event.key !== "Enter") {
+				return;
+			}
+
+			event.preventDefault();
+			const query = railSearch.value.trim();
+			if (query) {
+				window.location.href = `/games.html?q=${encodeURIComponent(query)}`;
+			} else {
+				window.location.href = "/games.html";
+			}
+		});
+	}
+
 	const logoutButton = document.getElementById("logout-button");
 	if (logoutButton) {
 		logoutButton.addEventListener("click", async (event) => {
