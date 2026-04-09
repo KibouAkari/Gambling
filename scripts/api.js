@@ -7,6 +7,8 @@ const defaultState = {
 		"https://static.vecteezy.com/system/resources/previews/023/465/688/non_2x/contact-dark-mode-glyph-ui-icon-address-book-profile-page-user-interface-design-white-silhouette-symbol-on-black-space-solid-pictogram-for-web-mobile-isolated-illustration-vector.jpg",
 	email: "",
 	bio: "",
+	paymentMethod: "",
+	dateOfBirth: "",
 	hasAccount: false,
 	isLoggedIn: false,
 	password: "",
@@ -59,8 +61,135 @@ function normalizeRemoteUser(user) {
 		username: user?.username || "",
 		email: user?.email || "",
 		bio: user?.bio || "",
+		paymentMethod: user?.paymentMethod || "",
+		dateOfBirth: user?.dateOfBirth || "",
 		profileImage: user?.profileImage || defaultState.profileImage,
 		coins: typeof user?.coins === "number" ? user.coins : 1000,
+	};
+}
+
+function ensureAuthModal() {
+	if (document.getElementById("auth-modal")) {
+		return;
+	}
+
+	const modal = document.createElement("section");
+	modal.id = "auth-modal";
+	modal.className = "auth-modal hidden";
+	modal.innerHTML = `
+		<div class="auth-modal-shell">
+			<button class="auth-close" type="button" id="auth-modal-close" aria-label="Close">×</button>
+			<div class="auth-left">
+				<h3>WELCOME BONUS</h3>
+				<p>200% BONUS UP TO 1 BTC</p>
+			</div>
+			<div class="auth-right">
+				<h2 id="auth-modal-title">Sign up for a new account</h2>
+				<form id="auth-signup-form" class="auth-form">
+					<label>Email*</label>
+					<input id="auth-signup-email" type="email" placeholder="ex. name@email.com" required />
+					<label>Username*</label>
+					<input id="auth-signup-username" type="text" placeholder="ex. Name_123" required />
+					<label>Password*</label>
+					<input id="auth-signup-password" type="password" placeholder="Enter your password" required />
+					<label>Date of birth*</label>
+					<input id="auth-signup-dob" type="date" required />
+					<label>Promo Code (optional)</label>
+					<input id="auth-signup-promo" type="text" placeholder="Promo code" />
+					<button type="submit" class="btn auth-submit">Sign Up</button>
+					<p class="auth-note">Already a member? <a href="#" id="modal-switch-login">Log in</a></p>
+				</form>
+				<form id="auth-login-form" class="auth-form hidden">
+					<label>Username*</label>
+					<input id="auth-login-username" type="text" placeholder="Username" required />
+					<label>Password*</label>
+					<input id="auth-login-password" type="password" placeholder="Password" required />
+					<button type="submit" class="btn auth-submit">Log In</button>
+					<p class="auth-note">No account yet? <a href="#" id="modal-switch-signup">Sign up</a></p>
+				</form>
+				<p id="auth-modal-feedback" class="auth-feedback"></p>
+			</div>
+		</div>
+	`;
+
+	document.body.appendChild(modal);
+
+	const closeButton = modal.querySelector("#auth-modal-close");
+	closeButton?.addEventListener("click", () => modal.classList.add("hidden"));
+	modal.addEventListener("click", (event) => {
+		if (event.target === modal) {
+			modal.classList.add("hidden");
+		}
+	});
+
+	const signupForm = modal.querySelector("#auth-signup-form");
+	const loginForm = modal.querySelector("#auth-login-form");
+	const feedback = modal.querySelector("#auth-modal-feedback");
+	const title = modal.querySelector("#auth-modal-title");
+
+	function openMode(mode) {
+		const isSignup = mode !== "login";
+		signupForm?.classList.toggle("hidden", !isSignup);
+		loginForm?.classList.toggle("hidden", isSignup);
+		if (title) {
+			title.textContent = isSignup ? "Sign up for a new account" : "Log in to your account";
+		}
+		if (feedback) {
+			feedback.textContent = "";
+		}
+	}
+
+	modal.querySelector("#modal-switch-login")?.addEventListener("click", (event) => {
+		event.preventDefault();
+		openMode("login");
+	});
+	modal.querySelector("#modal-switch-signup")?.addEventListener("click", (event) => {
+		event.preventDefault();
+		openMode("signup");
+	});
+
+	signupForm?.addEventListener("submit", async (event) => {
+		event.preventDefault();
+		const response = await CasinoStore.registerAccount({
+			email: modal.querySelector("#auth-signup-email")?.value || "",
+			username: modal.querySelector("#auth-signup-username")?.value || "",
+			password: modal.querySelector("#auth-signup-password")?.value || "",
+			dateOfBirth: modal.querySelector("#auth-signup-dob")?.value || "",
+			promoCode: modal.querySelector("#auth-signup-promo")?.value || "",
+		});
+
+		if (!response.ok) {
+			if (feedback) {
+				feedback.textContent = response.message;
+			}
+			return;
+		}
+
+		modal.classList.add("hidden");
+		updateCoinViews();
+	});
+
+	loginForm?.addEventListener("submit", async (event) => {
+		event.preventDefault();
+		const response = await CasinoStore.loginAccount({
+			username: modal.querySelector("#auth-login-username")?.value || "",
+			password: modal.querySelector("#auth-login-password")?.value || "",
+		});
+
+		if (!response.ok) {
+			if (feedback) {
+				feedback.textContent = response.message;
+			}
+			return;
+		}
+
+		modal.classList.add("hidden");
+		updateCoinViews();
+	});
+
+	window.openAuthModal = (mode) => {
+		openMode(mode || "signup");
+		modal.classList.remove("hidden");
 	};
 }
 
@@ -110,6 +239,7 @@ const CasinoStore = {
 		const username = String(payload.username || "").trim();
 		const email = String(payload.email || "").trim();
 		const password = String(payload.password || "").trim();
+		const dateOfBirth = String(payload.dateOfBirth || "").trim();
 
 		if (!username || !email || !password) {
 			return { ok: false, message: "Bitte alle Felder ausfüllen." };
@@ -118,7 +248,13 @@ const CasinoStore = {
 		try {
 			const response = await requestApi("/api/auth/register", {
 				method: "POST",
-				body: { username, email, password },
+				body: {
+					username,
+					email,
+					password,
+					dateOfBirth,
+					promoCode: String(payload.promoCode || "").trim(),
+				},
 			});
 
 			const remoteUser = normalizeRemoteUser(response.user);
@@ -138,6 +274,7 @@ const CasinoStore = {
 				isLoggedIn: true,
 				username,
 				email,
+				dateOfBirth,
 				password,
 				authProvider: "local",
 			});
@@ -301,6 +438,21 @@ function updateCoinViews() {
 	document.querySelectorAll('[data-auth="user"]').forEach((node) => {
 		node.style.display = isReady ? "inline-flex" : "none";
 	});
+
+	const avatarImage = document.getElementById("top-avatar");
+	if (avatarImage) {
+		avatarImage.src = state.profileImage || defaultState.profileImage;
+	}
+
+	const emailLine = document.getElementById("dropdown-email");
+	if (emailLine) {
+		emailLine.textContent = state.email || "Keine E-Mail hinterlegt";
+	}
+
+	const paymentLine = document.getElementById("dropdown-payment");
+	if (paymentLine) {
+		paymentLine.textContent = state.paymentMethod || "Kein Zahlungsweg gespeichert";
+	}
 }
 
 async function loadNavbar() {
@@ -341,6 +493,54 @@ async function loadNavbar() {
 			} else {
 				window.location.href = "/games.html";
 			}
+		});
+	}
+
+	ensureAuthModal();
+
+	document.querySelectorAll("[data-open-auth]").forEach((button) => {
+		button.addEventListener("click", () => {
+			const mode = button.getAttribute("data-open-auth") || "signup";
+			if (window.openAuthModal) {
+				window.openAuthModal(mode);
+			}
+		});
+	});
+
+	const avatarToggle = document.getElementById("avatar-menu-toggle");
+	const avatarDropdown = document.getElementById("avatar-dropdown");
+	if (avatarToggle && avatarDropdown) {
+		avatarToggle.addEventListener("click", () => {
+			avatarDropdown.classList.toggle("hidden");
+		});
+
+		document.addEventListener("click", (event) => {
+			const target = event.target;
+			if (!(target instanceof HTMLElement)) {
+				return;
+			}
+			if (!target.closest(".avatar-menu")) {
+				avatarDropdown.classList.add("hidden");
+			}
+		});
+	}
+
+	const avatarUpload = document.getElementById("top-avatar-upload");
+	if (avatarUpload) {
+		avatarUpload.addEventListener("change", (event) => {
+			const file = event.target?.files?.[0];
+			if (!file) {
+				return;
+			}
+
+			const reader = new FileReader();
+			reader.onload = (loadEvent) => {
+				const result = loadEvent.target?.result;
+				if (typeof result === "string") {
+					CasinoStore.syncProfile({ profileImage: result }).catch(() => {});
+				}
+			};
+			reader.readAsDataURL(file);
 		});
 	}
 

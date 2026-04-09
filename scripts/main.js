@@ -18,6 +18,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const bioInput = document.getElementById("bio");
   const userForm = document.getElementById("user-form");
   const payForm = document.getElementById("pay-form");
+  const creditCardInput = document.getElementById("creditcard");
+  const expiryInput = document.getElementById("expiry-date");
 
   const fileInput = document.getElementById("file-upload");
   const urlInput = document.getElementById("url-input");
@@ -28,6 +30,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   emailInput.value = stored.email || "";
   bioInput.value = stored.bio || "";
   profileImg.src = stored.profileImage;
+
+  if (stored.paymentMethod && creditCardInput) {
+    creditCardInput.value = stored.paymentMethod;
+  }
 
   function openProfileEditor() {
     authContainer.classList.add("hidden");
@@ -131,8 +137,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   });
 
-  payForm.addEventListener("submit", (event) => {
+  payForm.addEventListener("submit", async (event) => {
     event.preventDefault();
+
+    const card = (creditCardInput?.value || "").replace(/\s+/g, "").trim();
+    const expiry = (expiryInput?.value || "").trim();
+    const masked = card.length >= 4 ? `**** **** **** ${card.slice(-4)}${expiry ? ` (${expiry})` : ""}` : "";
+
+    await CasinoStore.syncProfile({ paymentMethod: masked });
   });
 
   fileInput.addEventListener("change", (event) => {
@@ -166,6 +178,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     emailInput.value = current.email || "";
     bioInput.value = current.bio || "";
     profileImg.src = current.profileImage;
+    if (current.paymentMethod && creditCardInput) {
+      creditCardInput.value = current.paymentMethod;
+    }
   } else {
     openAuthView();
   }

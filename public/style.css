@@ -238,10 +238,167 @@ a {
   letter-spacing: 0.02em;
 }
 
+.top-bar-copy.brand-only {
+  display: flex;
+  align-items: center;
+}
+
+.top-brand-link {
+  text-decoration: none;
+  font-family: "Cinzel", serif;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #f4f7ff;
+}
+
 .top-bar-actions {
   display: flex;
   align-items: center;
   gap: 0.55rem;
+}
+
+.avatar-menu {
+  position: relative;
+}
+
+.avatar-button {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.avatar-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.45rem);
+  width: min(290px, 86vw);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  background: rgba(10, 16, 28, 0.96);
+  padding: 0.75rem;
+  z-index: 30;
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.5);
+}
+
+.avatar-dropdown p {
+  margin: 0.25rem 0;
+}
+
+.muted-line {
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.avatar-upload-btn,
+.dropdown-link {
+  margin-top: 0.55rem;
+  display: inline-flex;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.36rem 0.6rem;
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+}
+
+.auth-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-content: center;
+  background: rgba(4, 8, 15, 0.82);
+  backdrop-filter: blur(4px);
+}
+
+.auth-modal-shell {
+  width: min(980px, 96vw);
+  min-height: 620px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 188, 76, 0.25);
+  background: linear-gradient(170deg, rgba(5, 10, 18, 0.98), rgba(8, 14, 25, 0.98));
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) minmax(360px, 1.25fr);
+  overflow: hidden;
+  position: relative;
+}
+
+.auth-close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.8rem;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.auth-left {
+  padding: 1.35rem;
+  display: grid;
+  align-content: start;
+  background:
+    linear-gradient(180deg, rgba(4, 8, 15, 0.55), rgba(4, 8, 15, 0.84)),
+    url("/assets/casino-poster.jpg") center/cover;
+}
+
+.auth-left h3 {
+  margin: 0;
+  font-family: "Cinzel", serif;
+  font-size: clamp(2rem, 4.3vw, 4.1rem);
+  line-height: 0.92;
+  color: transparent;
+  -webkit-text-stroke: 1.4px #f7bc44;
+}
+
+.auth-left p {
+  margin-top: 0.75rem;
+  font-size: 1.7rem;
+  font-weight: 800;
+}
+
+.auth-right {
+  padding: 1.25rem 1.35rem;
+}
+
+.auth-right h2 {
+  margin-top: 0.2rem;
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+}
+
+.auth-form {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.auth-form label {
+  font-size: 0.82rem;
+  color: #ced6ef;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.auth-submit {
+  margin-top: 0.42rem;
+  font-size: 1.4rem;
+}
+
+.auth-note {
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+}
+
+.auth-note a {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.auth-feedback {
+  min-height: 22px;
+  color: #ffb3b3;
 }
 
 .header-btn {
@@ -861,6 +1018,107 @@ a {
   margin: 0.4rem 0 1.2rem;
 }
 
+.game-studio {
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.game-studio h3 {
+  margin: 0;
+  font-family: "Cinzel", serif;
+}
+
+.studio-launch-row {
+  margin-top: 0.6rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.studio-launch-row button {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(11, 17, 29, 0.88);
+  color: #eef4ff;
+}
+
+.game-window-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  background: rgba(2, 4, 9, 0.74);
+  backdrop-filter: blur(3px);
+  display: grid;
+  place-content: center;
+  padding: 1rem;
+}
+
+.game-window-card {
+  width: min(1120px, 95vw);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 188, 76, 0.24);
+  background: rgba(6, 11, 20, 0.96);
+  padding: 0.7rem;
+}
+
+.game-window-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.45rem;
+}
+
+.game-window-head h3 {
+  margin: 0;
+  font-family: "Cinzel", serif;
+}
+
+.game-window-head button {
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+}
+
+#game-window-frame {
+  width: 100%;
+  min-height: min(72vh, 680px);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #050a14;
+}
+
+.game-window-switcher {
+  margin-top: 0.6rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(130px, 1fr));
+  gap: 0.45rem;
+}
+
+.game-window-switcher button {
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(14, 22, 36, 0.92);
+  color: #ecf2ff;
+  padding: 0.35rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.game-window-switcher button.is-active {
+  border-color: rgba(255, 189, 72, 0.66);
+  box-shadow: 0 0 0 1px rgba(255, 189, 72, 0.35);
+}
+
+.game-window-switcher img {
+  width: 100%;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
 .promo-item {
   padding: 0.92rem;
 }
@@ -1392,6 +1650,19 @@ footer {
   .hero-visual-block img {
     border-top-right-radius: 0;
     border-bottom-left-radius: 20px;
+  }
+
+  .auth-modal-shell {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .auth-left {
+    min-height: 210px;
+  }
+
+  .game-window-switcher {
+    grid-template-columns: repeat(2, minmax(110px, 1fr));
   }
 
   .profile-container,

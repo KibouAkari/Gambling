@@ -26,6 +26,8 @@ export default async function handler(req, res) {
   const usernameRaw = String(payload.username || "").trim();
   const emailRaw = String(payload.email || "").trim();
   const passwordRaw = String(payload.password || "").trim();
+  const dateOfBirthRaw = String(payload.dateOfBirth || "").trim();
+  const promoCodeRaw = String(payload.promoCode || "").trim();
 
   if (!usernameRaw || !emailRaw || !passwordRaw) {
     return json(res, 400, { ok: false, message: "Bitte alle Felder ausfüllen." });
@@ -49,6 +51,9 @@ export default async function handler(req, res) {
     profileImage:
       "https://static.vecteezy.com/system/resources/previews/023/465/688/non_2x/contact-dark-mode-glyph-ui-icon-address-book-profile-page-user-interface-design-white-silhouette-symbol-on-black-space-solid-pictogram-for-web-mobile-isolated-illustration-vector.jpg",
     bio: "",
+    paymentMethod: "",
+    dateOfBirth: dateOfBirthRaw,
+    promoCode: promoCodeRaw,
     coins: 1000,
     createdAt: new Date().toISOString(),
   };
@@ -71,6 +76,8 @@ export default async function handler(req, res) {
       username: user.username,
       email: user.email,
       bio: user.bio,
+      paymentMethod: user.paymentMethod,
+      dateOfBirth: user.dateOfBirth,
       profileImage: user.profileImage,
       coins: user.coins,
     },

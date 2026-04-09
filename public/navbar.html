@@ -27,16 +27,34 @@
 </aside>
 
 <header class="top-bar fade-in">
-  <div class="top-bar-copy">
-    <span>Prefer the old Mongo floor? Visit classic lobby.</span>
-    <h1>Mongo Casino</h1>
+  <div class="top-bar-copy brand-only">
+    <a href="/index.html" class="top-brand-link">Mongo Casino</a>
   </div>
 
   <div class="top-bar-actions">
-    <a href="/profile.html" class="header-btn ghost" data-auth="guest">Sign Up</a>
-    <a href="/profile.html" class="header-btn outline" data-auth="guest">Log In</a>
+    <button class="header-btn ghost" data-auth="guest" data-open-auth="signup" type="button">Sign Up</button>
+    <button class="header-btn outline" data-auth="guest" data-open-auth="login" type="button">Log In</button>
     <a href="/buy-coins.html" class="coins" id="coin-balance" title="Mongocoins" data-auth="user">₥ 1,000</a>
-    <span class="nav-user" data-user-view data-auth="user">Gast</span>
+
+    <div class="avatar-menu" data-auth="user">
+      <button class="avatar-button" id="avatar-menu-toggle" type="button" aria-label="Profile menu">
+        <img
+          id="top-avatar"
+          src="https://static.vecteezy.com/system/resources/previews/023/465/688/non_2x/contact-dark-mode-glyph-ui-icon-address-book-profile-page-user-interface-design-white-silhouette-symbol-on-black-space-solid-pictogram-for-web-mobile-isolated-illustration-vector.jpg"
+          alt="Profile Picture"
+          class="avatar"
+        />
+      </button>
+      <div class="avatar-dropdown hidden" id="avatar-dropdown">
+        <p><strong data-user-view>Gast</strong></p>
+        <p class="muted-line" id="dropdown-email">Keine E-Mail hinterlegt</p>
+        <p class="muted-line" id="dropdown-payment">Kein Zahlungsweg gespeichert</p>
+        <label class="avatar-upload-btn" for="top-avatar-upload">Profilbild ändern</label>
+        <input id="top-avatar-upload" type="file" accept="image/*" class="hidden" />
+        <a href="/profile.html" class="dropdown-link">Zum Account Center</a>
+      </div>
+    </div>
+
     <a href="#" class="logout-link" id="logout-button" data-auth="user">Logout</a>
   </div>
 </header>

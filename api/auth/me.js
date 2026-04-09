@@ -40,6 +40,8 @@ export default async function handler(req, res) {
         username: user.username,
         email: user.email,
         bio: user.bio,
+        paymentMethod: user.paymentMethod || "",
+        dateOfBirth: user.dateOfBirth || "",
         profileImage: user.profileImage,
         coins: user.coins,
       },
@@ -60,6 +62,12 @@ export default async function handler(req, res) {
   if (typeof payload.profileImage === "string" && payload.profileImage.trim()) {
     user.profileImage = payload.profileImage.trim();
   }
+  if (typeof payload.paymentMethod === "string") {
+    user.paymentMethod = payload.paymentMethod.trim();
+  }
+  if (typeof payload.dateOfBirth === "string") {
+    user.dateOfBirth = payload.dateOfBirth.trim();
+  }
   if (typeof payload.coins === "number" && Number.isFinite(payload.coins)) {
     user.coins = Math.max(0, Math.floor(payload.coins));
   }
@@ -73,6 +81,8 @@ export default async function handler(req, res) {
       username: user.username,
       email: user.email,
       bio: user.bio,
+      paymentMethod: user.paymentMethod || "",
+      dateOfBirth: user.dateOfBirth || "",
       profileImage: user.profileImage,
       coins: user.coins,
     },

@@ -67,6 +67,8 @@ export default async function handler(req, res) {
       username: user.username,
       email: user.email,
       bio: user.bio,
+      paymentMethod: user.paymentMethod || "",
+      dateOfBirth: user.dateOfBirth || "",
       profileImage: user.profileImage,
       coins: user.coins,
     },
