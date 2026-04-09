@@ -96,9 +96,17 @@ function spinRoulette() {
   }, 3200);
 }
 
-rouletteBetType.addEventListener("change", () => {
+if (!CasinoStore.requireAccount({ withOverlay: true })) {
+  rouletteSpinBtn.disabled = true;
+  rouletteBetType.disabled = true;
+  rouletteNumber.disabled = true;
+  rouletteBetAmount.disabled = true;
+  updateRouletteInfo("Bitte zuerst Account erstellen und einloggen.");
+} else {
+  rouletteBetType.addEventListener("change", () => {
+    rouletteNumber.disabled = rouletteBetType.value !== "number";
+  });
+  rouletteSpinBtn.addEventListener("click", spinRoulette);
   rouletteNumber.disabled = rouletteBetType.value !== "number";
-});
-rouletteSpinBtn.addEventListener("click", spinRoulette);
-rouletteNumber.disabled = rouletteBetType.value !== "number";
-updateRouletteInfo("Setze auf Farbe, Gerade/Ungerade oder Zahl.");
+  updateRouletteInfo("Setze auf Farbe, Gerade/Ungerade oder Zahl.");
+}

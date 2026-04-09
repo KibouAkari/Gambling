@@ -11,30 +11,46 @@
 
     <main>
       <section class="hero surface fade-in">
-        <h1>Real Casino Atmosphere, Smooth Play, Strong Effects.</h1>
-        <p>
-          Willkommen im neuen Mongo Casino. Vollere Lobby, klarer Account-Flow, instant Mongocoin-Topups,
-          aktive Animationen und spielbare Core-Games mit Sound- und Win-Effekten.
-        </p>
-        <div class="metrics">
-          <div class="metric">
-            <strong>4</strong>
-            <span>Live Games Online</span>
-          </div>
-          <div class="metric">
-            <strong>6+</strong>
-            <span>Weitere Titles folgen</span>
-          </div>
-          <div class="metric">
-            <strong data-coins-view>₥ 1,000</strong>
-            <span>Startguthaben</span>
-          </div>
+        <h1>Mongo Casino Floor</h1>
+        <p>Lebendige Lobby mit direkten Game-Entrances, Account-Progress und schneller Coin-Action.</p>
+        <div class="ticker" aria-label="live feed">
+          <span>🎉 Jackpot-Flash aktiv</span>
+          <span>🃏 Poker-Tische offen</span>
+          <span>🎡 Roulette live</span>
+          <span>🟡 Plinko Multipliers bis x6</span>
+          <span>🎰 Slot Auto-Spin verfügbar</span>
         </div>
       </section>
 
-      <h2 class="centered-title">Top Games</h2>
-      <p class="section-subtitle">Spielbar mit Animationen, Light-Flashes, Partikel-Effekten und Win-Sounds.</p>
-      <div class="game-grid fade-in">
+      <section class="floor-grid fade-in">
+        <article class="floor-panel surface">
+          <h3>Live Floor</h3>
+          <p>Springe direkt in ein laufendes Spiel.</p>
+          <div class="quick-links">
+            <a href="/games/slot.html">Slot Arena</a>
+            <a href="/games/poker.html">Poker Lounge</a>
+            <a href="/games/roulette.html">Roulette Hall</a>
+            <a href="/games/plinko.html">Plinko Stage</a>
+          </div>
+        </article>
+
+        <article class="floor-panel surface">
+          <h3>Account Status</h3>
+          <p>Spielzugang ist an deinen Account gekoppelt.</p>
+          <div class="account-chip">Player: <strong data-user-view>Gast</strong></div>
+          <div class="account-chip">Coins: <strong data-coins-view>Account nötig</strong></div>
+          <a class="btn" href="/profile.html">Account öffnen</a>
+        </article>
+
+        <article class="floor-panel surface">
+          <h3>Coin Packs</h3>
+          <p>Staffelungen von Starter bis Imperial Reserve.</p>
+          <a class="btn" href="/buy-coins.html">Zum Store</a>
+        </article>
+      </section>
+
+      <h2 class="centered-title">Game Entrance</h2>
+      <div class="game-grid fade-in arcade-grid">
         <article class="game">
           <a href="/games/slot.html">
             <img
@@ -42,7 +58,7 @@
               alt="Slot Machine"
             />
             <p>Slot Machine</p>
-            <span class="badge">Play Now</span>
+            <span class="badge">Open Arena</span>
           </a>
         </article>
 
@@ -53,7 +69,7 @@
               alt="Poker"
             />
             <p>Poker</p>
-            <span class="badge">Play Now</span>
+            <span class="badge">Open Table</span>
           </a>
         </article>
 
@@ -64,7 +80,7 @@
               alt="Roulette"
             />
             <p>Roulette</p>
-            <span class="badge">Play Now</span>
+            <span class="badge">Open Wheel</span>
           </a>
         </article>
 
@@ -75,13 +91,13 @@
               alt="Plinko"
             />
             <p>Plinko</p>
-            <span class="badge">Play Now</span>
+            <span class="badge">Open Drop</span>
           </a>
         </article>
       </div>
     </main>
 
-    <footer>© 2026 Mongo Casino. Premium gambling style demo.</footer>
+    <footer>© 2026 Mongo Casino. Willkommen auf dem lebendigen Casino Floor.</footer>
 
     <script src="../scripts/fx.js"></script>
     <script src="../scripts/api.js"></script>

@@ -11,8 +11,9 @@
 
     <main>
       <section class="hero surface fade-in">
-        <h2>Player Profile</h2>
-        <p>Verwalte deinen Account, Avatar und Basisdaten in einem schnellen, stabilen Bereich.</p>
+        <h2>Account Center</h2>
+        <p>Erstelle zuerst deinen Account. Ohne Login sind Games und Coin-Store gesperrt.</p>
+        <div class="account-chip">Status: <strong data-user-view>Gast</strong></div>
       </section>
 
       <div id="auth-container" class="login-box">
@@ -21,17 +22,17 @@
           <input type="text" id="login-username" placeholder="Username" autocomplete="username" />
           <input type="password" id="login-password" placeholder="Password" autocomplete="current-password" />
           <button id="login-btn" type="button">Login</button>
-          <p>Noch kein Konto? <a href="#" id="show-signin">Registrieren</a></p>
+          <p>Noch kein Konto? <a href="#" id="show-signin">Jetzt registrieren</a></p>
           <p id="auth-feedback"></p>
         </section>
 
         <section id="signin-form" class="form-container hidden">
-          <h2>Sign Up</h2>
+          <h2>Account Erstellen</h2>
           <input type="text" id="signin-username" placeholder="Username" autocomplete="username" />
           <input type="email" id="signin-email" placeholder="Email" autocomplete="email" />
           <input type="password" id="signin-password" placeholder="Passwort" autocomplete="new-password" />
           <button id="signin-btn" type="button">Registrieren</button>
-          <p>Schon ein Konto? <a href="#" id="show-login">Log in</a></p>
+          <p>Schon ein Konto? <a href="#" id="show-login">Zum Login</a></p>
         </section>
       </div>
 

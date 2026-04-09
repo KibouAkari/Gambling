@@ -136,7 +136,15 @@ window.addEventListener("resize", () => {
   drawBoard();
 });
 
-plinkoDropBtn.addEventListener("click", dropBall);
-resizePlinko();
-drawBoard();
-updatePlinkoInfo("Drop starten und Multiplikatoren jagen.");
+if (!CasinoStore.requireAccount({ withOverlay: true })) {
+  plinkoDropBtn.disabled = true;
+  plinkoBet.disabled = true;
+  resizePlinko();
+  drawBoard();
+  updatePlinkoInfo("Bitte zuerst Account erstellen und einloggen.");
+} else {
+  plinkoDropBtn.addEventListener("click", dropBall);
+  resizePlinko();
+  drawBoard();
+  updatePlinkoInfo("Drop starten und Multiplikatoren jagen.");
+}

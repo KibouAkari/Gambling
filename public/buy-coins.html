@@ -11,8 +11,9 @@
 
     <main>
       <section class="hero surface fade-in">
-        <h2>MongoCoin Store</h2>
-        <p>Mehr Pakete, bessere Staffelungen und sofortige Gutschrift fur deinen Account.</p>
+        <h2>MongoCoin Kasse</h2>
+        <p>Account-basiertes Guthaben mit mehreren Paketstufen fur kurze oder lange Sessions.</p>
+        <div class="account-chip">Aktueller Stand: <strong data-coins-view>Account nötig</strong></div>
       </section>
 
       <h2 class="centered-title">Buy Mongocoins</h2>
@@ -61,13 +62,23 @@
       </div>
     </main>
 
-    <footer>© 2026 Mongo Casino. Store linked with your local account balance.</footer>
+    <footer>© 2026 Mongo Casino. Coins werden nur für eingeloggte Accounts gutgeschrieben.</footer>
 
     <script src="../scripts/fx.js"></script>
     <script src="../scripts/api.js"></script>
     <script>
+      if (!CasinoStore.requireAccount({ withOverlay: true })) {
+        document.querySelectorAll("[data-pack]").forEach((button) => {
+          button.disabled = true;
+        });
+      }
+
       document.querySelectorAll("[data-pack]").forEach((button) => {
         button.addEventListener("click", () => {
+          if (!CasinoStore.requireAccount({ withOverlay: true })) {
+            return;
+          }
+
           const amount = Number(button.dataset.pack || 0);
           CasinoStore.addCoins(amount);
           if (amount >= 150000) {

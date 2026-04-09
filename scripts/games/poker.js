@@ -156,6 +156,15 @@ function draw() {
 }
 
 function initPoker() {
+  if (!CasinoStore.requireAccount({ withOverlay: true })) {
+    pokerDealBtn.disabled = true;
+    pokerDrawBtn.disabled = true;
+    pokerBetDown.disabled = true;
+    pokerBetUp.disabled = true;
+    refreshInfo("Bitte zuerst Account erstellen und einloggen.");
+    return;
+  }
+
   pokerDealBtn.addEventListener("click", deal);
   pokerDrawBtn.addEventListener("click", draw);
 

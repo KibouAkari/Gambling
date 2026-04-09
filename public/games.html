@@ -11,15 +11,16 @@
 
     <main>
       <section class="hero surface fade-in">
-        <h2>Grand Game Lobby</h2>
-        <p>Live spielbare Games plus kommende Titel in einer volleren Casino-Lobby mit klaren Status-Tags.</p>
+        <h2>Casino Game Hall</h2>
+        <p>Alle aktiven Spiele in einem Bereich mit direktem Einstieg und klaren Live-Status.</p>
+        <div class="account-chip">Player: <strong data-user-view>Gast</strong></div>
       </section>
 
-      <h2 class="centered-title">All Games</h2>
+      <h2 class="centered-title">Live Jetzt</h2>
       <input
         type="text"
         id="search"
-        placeholder="Search games..."
+        placeholder="Spiel suchen..."
         oninput="searchGames()"
       />
 
@@ -68,12 +69,16 @@
           </a>
         </article>
 
+      </div>
+
+      <h2 class="centered-title">Coming Soon Wall</h2>
+      <div class="game-grid fade-in" id="coming-soon-list">
         <article class="game">
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Blackjackinsession.jpg/640px-Blackjackinsession.jpg"
             alt="Blackjack"
           />
-          <p>Blackjack</p>
+          <p>Blackjack Pro</p>
           <span class="badge">Coming Soon</span>
         </article>
 
@@ -106,7 +111,7 @@
       </div>
     </main>
 
-    <footer>© 2026 Mongo Casino. Daily content updates planned.</footer>
+    <footer>© 2026 Mongo Casino. Neue Spiele werden laufend erweitert.</footer>
 
     <script src="../scripts/fx.js"></script>
     <script src="../scripts/api.js"></script>
@@ -120,6 +125,8 @@
           game.style.display = title.includes(input) ? "block" : "none";
         });
       }
+
+      CasinoStore.requireAccount({ withOverlay: true });
     </script>
   </body>
 </html>

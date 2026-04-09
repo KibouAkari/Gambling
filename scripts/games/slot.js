@@ -219,6 +219,17 @@ function wire() {
 }
 
 function initSlot() {
+  if (!CasinoStore.requireAccount({ withOverlay: true })) {
+    spinBtn.disabled = true;
+    autoBtn.disabled = true;
+    betMinusBtn.disabled = true;
+    betPlusBtn.disabled = true;
+    createBoardUi();
+    renderBoard(randomBoard());
+    updateStatus("Bitte zuerst Account erstellen und einloggen.");
+    return;
+  }
+
   createBoardUi();
   renderBoard(randomBoard());
   updateBetView();

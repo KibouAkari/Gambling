@@ -35,6 +35,11 @@ document.addEventListener("DOMContentLoaded", () => {
     profileContainer.classList.add("fade-in");
   }
 
+  function openAuthView() {
+    profileContainer.classList.add("hidden");
+    authContainer.classList.remove("hidden");
+  }
+
   function saveProfileImage(src) {
     profileImg.src = src;
     CasinoStore.setState({ profileImage: src });
@@ -54,30 +59,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loginBtn.addEventListener("click", () => {
     const loginUsername = document.getElementById("login-username").value.trim();
-    if (!loginUsername) {
-      authFeedback.textContent = "Bitte gib einen Username ein.";
+    const loginPassword = document.getElementById("login-password").value.trim();
+    const response = CasinoStore.loginAccount({
+      username: loginUsername,
+      password: loginPassword,
+    });
+
+    if (!response.ok) {
+      authFeedback.textContent = response.message;
       return;
     }
 
-    CasinoStore.setState({ username: loginUsername });
-    usernameInput.value = loginUsername;
+    const next = CasinoStore.getState();
     authFeedback.textContent = "";
+    usernameInput.value = next.username;
+    emailInput.value = next.email;
+    bioInput.value = next.bio;
+    profileImg.src = next.profileImage;
+    usernameInput.value = loginUsername;
     openProfileEditor();
   });
 
   signInBtn.addEventListener("click", () => {
     const signInUsername = document.getElementById("signin-username").value.trim();
     const signInEmail = document.getElementById("signin-email").value.trim();
+    const signInPassword = document.getElementById("signin-password").value.trim();
 
-    if (!signInUsername || !signInEmail) {
-      authFeedback.textContent = "Bitte Username und E-Mail angeben.";
+    const response = CasinoStore.registerAccount({
+      username: signInUsername,
+      email: signInEmail,
+      password: signInPassword,
+    });
+
+    if (!response.ok) {
+      authFeedback.textContent = response.message;
       return;
     }
 
-    CasinoStore.setState({ username: signInUsername, email: signInEmail });
+    authFeedback.textContent = "";
     usernameInput.value = signInUsername;
     emailInput.value = signInEmail;
-    authFeedback.textContent = "";
     openProfileEditor();
   });
 
@@ -136,7 +157,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  if (stored.username && stored.username !== "Guest") {
+  if (stored.hasAccount && stored.isLoggedIn) {
     openProfileEditor();
+  } else {
+    openAuthView();
   }
 });
