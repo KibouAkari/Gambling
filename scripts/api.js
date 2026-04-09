@@ -37,7 +37,9 @@ function writeState(nextState) {
 
 async function requestApi(path, options = {}) {
 	const state = readState();
-	const response = await fetch(path, {
+	let response;
+	try {
+		response = await fetch(path, {
 		method: options.method || "GET",
 		headers: {
 			"Content-Type": "application/json",
@@ -46,11 +48,14 @@ async function requestApi(path, options = {}) {
 				: {}),
 		},
 		body: options.body ? JSON.stringify(options.body) : undefined,
-	});
+		});
+	} catch (_error) {
+		throw new Error("NETWORK_UNAVAILABLE");
+	}
 
 	const payload = await response.json().catch(() => ({}));
 	if (!response.ok || payload.ok === false) {
-		throw new Error(payload.message || "API-Fehler");
+		throw new Error(payload.message || "API_ERROR");
 	}
 
 	return payload;
@@ -268,7 +273,11 @@ const CasinoStore = {
 			});
 			return { ok: true };
 		} catch (_error) {
-			// Fallback for local preview/dev without serverless deployment.
+			if (_error?.message !== "NETWORK_UNAVAILABLE") {
+				return { ok: false, message: _error?.message || "Registrierung fehlgeschlagen." };
+			}
+
+			// Fallback for local preview/dev without reachable serverless deployment.
 			this.setState({
 				hasAccount: true,
 				isLoggedIn: true,
@@ -308,6 +317,10 @@ const CasinoStore = {
 			});
 			return { ok: true };
 		} catch (_error) {
+			if (_error?.message !== "NETWORK_UNAVAILABLE") {
+				return { ok: false, message: _error?.message || "Login fehlgeschlagen." };
+			}
+
 			if (!state.hasAccount) {
 				return { ok: false, message: "Bitte zuerst einen Account erstellen." };
 			}
@@ -557,11 +570,16 @@ async function loadNavbar() {
 document.addEventListener("casino:state-change", updateCoinViews);
 
 document.addEventListener("DOMContentLoaded", async () => {
-	await loadNavbar();
-	await CasinoStore.refreshSession();
-	updateCoinViews();
+	const isEmbed = new URLSearchParams(window.location.search).get("embed") === "1";
+	if (isEmbed) {
+		document.body.classList.add("embed-mode");
+	} else {
+		await loadNavbar();
+		await CasinoStore.refreshSession();
+		updateCoinViews();
+	}
 
-	if (window.CasinoFX) {
+	if (window.CasinoFX && !isEmbed) {
 		window.CasinoFX.initAmbient();
 	}
 });

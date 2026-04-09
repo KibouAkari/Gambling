@@ -180,10 +180,10 @@
     <script src="../scripts/api.js"></script>
     <script>
       const GAME_MAP = {
-        slot: { title: "Slot Arena", url: "/games/slot.html" },
-        poker: { title: "Poker Lounge", url: "/games/poker.html" },
-        roulette: { title: "Roulette Hall", url: "/games/roulette.html" },
-        plinko: { title: "Plinko Stage", url: "/games/plinko.html" },
+        slot: { title: "Slot Arena", url: "/games/slot.html?embed=1" },
+        poker: { title: "Poker Lounge", url: "/games/poker.html?embed=1" },
+        roulette: { title: "Roulette Hall", url: "/games/roulette.html?embed=1" },
+        plinko: { title: "Plinko Stage", url: "/games/plinko.html?embed=1" },
       };
 
       function searchGames() {
@@ -252,9 +252,7 @@
         }
       });
 
-      if (CasinoStore.requireAccount({ withOverlay: true })) {
-        openGameWindow("slot");
-      }
+      CasinoStore.requireAccount({ withOverlay: true });
     </script>
   </body>
 </html>
