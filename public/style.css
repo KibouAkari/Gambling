@@ -480,6 +480,183 @@ button,
   font-size: 0.78rem;
 }
 
+.hero-stage--featured {
+  position: relative;
+  border-color: rgba(245, 197, 79, 0.3);
+  background:
+    radial-gradient(circle at 88% 18%, rgba(255, 94, 46, 0.34), transparent 34%),
+    radial-gradient(circle at 15% 80%, rgba(57, 122, 255, 0.26), transparent 48%),
+    linear-gradient(150deg, rgba(11, 18, 31, 0.97), rgba(5, 9, 18, 0.98));
+}
+
+.hero-stage--featured::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 34%);
+}
+
+.hero-metrics {
+  margin-top: 0.92rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.hero-metrics div {
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(5, 10, 18, 0.7);
+  padding: 0.5rem 0.55rem;
+}
+
+.hero-metrics strong {
+  display: block;
+  font-size: 1rem;
+  color: #ffe3a0;
+}
+
+.hero-metrics span {
+  font-size: 0.77rem;
+  color: var(--muted);
+}
+
+.hero-visual-stamp {
+  position: absolute;
+  top: 0.78rem;
+  right: 0.78rem;
+  z-index: 2;
+  border-radius: 999px;
+  padding: 0.25rem 0.56rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #181004;
+  background: linear-gradient(180deg, #ffe58e, #f2b848);
+}
+
+.market-ticker {
+  margin-top: 0.72rem;
+  padding: 0.55rem 0;
+  overflow: hidden;
+  border-radius: 999px;
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.market-ticker p {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 1.4rem;
+  white-space: nowrap;
+  padding-left: 100%;
+  animation: tickerSlide 19s linear infinite;
+}
+
+.market-ticker span {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #f2f6ff;
+}
+
+.home-control-grid {
+  margin-top: 0.78rem;
+  display: grid;
+  grid-template-columns: minmax(340px, 1.2fr) minmax(300px, 0.9fr);
+  gap: 0.62rem;
+}
+
+.jackpot-panel,
+.signal-board {
+  padding: 1rem;
+}
+
+.jackpot-panel {
+  background:
+    linear-gradient(120deg, rgba(6, 13, 22, 0.68), rgba(6, 13, 22, 0.88)),
+    url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=70") center/cover;
+}
+
+.jackpot-panel h3,
+.signal-board h3,
+.story-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.4rem;
+}
+
+.jackpot-panel p {
+  color: #dde6fc;
+  max-width: 50ch;
+}
+
+.signal-board {
+  background: linear-gradient(160deg, rgba(18, 29, 46, 0.94), rgba(6, 10, 19, 0.96));
+}
+
+.signal-board ul {
+  margin: 0.35rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.44rem;
+}
+
+.signal-board li {
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(4, 9, 16, 0.8);
+  padding: 0.56rem;
+  display: grid;
+  gap: 0.16rem;
+}
+
+.signal-board strong {
+  color: #ffd793;
+  font-size: 0.86rem;
+}
+
+.signal-board li span {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.hot-games-row--elevated .mini-game-tile {
+  border-color: rgba(255, 255, 255, 0.2);
+  background:
+    radial-gradient(circle at 85% 12%, rgba(247, 199, 82, 0.3), transparent 38%),
+    linear-gradient(160deg, rgba(24, 36, 57, 0.96), rgba(8, 13, 24, 0.97));
+}
+
+.story-ribbon {
+  margin-top: 0.82rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 0.58rem;
+}
+
+.story-card {
+  padding: 0.86rem;
+}
+
+.story-card p {
+  margin-top: 0;
+  color: var(--muted);
+  min-height: 62px;
+}
+
+.story-card a {
+  display: inline-flex;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.24rem 0.58rem;
+  text-decoration: none;
+  font-size: 0.8rem;
+}
+
 .hot-games-row {
   margin-top: 0.78rem;
   display: grid;
@@ -1426,6 +1603,16 @@ footer {
   }
 }
 
+@keyframes tickerSlide {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+}
+
 @media (max-width: 980px) {
   body {
     padding-left: 0;
@@ -1453,6 +1640,9 @@ footer {
   }
 
   .hero-stage,
+  .hero-metrics,
+  .home-control-grid,
+  .story-ribbon,
   .hot-games-row,
   .why-grid,
   .experience-grid,
@@ -1493,6 +1683,14 @@ footer {
 
   .hero-title-outline {
     font-size: 1.7rem;
+  }
+
+  .market-ticker span {
+    font-size: 0.76rem;
+  }
+
+  .hero-metrics strong {
+    font-size: 0.88rem;
   }
 
   .why-feature h3 {
