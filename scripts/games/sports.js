@@ -36,9 +36,14 @@ function inverseWeight(odd) {
 }
 
 function weightedOutcome(match) {
-  const homeWeight = inverseWeight(match.odds.home);
-  const drawWeight = inverseWeight(match.odds.draw) * (1 + balancing.volatility * 0.2);
-  const awayWeight = inverseWeight(match.odds.away);
+  const event = match.event || null;
+  const homeShift = event?.type?.includes("home") ? 0.12 : event?.type?.includes("away") ? -0.1 : 0;
+  const awayShift = event?.type?.includes("away") ? 0.12 : event?.type?.includes("home") ? -0.1 : 0;
+  const drawShift = event?.type?.includes("momentum") ? -0.08 : 0.06;
+
+  const homeWeight = inverseWeight(match.odds.home) * (1 + homeShift);
+  const drawWeight = inverseWeight(match.odds.draw) * (1 + balancing.volatility * 0.2 + drawShift);
+  const awayWeight = inverseWeight(match.odds.away) * (1 + awayShift);
   const total = homeWeight + drawWeight + awayWeight;
 
   let roll = Math.random() * total;
@@ -97,6 +102,7 @@ function renderMatches() {
     card.innerHTML = `
       <strong>${match.home} vs ${match.away}</strong>
       <span>1: ${formatOdds(match.odds.home)} | X: ${formatOdds(match.odds.draw)} | 2: ${formatOdds(match.odds.away)}</span>
+      ${match.event ? `<small>${match.event.label}</small>` : ""}
     `;
     card.addEventListener("click", () => {
       selectedMatchId = match.id;
@@ -170,6 +176,10 @@ async function refreshSportsFeed() {
   }
 
   tickerLines = response.data.ticker || tickerLines;
+  if (response.data.matches?.some((m) => m.event)) {
+    const eventCount = response.data.matches.filter((m) => m.event).length;
+    updateInfo(`In-Play aktiv: ${eventCount} Event(s) beeinflussen gerade die Odds.`);
+  }
   renderMatches();
 }
 

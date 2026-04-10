@@ -1,15 +1,3 @@
-const missionsBase = [
-  { id: "m-slot", title: "Slot Sprint", action: "slot", goal: 5, reward: 180, xp: 120 },
-  { id: "m-live", title: "Live Pressure", action: "live", goal: 4, reward: 230, xp: 160 },
-  { id: "m-sports", title: "Sharp Picks", action: "sports", goal: 6, reward: 210, xp: 140 },
-];
-
-const balancing = {
-  actionVolatility: 0.26,
-  rewardBoostMax: 0.18,
-  xpScale: 1,
-};
-
 const actionCosts = {
   slot: 20,
   live: 35,
@@ -25,10 +13,15 @@ const titleNode = document.getElementById("missions-title");
 const liveCanvas = document.getElementById("missions-live-canvas");
 
 const missionState = {
+  dailyKey: "",
+  weekKey: "",
   xp: 0,
+  seasonXp: 0,
+  seasonClaims: 0,
   streak: 0,
   progress: {},
   claimed: {},
+  missions: [],
 };
 
 function updateHeaderByMode() {
@@ -46,25 +39,27 @@ function missionDone(mission) {
   return missionProgress(mission) >= mission.goal;
 }
 
-function rewardWithBalance(baseReward) {
-  const drift = (Math.random() * 2 - 1) * balancing.rewardBoostMax;
-  return Math.max(10, Math.floor(baseReward * (1 + drift)));
-}
-
 function refreshTop(message) {
   coinsNode.textContent = CasinoStore.formatCoins(CasinoStore.getCoins());
   xpNode.textContent = String(missionState.xp);
   streakNode.textContent = String(missionState.streak);
-  statusNode.textContent = message;
+  statusNode.textContent = `${message} | Daily ${missionState.dailyKey || "-"} | Season ${missionState.weekKey || "-"} XP ${missionState.seasonXp}`;
 }
 
-async function persistState() {
-  await CasinoStore.saveEngineState("missions", {
-    xp: missionState.xp,
-    streak: missionState.streak,
-    progress: missionState.progress,
-    claimed: missionState.claimed,
-  });
+function applyServerState(state) {
+  if (!state) {
+    return;
+  }
+
+  missionState.dailyKey = state.dailyKey || missionState.dailyKey;
+  missionState.weekKey = state.weekKey || missionState.weekKey;
+  missionState.xp = Number(state.xp || 0);
+  missionState.seasonXp = Number(state.seasonXp || 0);
+  missionState.seasonClaims = Number(state.seasonClaims || 0);
+  missionState.streak = Number(state.streak || 0);
+  missionState.progress = state.progress || {};
+  missionState.claimed = state.claimed || {};
+  missionState.missions = Array.isArray(state.missions) ? state.missions : missionState.missions;
 }
 
 async function hydrateState() {
@@ -73,16 +68,13 @@ async function hydrateState() {
     return;
   }
 
-  missionState.xp = Number(response.state.xp || 0);
-  missionState.streak = Number(response.state.streak || 0);
-  missionState.progress = response.state.progress || {};
-  missionState.claimed = response.state.claimed || {};
+  applyServerState(response.state);
 }
 
 function renderMissions() {
   gridNode.innerHTML = "";
 
-  missionsBase.forEach((mission) => {
+  missionState.missions.forEach((mission) => {
     const progress = missionProgress(mission);
     const percent = Math.min(100, Math.round((progress / mission.goal) * 100));
     const isDone = missionDone(mission);
@@ -109,56 +101,44 @@ function renderMissions() {
   });
 
   gridNode.querySelectorAll("[data-claim-id]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const mission = missionsBase.find((item) => item.id === button.dataset.claimId);
+    button.addEventListener("click", async () => {
+      const mission = missionState.missions.find((item) => item.id === button.dataset.claimId);
       if (!mission || missionState.claimed[mission.id] || !missionDone(mission)) {
         return;
       }
 
-      missionState.claimed[mission.id] = true;
-      missionState.xp += Math.floor(mission.xp * balancing.xpScale);
-      missionState.streak += 1;
-      const reward = rewardWithBalance(mission.reward);
-      CasinoStore.addCoins(reward);
+      const response = await CasinoStore.claimMission(mission.id);
+      if (!response.ok || !response.data) {
+        refreshTop(response.message || "Claim fehlgeschlagen.");
+        return;
+      }
+
+      applyServerState(response.data.state);
       CasinoFX.celebrateWin();
-      persistState().catch(() => {});
       renderMissions();
-      refreshTop(`${mission.title} geclaimt: +${Math.floor(mission.xp * balancing.xpScale)} XP und ${CasinoStore.formatCoins(reward)}.`);
+      refreshTop(`${mission.title} geclaimt: +${response.data.xp} XP und ${CasinoStore.formatCoins(response.data.reward)}.`);
     });
   });
 }
 
-function runAction(action) {
-  const cost = actionCosts[action] || 0;
-  if (!CasinoStore.spendCoins(cost)) {
+async function runAction(action) {
+  const response = await CasinoStore.runMissionAction(action);
+  if (!response.ok || !response.data) {
     CasinoFX.play("lose");
-    refreshTop("Nicht genug Coins fur diese Aktion.");
+    refreshTop(response.message || "Mission-Aktion fehlgeschlagen.");
     return;
   }
 
-  let advanced = 0;
-  missionsBase.forEach((mission) => {
-    if (mission.action !== action || missionState.claimed[mission.id]) {
-      return;
-    }
-
-    const current = missionProgress(mission);
-    if (current < mission.goal) {
-      const boostRoll = Math.random() < balancing.actionVolatility ? 2 : 1;
-      missionState.progress[mission.id] = current + boostRoll;
-      advanced += 1;
-    }
-  });
-
-  if (advanced > 0) {
+  applyServerState(response.data.state);
+  const cost = actionCosts[action] || 0;
+  if (response.data.advanced > 0) {
     CasinoFX.play("spin");
-    refreshTop(`Aktion ${action.toUpperCase()} abgeschlossen. ${advanced} Missionsfortschritte hinzugefugt.`);
+    refreshTop(`Aktion ${action.toUpperCase()} abgeschlossen. Kosten ${CasinoStore.formatCoins(cost)}. Fortschritte: ${response.data.advanced}.`);
   } else {
     CasinoFX.play("lose");
-    refreshTop(`Aktion ${action.toUpperCase()} abgeschlossen, aber keine offene Mission passt.`);
+    refreshTop(`Aktion ${action.toUpperCase()} ausgefuhrt. Keine passende offene Mission.`);
   }
 
-  persistState().catch(() => {});
   renderMissions();
 }
 
@@ -217,6 +197,13 @@ async function initMissions() {
   updateHeaderByMode();
   initLiveBackground();
   await hydrateState();
+  if (!missionState.missions.length) {
+    missionState.missions = [
+      { id: "m-slot", title: "Slot Sprint", action: "slot", goal: 5, reward: 180, xp: 120 },
+      { id: "m-live", title: "Live Pressure", action: "live", goal: 4, reward: 230, xp: 160 },
+      { id: "m-sports", title: "Sharp Picks", action: "sports", goal: 6, reward: 210, xp: 140 },
+    ];
+  }
   renderMissions();
   refreshTop("Mission Engine bereit. Starte Aktionen und claime Rewards.");
 

@@ -504,6 +504,84 @@ const CasinoStore = {
 		}
 	},
 
+	async playTournament(payload) {
+		const state = readState();
+		if (!state.sessionToken) {
+			return { ok: false, message: "Session fehlt. Bitte erneut einloggen." };
+		}
+
+		try {
+			const response = await requestApi("/api/game/tournament-play", {
+				method: "POST",
+				token: state.sessionToken,
+				body: payload,
+			});
+
+			if (typeof response?.user?.coins === "number") {
+				this.setState({ coins: response.user.coins });
+			}
+
+			return { ok: true, data: response };
+		} catch (error) {
+			return { ok: false, message: error.message || "Turnier konnte nicht gestartet werden." };
+		}
+	},
+
+	async fetchLeaderboard() {
+		try {
+			const response = await requestApi("/api/game/leaderboard", { method: "GET" });
+			return { ok: true, leaderboard: response.leaderboard || [] };
+		} catch (error) {
+			return { ok: false, message: error.message || "Leaderboard nicht erreichbar.", leaderboard: [] };
+		}
+	},
+
+	async runMissionAction(action) {
+		const state = readState();
+		if (!state.sessionToken) {
+			return { ok: false, message: "Session fehlt. Bitte erneut einloggen." };
+		}
+
+		try {
+			const response = await requestApi("/api/game/missions-action", {
+				method: "POST",
+				token: state.sessionToken,
+				body: { action },
+			});
+
+			if (typeof response?.user?.coins === "number") {
+				this.setState({ coins: response.user.coins });
+			}
+
+			return { ok: true, data: response };
+		} catch (error) {
+			return { ok: false, message: error.message || "Mission-Aktion fehlgeschlagen." };
+		}
+	},
+
+	async claimMission(missionId) {
+		const state = readState();
+		if (!state.sessionToken) {
+			return { ok: false, message: "Session fehlt. Bitte erneut einloggen." };
+		}
+
+		try {
+			const response = await requestApi("/api/game/missions-claim", {
+				method: "POST",
+				token: state.sessionToken,
+				body: { missionId },
+			});
+
+			if (typeof response?.user?.coins === "number") {
+				this.setState({ coins: response.user.coins });
+			}
+
+			return { ok: true, data: response };
+		} catch (error) {
+			return { ok: false, message: error.message || "Mission-Claim fehlgeschlagen." };
+		}
+	},
+
 	requireAccount(options) {
 		const state = readState();
 		if (state.hasAccount && state.isLoggedIn) {

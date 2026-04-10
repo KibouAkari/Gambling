@@ -3,6 +3,7 @@ import { list, put } from "@vercel/blob";
 const AUTH_NAMESPACE = process.env.AUTH_STORAGE_NAMESPACE || "mongo-casino-auth-storage";
 const USER_PREFIX = `${AUTH_NAMESPACE}/users/users-`;
 const SESSION_PREFIX = `${AUTH_NAMESPACE}/sessions/sessions-`;
+const GAME_STATE_PREFIX = `${AUTH_NAMESPACE}/game-state/state-`;
 
 async function readLatestJson(prefix) {
   let result;
@@ -62,4 +63,12 @@ export async function readSessions() {
 
 export async function writeSessions(nextSessions) {
   await writeSnapshot(SESSION_PREFIX, nextSessions);
+}
+
+export async function readGameState() {
+  return readLatestJson(GAME_STATE_PREFIX);
+}
+
+export async function writeGameState(nextGameState) {
+  await writeSnapshot(GAME_STATE_PREFIX, nextGameState);
 }

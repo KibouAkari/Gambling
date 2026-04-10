@@ -11,19 +11,11 @@ const logNode = document.getElementById("tournament-log-list");
 const titleNode = document.getElementById("tournaments-title");
 const liveCanvas = document.getElementById("tournaments-live-canvas");
 
-const balancing = {
-  skillVariance: 0.14,
-  payoutCurve: {
-    first: 0.56,
-    second: 0.24,
-    top4: 0.1,
-  },
-  bonusVolatility: 0.12,
-};
-
 const stats = {
   bestPlace: null,
   totalWin: 0,
+  runs: 0,
+  wins: 0,
 };
 
 function updateHeaderByMode() {
@@ -49,52 +41,8 @@ async function hydrateStats() {
 
   stats.bestPlace = response.state.bestPlace ?? null;
   stats.totalWin = Number(response.state.totalWin || 0);
-}
-
-async function persistStats() {
-  await CasinoStore.saveEngineState("tournaments", {
-    bestPlace: stats.bestPlace,
-    totalWin: stats.totalWin,
-  });
-}
-
-function randomName() {
-  const left = ["Neon", "Royal", "Atlas", "Nova", "Crimson", "Pulse", "Ember", "Frozen"];
-  const right = ["Raiders", "Knights", "Titans", "Wolves", "Sharks", "Falcons", "Guard", "Storm"];
-  return `${left[Math.floor(Math.random() * left.length)]} ${right[Math.floor(Math.random() * right.length)]}`;
-}
-
-function createPlayers(size) {
-  const players = [{ name: "YOU", skill: 0.64 + Math.random() * 0.14, isYou: true }];
-  while (players.length < size) {
-    players.push({
-      name: randomName(),
-      skill: 0.4 + Math.random() * (0.42 + balancing.skillVariance),
-      isYou: false,
-    });
-  }
-  return players.sort(() => Math.random() - 0.5);
-}
-
-function matchWinner(a, b) {
-  const aRoll = a.skill + Math.random() * 0.45;
-  const bRoll = b.skill + Math.random() * 0.45;
-  return aRoll >= bRoll ? a : b;
-}
-
-function payoutForPlace(place, pool) {
-  if (place === 1) return Math.floor(pool * balancing.payoutCurve.first);
-  if (place === 2) return Math.floor(pool * balancing.payoutCurve.second);
-  if (place <= 4) return Math.floor(pool * balancing.payoutCurve.top4);
-  return 0;
-}
-
-function placeFromRound(eliminationRound, totalRounds) {
-  const delta = totalRounds - eliminationRound;
-  if (delta <= 0) return 1;
-  if (delta === 1) return 2;
-  if (delta === 2) return 4;
-  return 8;
+  stats.runs = Number(response.state.runs || 0);
+  stats.wins = Number(response.state.wins || 0);
 }
 
 function logLine(text, isGood) {
@@ -104,7 +52,25 @@ function logLine(text, isGood) {
   logNode.prepend(item);
 }
 
-function simulateTournament() {
+function renderLeaderboard(rows) {
+  if (!rows?.length) {
+    return;
+  }
+
+  const board = document.createElement("article");
+  board.className = "tournament-round";
+  board.innerHTML = "<h4>Global Leaderboard</h4>";
+
+  rows.slice(0, 6).forEach((row) => {
+    const line = document.createElement("p");
+    line.textContent = `#${row.rank} ${row.username} | Score ${row.score} | Best #${row.bestPlace}`;
+    board.appendChild(line);
+  });
+
+  bracketNode.appendChild(board);
+}
+
+async function simulateTournament() {
   const size = Number(sizeNode.value || 8);
   const buyin = Number(buyinNode.value || 0);
   if (!Number.isFinite(buyin) || buyin < 20) {
@@ -112,56 +78,44 @@ function simulateTournament() {
     return;
   }
 
-  if (!CasinoStore.spendCoins(buyin)) {
-    CasinoFX.play("lose");
-    updateOverview("Nicht genug Coins fur das Buy-In.");
-    return;
-  }
-
-  const players = createPlayers(size);
-  const pool = size * buyin;
-  const rounds = Math.log2(size);
-  let eliminationRound = rounds;
-  let active = players;
-
   bracketNode.innerHTML = "";
   logNode.innerHTML = "";
 
-  for (let round = 1; round <= rounds; round += 1) {
-    const next = [];
-    const roundNode = document.createElement("article");
-    roundNode.className = "tournament-round";
-    roundNode.innerHTML = `<h4>Round ${round}</h4>`;
+  const response = await CasinoStore.playTournament({
+    size,
+    buyin,
+    style: styleNode.value,
+  });
 
-    for (let i = 0; i < active.length; i += 2) {
-      const p1 = active[i];
-      const p2 = active[i + 1];
-      const winner = matchWinner(p1, p2);
-      const loser = winner === p1 ? p2 : p1;
-      next.push(winner);
-
-      const line = document.createElement("p");
-      line.textContent = `${p1.name} vs ${p2.name} -> ${winner.name}`;
-      line.className = winner.isYou ? "is-win" : loser.isYou ? "is-loss" : "";
-      roundNode.appendChild(line);
-
-      if (loser.isYou) {
-        eliminationRound = round;
-      }
-    }
-
-    bracketNode.appendChild(roundNode);
-    active = next;
+  if (!response.ok || !response.data) {
+    CasinoFX.play("lose");
+    updateOverview(response.message || "Turnier konnte nicht gestartet werden.");
+    return;
   }
 
-  const youWon = active[0]?.isYou;
-  const place = youWon ? 1 : placeFromRound(eliminationRound, rounds);
-  const payout = Math.max(0, Math.floor(payoutForPlace(place, pool) * (1 + (Math.random() * 2 - 1) * balancing.bonusVolatility)));
+  const { result, stats: apiStats, leaderboard } = response.data;
+  result.bracket.forEach((roundData) => {
+    const roundNode = document.createElement("article");
+    roundNode.className = "tournament-round";
+    roundNode.innerHTML = `<h4>Round ${roundData.round}</h4>`;
+    roundData.matches.forEach((match) => {
+      const line = document.createElement("p");
+      line.textContent = `${match.p1} vs ${match.p2} -> ${match.winner}`;
+      line.className = match.youWon ? "is-win" : match.youLost ? "is-loss" : "";
+      roundNode.appendChild(line);
+    });
+    bracketNode.appendChild(roundNode);
+  });
 
-  if (payout > 0) {
-    CasinoStore.addCoins(payout);
-    stats.totalWin += payout;
-    if (place === 1) {
+  renderLeaderboard(leaderboard);
+
+  stats.bestPlace = apiStats.bestPlace;
+  stats.totalWin = apiStats.totalWin;
+  stats.runs = apiStats.runs;
+  stats.wins = apiStats.wins;
+
+  if (result.payout > 0) {
+    if (result.place === 1) {
       CasinoFX.celebrateJackpot();
     } else {
       CasinoFX.celebrateWin();
@@ -170,13 +124,8 @@ function simulateTournament() {
     CasinoFX.play("lose");
   }
 
-  if (!stats.bestPlace || place < stats.bestPlace) {
-    stats.bestPlace = place;
-  }
-  persistStats().catch(() => {});
-
-  logLine(`Style ${styleNode.value.toUpperCase()} | Place #${place} | Reward ${CasinoStore.formatCoins(payout)}`, payout > 0);
-  updateOverview(`Turnier beendet: Platz #${place}. ${payout > 0 ? `Auszahlung ${CasinoStore.formatCoins(payout)}.` : "Kein Preisgeld."}`);
+  logLine(`Style ${result.style.toUpperCase()} | Place #${result.place} | Reward ${CasinoStore.formatCoins(result.payout)}`, result.payout > 0);
+  updateOverview(`Turnier beendet: Platz #${result.place}. ${result.payout > 0 ? `Auszahlung ${CasinoStore.formatCoins(result.payout)}.` : "Kein Preisgeld."} Runs ${stats.runs} | Wins ${stats.wins}`);
 }
 
 function initLiveBackground() {
@@ -230,8 +179,16 @@ async function initTournaments() {
   updateHeaderByMode();
   initLiveBackground();
   await hydrateStats();
+  const board = await CasinoStore.fetchLeaderboard();
+  if (board.ok) {
+    renderLeaderboard(board.leaderboard);
+  }
   updateOverview("Turnier-Engine bereit. Wale Setup und starte den Bracket-Run.");
-  startBtn.addEventListener("click", simulateTournament);
+  startBtn.addEventListener("click", () => {
+    simulateTournament().catch(() => {
+      updateOverview("Turnier-Request fehlgeschlagen.");
+    });
+  });
 }
 
 initTournaments();
