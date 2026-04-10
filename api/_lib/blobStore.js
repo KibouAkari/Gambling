@@ -33,7 +33,7 @@ async function readLatestJson(prefix) {
 async function writeSnapshot(prefix, value) {
   const key = `${prefix}${Date.now()}.json`;
   await put(key, JSON.stringify(value), {
-    access: "private",
+    access: "public",
     contentType: "application/json",
   });
 }
