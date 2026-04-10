@@ -1,16 +1,25 @@
 import { list, put } from "@vercel/blob";
 
-const USER_PREFIX = "mongo-casino/users/users-";
-const SESSION_PREFIX = "mongo-casino/sessions/sessions-";
+const AUTH_NAMESPACE = process.env.AUTH_STORAGE_NAMESPACE || "mongo-casino-auth-storage";
+const USER_PREFIX = `${AUTH_NAMESPACE}/users/users-`;
+const SESSION_PREFIX = `${AUTH_NAMESPACE}/sessions/sessions-`;
 
 async function readLatestJson(prefix) {
-  const result = await list({ prefix, limit: 1000 });
+  let result;
+  try {
+    result = await list({ prefix, limit: 1000 });
+  } catch (_error) {
+    return {};
+  }
+
   if (!result.blobs.length) {
     return {};
   }
 
   const latest = [...result.blobs].sort(
-    (a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime(),
+    (a, b) =>
+      new Date(b.uploadedAt || 0).getTime() - new Date(a.uploadedAt || 0).getTime() ||
+      b.pathname.localeCompare(a.pathname),
   )[0];
 
   const response = await fetch(latest.url);

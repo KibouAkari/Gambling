@@ -70,6 +70,7 @@ body {
   overflow-x: hidden;
   padding-left: 248px;
   padding-top: 72px;
+  position: relative;
 }
 
 body.embed-mode {
@@ -91,6 +92,8 @@ body.embed-mode main {
 main {
   width: min(1240px, 95%);
   margin: 0.9rem auto 2rem;
+  position: relative;
+  z-index: 3;
 }
 
 a {
@@ -250,6 +253,11 @@ a {
   gap: 0.8rem;
   padding: 0.75rem 1.2rem;
   z-index: 110;
+}
+
+footer {
+  position: relative;
+  z-index: 3;
 }
 
 .top-bar-copy.brand-only {
@@ -579,6 +587,10 @@ button,
     url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=70") center/cover;
 }
 
+.jackpot-cta {
+  margin-top: 0.4rem;
+}
+
 .jackpot-panel h3,
 .signal-board h3,
 .story-card h3 {
@@ -867,6 +879,294 @@ button,
 
 .games-title {
   margin-top: 1.2rem;
+}
+
+.hub-filter {
+  margin-top: 0.9rem;
+  padding: 0.9rem;
+}
+
+.hub-filter h3 {
+  margin: 0;
+}
+
+.hub-filter-row {
+  margin-top: 0.62rem;
+  display: flex;
+  gap: 0.42rem;
+  flex-wrap: wrap;
+}
+
+.hub-filter-row button {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(7, 13, 23, 0.88);
+  color: #ecf2ff;
+  padding: 0.46rem 0.74rem;
+}
+
+.hub-filter-row button.is-active {
+  border-color: rgba(245, 197, 79, 0.7);
+  box-shadow: 0 0 0 1px rgba(245, 197, 79, 0.28);
+}
+
+.hub-zones {
+  display: grid;
+  gap: 0.82rem;
+}
+
+.hub-zone {
+  display: grid;
+  gap: 0.56rem;
+}
+
+.hub-zone h3 {
+  margin: 0;
+  font-family: "Cinzel", serif;
+  letter-spacing: 0.03em;
+}
+
+.zone-game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0.72rem;
+}
+
+.world-game-card {
+  min-height: 230px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  align-items: end;
+  transition: transform 0.22s ease, border-color 0.22s ease;
+}
+
+.world-game-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(6, 11, 18, 0.16), rgba(5, 9, 16, 0.9));
+  pointer-events: none;
+}
+
+.world-game-card:hover {
+  border-color: rgba(245, 197, 79, 0.6);
+}
+
+.card-copy {
+  position: relative;
+  z-index: 2;
+  padding: 0.82rem;
+}
+
+.card-eyebrow {
+  margin: 0;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #ffd990;
+}
+
+.card-copy h4 {
+  margin: 0.2rem 0 0;
+  font-size: 1.2rem;
+}
+
+.card-copy p {
+  margin: 0.4rem 0 0;
+  color: #dce6fb;
+  max-width: 45ch;
+}
+
+.card-meta {
+  margin: 0.5rem 0 0.6rem;
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.card-meta span {
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(6, 11, 18, 0.5);
+  padding: 0.2rem 0.5rem;
+  font-size: 0.76rem;
+}
+
+.card-mascot {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: radial-gradient(circle at 32% 30%, #fff5bb, #f3b45b 40%, #5d3014 72%);
+  box-shadow: 0 0 22px rgba(255, 203, 116, 0.45);
+  z-index: 2;
+}
+
+.card-mascot::before,
+.card-mascot::after {
+  content: "";
+  position: absolute;
+  top: 22px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #241104;
+}
+
+.card-mascot::before {
+  left: 20px;
+}
+
+.card-mascot::after {
+  right: 20px;
+}
+
+.theme-egypt {
+  background:
+    radial-gradient(circle at 85% 20%, rgba(255, 203, 112, 0.45), transparent 36%),
+    linear-gradient(145deg, rgba(53, 36, 14, 0.72), rgba(18, 12, 6, 0.88)),
+    url("https://images.unsplash.com/photo-1539650116574-75c0c6d73f87?auto=format&fit=crop&w=1200&q=70") center/cover;
+}
+
+.theme-neon-slot {
+  background:
+    radial-gradient(circle at 20% 15%, rgba(97, 184, 255, 0.4), transparent 38%),
+    linear-gradient(145deg, rgba(10, 30, 52, 0.78), rgba(7, 13, 24, 0.92)),
+    url("https://images.unsplash.com/photo-1596838132731-3301c3fd4317?auto=format&fit=crop&w=1200&q=70") center/cover;
+}
+
+.theme-poker {
+  background:
+    radial-gradient(circle at 80% 18%, rgba(231, 79, 67, 0.32), transparent 36%),
+    linear-gradient(145deg, rgba(38, 8, 10, 0.72), rgba(12, 8, 12, 0.92)),
+    url("https://images.unsplash.com/photo-1511193311914-0346f16efe90?auto=format&fit=crop&w=1200&q=70") center/cover;
+}
+
+.theme-plinko {
+  background:
+    radial-gradient(circle at 88% 14%, rgba(116, 238, 205, 0.34), transparent 38%),
+    linear-gradient(145deg, rgba(8, 35, 42, 0.7), rgba(8, 15, 24, 0.92)),
+    url("https://images.unsplash.com/photo-1544830280-5d93db7dfc6c?auto=format&fit=crop&w=1200&q=70") center/cover;
+}
+
+.theme-roulette,
+.theme-vip-wheel,
+.theme-blackjack-live,
+.theme-sports-football,
+.theme-sports-fight,
+.theme-missions,
+.theme-missions-night,
+.theme-tournament-wheel,
+.theme-tournament-slot,
+.theme-achievement-royal,
+.theme-achievement-streak {
+  background:
+    radial-gradient(circle at 82% 16%, rgba(245, 197, 79, 0.3), transparent 35%),
+    linear-gradient(150deg, rgba(17, 26, 39, 0.78), rgba(9, 13, 21, 0.94));
+}
+
+.theme-roulette {
+  background-image:
+    radial-gradient(circle at 82% 16%, rgba(245, 197, 79, 0.3), transparent 35%),
+    linear-gradient(150deg, rgba(17, 26, 39, 0.78), rgba(9, 13, 21, 0.94)),
+    url("https://images.unsplash.com/photo-1601370690183-1c7796ecec46?auto=format&fit=crop&w=1200&q=70");
+  background-size: auto, auto, cover;
+  background-position: center;
+}
+
+.theme-vip-wheel {
+  background-image:
+    radial-gradient(circle at 82% 16%, rgba(245, 197, 79, 0.3), transparent 35%),
+    linear-gradient(150deg, rgba(17, 26, 39, 0.78), rgba(9, 13, 21, 0.94)),
+    url("https://images.unsplash.com/photo-1529074963764-98f45c47344b?auto=format&fit=crop&w=1200&q=70");
+  background-size: auto, auto, cover;
+  background-position: center;
+}
+
+.theme-blackjack-live {
+  background-image:
+    radial-gradient(circle at 82% 16%, rgba(245, 197, 79, 0.3), transparent 35%),
+    linear-gradient(150deg, rgba(17, 26, 39, 0.78), rgba(9, 13, 21, 0.94)),
+    url("https://images.unsplash.com/photo-1596838132731-3301c3fd4317?auto=format&fit=crop&w=1200&q=70");
+  background-size: auto, auto, cover;
+  background-position: center;
+}
+
+.theme-sports-football {
+  background-image:
+    radial-gradient(circle at 82% 16%, rgba(245, 197, 79, 0.3), transparent 35%),
+    linear-gradient(150deg, rgba(17, 26, 39, 0.78), rgba(9, 13, 21, 0.94)),
+    url("https://images.unsplash.com/photo-1471295253337-3ceaaedca402?auto=format&fit=crop&w=1200&q=70");
+  background-size: auto, auto, cover;
+  background-position: center;
+}
+
+.theme-sports-fight {
+  background-image:
+    radial-gradient(circle at 82% 16%, rgba(245, 197, 79, 0.3), transparent 35%),
+    linear-gradient(150deg, rgba(17, 26, 39, 0.78), rgba(9, 13, 21, 0.94)),
+    url("https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=1200&q=70");
+  background-size: auto, auto, cover;
+  background-position: center;
+}
+
+.theme-missions {
+  background-image:
+    radial-gradient(circle at 82% 16%, rgba(245, 197, 79, 0.3), transparent 35%),
+    linear-gradient(150deg, rgba(17, 26, 39, 0.78), rgba(9, 13, 21, 0.94)),
+    url("https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=70");
+  background-size: auto, auto, cover;
+  background-position: center;
+}
+
+.theme-missions-night {
+  background-image:
+    radial-gradient(circle at 82% 16%, rgba(245, 197, 79, 0.3), transparent 35%),
+    linear-gradient(150deg, rgba(17, 26, 39, 0.78), rgba(9, 13, 21, 0.94)),
+    url("https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1200&q=70");
+  background-size: auto, auto, cover;
+  background-position: center;
+}
+
+.theme-tournament-wheel {
+  background-image:
+    radial-gradient(circle at 82% 16%, rgba(245, 197, 79, 0.3), transparent 35%),
+    linear-gradient(150deg, rgba(17, 26, 39, 0.78), rgba(9, 13, 21, 0.94)),
+    url("https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=1200&q=70");
+  background-size: auto, auto, cover;
+  background-position: center;
+}
+
+.theme-tournament-slot {
+  background-image:
+    radial-gradient(circle at 82% 16%, rgba(245, 197, 79, 0.3), transparent 35%),
+    linear-gradient(150deg, rgba(17, 26, 39, 0.78), rgba(9, 13, 21, 0.94)),
+    url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=70");
+  background-size: auto, auto, cover;
+  background-position: center;
+}
+
+.theme-achievement-royal {
+  background-image:
+    radial-gradient(circle at 82% 16%, rgba(245, 197, 79, 0.3), transparent 35%),
+    linear-gradient(150deg, rgba(17, 26, 39, 0.78), rgba(9, 13, 21, 0.94)),
+    url("https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&w=1200&q=70");
+  background-size: auto, auto, cover;
+  background-position: center;
+}
+
+.theme-achievement-streak {
+  background-image:
+    radial-gradient(circle at 82% 16%, rgba(245, 197, 79, 0.3), transparent 35%),
+    linear-gradient(150deg, rgba(17, 26, 39, 0.78), rgba(9, 13, 21, 0.94)),
+    url("https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1200&q=70");
+  background-size: auto, auto, cover;
+  background-position: center;
 }
 
 .game-studio--enhanced {
@@ -1297,6 +1597,49 @@ textarea:focus {
   padding: 1rem;
 }
 
+body[data-game-theme] .hero.surface {
+  border-color: rgba(245, 197, 79, 0.45);
+}
+
+body[data-game-theme] .game-shell {
+  border-color: rgba(245, 197, 79, 0.35);
+}
+
+body[data-game-theme="egypt-fire"] .hero.surface,
+body[data-game-theme="mongo-floor"] .hero.surface,
+body[data-game-theme="slot-blitz"] .hero.surface,
+body[data-game-theme="daily-risk"] .hero.surface {
+  background:
+    linear-gradient(125deg, rgba(24, 16, 5, 0.78), rgba(12, 8, 5, 0.9)),
+    url("https://images.unsplash.com/photo-1539650116574-75c0c6d73f87?auto=format&fit=crop&w=1200&q=70") center/cover;
+}
+
+body[data-game-theme="tome-madness"] .hero.surface,
+body[data-game-theme="blackjack-prime"] .hero.surface,
+body[data-game-theme="night-ops"] .hero.surface,
+body[data-game-theme="streak-architect"] .hero.surface {
+  background:
+    linear-gradient(125deg, rgba(30, 8, 8, 0.78), rgba(11, 8, 14, 0.9)),
+    url("https://images.unsplash.com/photo-1511193311914-0346f16efe90?auto=format&fit=crop&w=1200&q=70") center/cover;
+}
+
+body[data-game-theme="european-wheel"] .hero.surface,
+body[data-game-theme="vip-ember-wheel"] .hero.surface,
+body[data-game-theme="wheel-grand-prix"] .hero.surface,
+body[data-game-theme="arena-clash"] .hero.surface {
+  background:
+    linear-gradient(125deg, rgba(8, 15, 18, 0.78), rgba(7, 10, 14, 0.9)),
+    url("https://images.unsplash.com/photo-1601370690183-1c7796ecec46?auto=format&fit=crop&w=1200&q=70") center/cover;
+}
+
+body[data-game-theme="golden-diamonds"] .hero.surface,
+body[data-game-theme="velocity-football"] .hero.surface,
+body[data-game-theme="royal-collector"] .hero.surface {
+  background:
+    linear-gradient(125deg, rgba(9, 23, 28, 0.78), rgba(8, 11, 15, 0.9)),
+    url("https://images.unsplash.com/photo-1544830280-5d93db7dfc6c?auto=format&fit=crop&w=1200&q=70") center/cover;
+}
+
 .game-toolbar {
   display: grid;
   grid-template-columns: 1fr auto auto auto;
@@ -1670,7 +2013,7 @@ textarea:focus {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 1;
+  z-index: 0;
 }
 
 .ambient-chip {
@@ -1842,6 +2185,11 @@ footer {
   .game-toolbar.compact {
     grid-template-columns: 1fr;
   }
+
+  .hub-filter-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 640px) {
@@ -1879,5 +2227,9 @@ footer {
   .mini-game-tile img {
     width: 38px;
     height: 38px;
+  }
+
+  .hub-filter-row {
+    grid-template-columns: 1fr;
   }
 }

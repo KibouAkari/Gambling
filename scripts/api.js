@@ -105,14 +105,14 @@ async function requestApi(path, options = {}) {
 	let response;
 	try {
 		response = await fetch(path, {
-		method: options.method || "GET",
-		headers: {
-			"Content-Type": "application/json",
-			...(options.token || state.sessionToken
-				? { Authorization: `Bearer ${options.token || state.sessionToken}` }
-				: {}),
-		},
-		body: options.body ? JSON.stringify(options.body) : undefined,
+			method: options.method || "GET",
+			headers: {
+				"Content-Type": "application/json",
+				...(options.token || state.sessionToken
+					? { Authorization: `Bearer ${options.token || state.sessionToken}` }
+					: {}),
+			},
+			body: options.body ? JSON.stringify(options.body) : undefined,
 		});
 	} catch (_error) {
 		throw new Error("NETWORK_UNAVAILABLE");
@@ -124,6 +124,27 @@ async function requestApi(path, options = {}) {
 	}
 
 	return payload;
+}
+
+function applyGameThemeFromQuery() {
+	const params = new URLSearchParams(window.location.search);
+	const theme = params.get("theme");
+	const customTitle = params.get("title");
+
+	if (!theme && !customTitle) {
+		return;
+	}
+
+	if (theme) {
+		document.body.setAttribute("data-game-theme", theme);
+	}
+
+	if (customTitle) {
+		const heroTitle = document.querySelector(".hero h1, .hero h2");
+		if (heroTitle) {
+			heroTitle.textContent = customTitle;
+		}
+	}
 }
 
 function normalizeRemoteUser(user) {
@@ -336,24 +357,14 @@ const CasinoStore = {
 				sessionToken: response.token || "",
 				password: "",
 			});
+			await this.refreshSession();
 			return { ok: true };
-		} catch (_error) {
-			// Fallback for local preview/dev and for temporary remote API issues.
-			this.setState({
-				hasAccount: true,
-				isLoggedIn: true,
-				username,
-				email,
-				dateOfBirth,
-				password,
-				authProvider: "local",
-			});
-			return { ok: true };
+		} catch (error) {
+			return { ok: false, message: error.message || "Registrierung fehlgeschlagen." };
 		}
 	},
 
 	async loginAccount(payload) {
-		const state = readState();
 		const username = String(payload.username || "").trim();
 		const password = String(payload.password || "").trim();
 
@@ -376,24 +387,16 @@ const CasinoStore = {
 				sessionToken: response.token || "",
 				password: "",
 			});
+			await this.refreshSession();
 			return { ok: true };
-		} catch (_error) {
-			// Local fallback if remote login is unavailable or returns an error.
-			if (!state.hasAccount) {
-				return { ok: false, message: "Bitte zuerst einen Account erstellen." };
-			}
-			if (username !== state.username || password !== state.password) {
-				return { ok: false, message: "Login fehlgeschlagen. Bitte Daten prüfen." };
-			}
-
-			this.setState({ isLoggedIn: true, authProvider: "local" });
-			return { ok: true };
+		} catch (error) {
+			return { ok: false, message: error.message || "Login fehlgeschlagen." };
 		}
 	},
 
 	async logout() {
 		const state = readState();
-		if (state.authProvider === "blob" && state.sessionToken) {
+		if (state.sessionToken) {
 			try {
 				await requestApi("/api/auth/login", {
 					method: "POST",
@@ -401,16 +404,19 @@ const CasinoStore = {
 					token: state.sessionToken,
 				});
 			} catch (_error) {
-				// Ignore remote logout failures and still clear local session.
+				// Ignore remote logout failures and still clear local session state.
 			}
 		}
 
-		this.setState({ isLoggedIn: false, sessionToken: "" });
+		this.setState({ isLoggedIn: false, hasAccount: state.hasAccount, authProvider: "blob", sessionToken: "" });
 	},
 
 	async refreshSession() {
 		const state = readState();
 		if (!state.sessionToken) {
+			if (state.isLoggedIn) {
+				this.setState({ isLoggedIn: false, authProvider: "blob" });
+			}
 			return false;
 		}
 
@@ -435,8 +441,8 @@ const CasinoStore = {
 
 	async syncProfile(patch) {
 		const state = this.setState(patch);
-		if (state.authProvider !== "blob" || !state.sessionToken) {
-			return { ok: true };
+		if (!state.sessionToken) {
+			return { ok: false, message: "Session fehlt. Bitte erneut einloggen." };
 		}
 
 		try {
@@ -446,8 +452,8 @@ const CasinoStore = {
 				token: state.sessionToken,
 			});
 			return { ok: true };
-		} catch (_error) {
-			return { ok: false };
+		} catch (error) {
+			return { ok: false, message: error.message || "Profil-Sync fehlgeschlagen." };
 		}
 	},
 
@@ -629,10 +635,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 	const authMode = new URLSearchParams(window.location.search).get("auth");
 	if (isEmbed) {
 		document.body.classList.add("embed-mode");
+		applyGameThemeFromQuery();
 	} else {
 		await loadNavbar();
 		await CasinoStore.refreshSession();
 		updateCoinViews();
+		applyGameThemeFromQuery();
 		if (authMode === "login" || authMode === "signup") {
 			window.openAuthModal?.(authMode);
 		}

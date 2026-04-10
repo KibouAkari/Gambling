@@ -26,6 +26,7 @@ This project was never intended as a commercial venture — it was just for fun!
 - User and session snapshots are stored in Vercel Blob via [api/_lib/blobStore.js](api/_lib/blobStore.js).
 - Required environment variable for production and preview deployments:
 	- `BLOB_READ_WRITE_TOKEN`
+	- Optional but recommended: `AUTH_STORAGE_NAMESPACE=mongo-casino-auth-storage`
 - A sample env file is included in [.env.example](.env.example).
 
 ## Security and Product Criteria Coverage

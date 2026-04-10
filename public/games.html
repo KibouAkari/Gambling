@@ -13,92 +13,238 @@
     <main>
       <section class="games-hero surface fade-in">
         <article>
-          <p class="eyebrow">All Games Floor</p>
-          <h2>Mongo Casino Games</h2>
+          <p class="eyebrow">Mongo Game Hub</p>
+          <h2>Immersive Game Worlds</h2>
           <p>
-            Spielbare Titel plus kommende Kategorien. Account erforderlich für echte Runden und
-            Coin-Einsatz.
+            Wale live spielbare Titel, thematische Floors und aktive Events. Jeder Bereich hat
+            eigene Stimmung, eigene Aufgaben und direkte Launch-Pfade.
           </p>
           <div class="account-chip">Player: <strong data-user-view>Gast</strong></div>
         </article>
         <article class="games-hero-side">
-          <h3>Floor Status</h3>
+          <h3>Hub Status</h3>
           <div class="provider-row">
             <span>124 aktive Tische</span>
-            <span>Live Jackpot Timer</span>
-            <span>Fast Wallet Sync</span>
+            <span>6 Live Kategorien</span>
+            <span>Session Wallet Sync</span>
           </div>
-          <p>Direkt aus der Lobby in jedes Spiel wechseln - ohne Seitenbrüche.</p>
+          <p>Starte direkt aus der Lobby mit Deep-Links in jedes Spiel und behalte den Kontext.</p>
         </article>
       </section>
 
-      <section class="providers surface fade-in">
-        <h3>Trusted Provider Style</h3>
-        <div class="provider-row">
-          <span>Pragmatic Play</span>
-          <span>Evolution Inspired</span>
-          <span>Hacksaw Style</span>
-          <span>Mongo Originals</span>
+      <section class="hub-filter surface fade-in" aria-label="game category filter">
+        <h3>Bereiche</h3>
+        <div class="hub-filter-row" role="tablist" aria-label="Bereiche filtern">
+          <button type="button" class="is-active" data-hub-filter="all">Alle</button>
+          <button type="button" data-hub-filter="casino">Casino</button>
+          <button type="button" data-hub-filter="live-casino">Live Casino</button>
+          <button type="button" data-hub-filter="sports">Sports</button>
+          <button type="button" data-hub-filter="missions">Missions</button>
+          <button type="button" data-hub-filter="tournaments">Tournaments</button>
+          <button type="button" data-hub-filter="achievements">Achievements</button>
         </div>
       </section>
 
       <h2 class="centered-title games-title">Live Now</h2>
-      <input type="text" id="search" placeholder="Spiel suchen..." oninput="searchGames()" />
+      <input type="text" id="search" placeholder="Spiel oder Bereich suchen..." oninput="searchGames()" />
 
-      <div class="game-grid fade-in" id="game-list">
-        <article class="game">
-          <a href="/games/slot.html" data-game-launch="slot">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKLImqlhsXljBytSwyEX2BpIzEQLXsXVqPow&s"
-              alt="Slot Machine"
-            />
-            <p>Slot Machine</p>
-            <span class="badge">Playable Now</span>
-          </a>
+      <section class="hub-zones fade-in" id="hub-zones">
+        <article class="hub-zone" data-zone="casino" id="casino">
+          <h3>CASINO</h3>
+          <div class="zone-game-grid" id="game-list">
+            <article class="world-game-card theme-egypt" data-categories="casino" data-search="slots egypt fire pyramids pharaoh cat">
+              <div class="card-mascot" aria-hidden="true"></div>
+              <div class="card-copy">
+                <p class="card-eyebrow">Slots</p>
+                <h4>Egypt Fire 2</h4>
+                <p>Sandsturm-Walzen, Gold-Kaskaden und eine reagierende Sphinx-Katze.</p>
+                <div class="card-meta"><span>Mongo Floor</span><span>₥ 135</span></div>
+                <button type="button" class="btn" data-game-launch="egypt-fire">Start Session</button>
+              </div>
+            </article>
+
+            <article class="world-game-card theme-neon-slot" data-categories="casino" data-search="slots mongo floor neon">
+              <div class="card-mascot" aria-hidden="true"></div>
+              <div class="card-copy">
+                <p class="card-eyebrow">Slots</p>
+                <h4>Mongo Floor</h4>
+                <p>Neon-Walzen mit Heat-Zonen, die bei Seriengewinnen die Payline pushen.</p>
+                <div class="card-meta"><span>Fast Pace</span><span>₥ 112</span></div>
+                <button type="button" class="btn" data-game-launch="mongo-floor">Start Session</button>
+              </div>
+            </article>
+
+            <article class="world-game-card theme-poker" data-categories="casino" data-search="poker tome of madness cards">
+              <div class="card-mascot" aria-hidden="true"></div>
+              <div class="card-copy">
+                <p class="card-eyebrow">Poker</p>
+                <h4>Tome of Madness</h4>
+                <p>Arcane Tisch mit multiplen Side-Pots und dynamischem Risk-Deck.</p>
+                <div class="card-meta"><span>Card Arena</span><span>₥ 64</span></div>
+                <button type="button" class="btn" data-game-launch="tome-madness">Start Session</button>
+              </div>
+            </article>
+
+            <article class="world-game-card theme-plinko" data-categories="casino" data-search="plinko golden diamonds drop stage">
+              <div class="card-mascot" aria-hidden="true"></div>
+              <div class="card-copy">
+                <p class="card-eyebrow">Plinko</p>
+                <h4>Golden Diamonds</h4>
+                <p>Diamant-Rampen und Trigger-Felder mit progressiver Multiplikator-Kette.</p>
+                <div class="card-meta"><span>Drop Stage</span><span>₥ 47</span></div>
+                <button type="button" class="btn" data-game-launch="golden-diamonds">Start Session</button>
+              </div>
+            </article>
+          </div>
         </article>
 
-        <article class="game">
-          <a href="/games/poker.html" data-game-launch="poker">
-            <img
-              src="https://media.istockphoto.com/id/538355056/vector/pocker-cards-flush-hearts-hand.jpg?s=612x612&w=0&k=20&c=5uLrcrC_criJK1LvhOZfQdTId0HUD9qlZXKBWn90Sd8="
-              alt="Poker"
-            />
-            <p>Poker</p>
-            <span class="badge">Playable Now</span>
-          </a>
+        <article class="hub-zone" data-zone="live-casino" id="live-casino">
+          <h3>LIVE CASINO</h3>
+          <div class="zone-game-grid">
+            <article class="world-game-card theme-roulette" data-categories="live-casino" data-search="roulette european wheel live table">
+              <div class="card-mascot" aria-hidden="true"></div>
+              <div class="card-copy">
+                <p class="card-eyebrow">Roulette</p>
+                <h4>European Wheel</h4>
+                <p>Live-Table Vibe, Kamerawinkel-Simulation und schnelle Bets zwischen Spins.</p>
+                <div class="card-meta"><span>Live Table</span><span>₥ 38</span></div>
+                <button type="button" class="btn" data-game-launch="european-wheel">Open Live Table</button>
+              </div>
+            </article>
+
+            <article class="world-game-card theme-vip-wheel" data-categories="live-casino" data-search="roulette vip wheel">
+              <div class="card-mascot" aria-hidden="true"></div>
+              <div class="card-copy">
+                <p class="card-eyebrow">Roulette</p>
+                <h4>VIP Ember Wheel</h4>
+                <p>Hohe Limits, schnellere Runden und Crowd-Energie fur High-Roller-Phasen.</p>
+                <div class="card-meta"><span>VIP Pit</span><span>₥ 210</span></div>
+                <button type="button" class="btn" data-game-launch="vip-ember-wheel">Open Live Table</button>
+              </div>
+            </article>
+
+            <article class="world-game-card theme-blackjack-live" data-categories="live-casino" data-search="blackjack live dealer">
+              <div class="card-mascot" aria-hidden="true"></div>
+              <div class="card-copy">
+                <p class="card-eyebrow">Cards</p>
+                <h4>Blackjack Prime Live</h4>
+                <p>Dealer-Flow auf Poker-Engine mit schnellen Draw-Entscheidungen und Side-Bets.</p>
+                <div class="card-meta"><span>Live Dealer</span><span>₥ 75</span></div>
+                <button type="button" class="btn" data-game-launch="blackjack-prime">Open Live Table</button>
+              </div>
+            </article>
+          </div>
         </article>
 
-        <article class="game">
-          <a href="/games/roulette.html" data-game-launch="roulette">
-            <img
-              src="https://gamblebase.com/wp-content/uploads/2022/03/Roulette-Tisch.webp"
-              alt="Roulette"
-            />
-            <p>Roulette</p>
-            <span class="badge">Playable Now</span>
-          </a>
+        <article class="hub-zone" data-zone="sports" id="sports">
+          <h3>SPORTS</h3>
+          <div class="zone-game-grid">
+            <article class="world-game-card theme-sports-football" data-categories="sports" data-search="sports football odds">
+              <div class="card-copy">
+                <p class="card-eyebrow">Sportsbook</p>
+                <h4>Velocity Football</h4>
+                <p>Live Odds Board mit Mission-Boosts und schneller Match-Simulation.</p>
+                <div class="card-meta"><span>Odds Engine</span><span>₥ 25 Min</span></div>
+                <button type="button" class="btn" data-game-launch="velocity-football">Open Sports Mode</button>
+              </div>
+            </article>
+
+            <article class="world-game-card theme-sports-fight" data-categories="sports" data-search="sports mma combat">
+              <div class="card-copy">
+                <p class="card-eyebrow">Sportsbook</p>
+                <h4>Arena Clash MMA</h4>
+                <p>Volatile Runden mit Live-Momentum-Anzeige und schnellen Cashout-Punkten.</p>
+                <div class="card-meta"><span>Combat Board</span><span>₥ 35 Min</span></div>
+                <button type="button" class="btn" data-game-launch="arena-clash">Open Sports Mode</button>
+              </div>
+            </article>
+          </div>
         </article>
 
-        <article class="game">
-          <a href="/games/plinko.html" data-game-launch="plinko">
-            <img
-              src="https://iconstyle.al/wp-content/uploads/2024/09/6CED10EC-3212-4532-BA8E-F330CF895BD3.jpeg"
-              alt="Plinko"
-            />
-            <p>Plinko</p>
-            <span class="badge">Playable Now</span>
-          </a>
+        <article class="hub-zone" data-zone="missions" id="missions">
+          <h3>MISSIONS</h3>
+          <div class="zone-game-grid">
+            <article class="world-game-card theme-missions" data-categories="missions" data-search="missions daily streak">
+              <div class="card-copy">
+                <p class="card-eyebrow">Progress</p>
+                <h4>Daily Risk Ladder</h4>
+                <p>3 Missionen pro Tag, Bonus bei sauberer Serie und aktiver Session.</p>
+                <div class="card-meta"><span>3/5 Active</span><span>Reward ₥ 120</span></div>
+                <button type="button" class="btn" data-game-launch="daily-risk">Open Mission Board</button>
+              </div>
+            </article>
+
+            <article class="world-game-card theme-missions-night" data-categories="missions" data-search="missions night ops">
+              <div class="card-copy">
+                <p class="card-eyebrow">Progress</p>
+                <h4>Night Ops Contracts</h4>
+                <p>Zeitfenster-Missionen mit Multiplikator, wenn du 2 Spiele kombinierst.</p>
+                <div class="card-meta"><span>Time Window</span><span>Reward ₥ 210</span></div>
+                <button type="button" class="btn" data-game-launch="night-ops">Open Mission Board</button>
+              </div>
+            </article>
+          </div>
         </article>
-      </div>
+
+        <article class="hub-zone" data-zone="tournaments" id="tournaments">
+          <h3>TOURNAMENTS</h3>
+          <div class="zone-game-grid">
+            <article class="world-game-card theme-tournament-wheel" data-categories="tournaments" data-search="tournament roulette ladder">
+              <div class="card-copy">
+                <p class="card-eyebrow">Competition</p>
+                <h4>Wheel Grand Prix</h4>
+                <p>Roulette-Sprint uber 15 Runden mit globalem Leaderboard im Hub.</p>
+                <div class="card-meta"><span>128 Players</span><span>Prize ₥ 9,000</span></div>
+                <button type="button" class="btn" data-game-launch="wheel-grand-prix">Open Tournament</button>
+              </div>
+            </article>
+
+            <article class="world-game-card theme-tournament-slot" data-categories="tournaments" data-search="tournament slot blitz">
+              <div class="card-copy">
+                <p class="card-eyebrow">Competition</p>
+                <h4>Slot Blitz Cup</h4>
+                <p>10 Minuten Burst-Mode, Ziel ist die hohste Punktdichte pro Einsatz.</p>
+                <div class="card-meta"><span>Live Bracket</span><span>Prize ₥ 6,300</span></div>
+                <button type="button" class="btn" data-game-launch="slot-blitz">Open Tournament</button>
+              </div>
+            </article>
+          </div>
+        </article>
+
+        <article class="hub-zone" data-zone="achievements" id="achievements">
+          <h3>ACHIEVEMENTS</h3>
+          <div class="zone-game-grid">
+            <article class="world-game-card theme-achievement-royal" data-categories="achievements" data-search="achievements royal collector">
+              <div class="card-copy">
+                <p class="card-eyebrow">Collection</p>
+                <h4>Royal Collector</h4>
+                <p>Unlocke 12 seltene Badges und erhalte persistente Coin-Boni pro Woche.</p>
+                <div class="card-meta"><span>8/12 Unlocked</span><span>Bonus +6%</span></div>
+                <button type="button" class="btn" data-game-launch="royal-collector">Open Achievements</button>
+              </div>
+            </article>
+
+            <article class="world-game-card theme-achievement-streak" data-categories="achievements" data-search="achievements streak">
+              <div class="card-copy">
+                <p class="card-eyebrow">Collection</p>
+                <h4>Streak Architect</h4>
+                <p>Halte eine 7-Tage-Serie in Missionen und Live-Tischen fur XP-Boosts.</p>
+                <div class="card-meta"><span>Day 4/7</span><span>XP +350</span></div>
+                <button type="button" class="btn" data-game-launch="streak-architect">Open Achievements</button>
+              </div>
+            </article>
+          </div>
+        </article>
+      </section>
 
       <section class="game-studio game-studio--enhanced surface fade-in">
         <h3>Mongo Game Studio</h3>
-        <p>Öffne ein Spiel im eingebetteten Fenster und wechsle darunter direkt zum nächsten Titel.</p>
-        <div class="studio-launch-row">
-          <button type="button" data-game-launch="slot">Slot Arena</button>
-          <button type="button" data-game-launch="poker">Poker Lounge</button>
-          <button type="button" data-game-launch="roulette">Roulette Hall</button>
-          <button type="button" data-game-launch="plinko">Plinko Stage</button>
+        <p>Offne ein Spiel im eingebetteten Fenster und wechsle unten direkt zum nachsten Titel.</p>
+        <div class="studio-launch-row" id="studio-launch-row">
+          <button type="button" data-game-launch="egypt-fire">Egypt Fire 2</button>
+          <button type="button" data-game-launch="tome-madness">Tome of Madness</button>
+          <button type="button" data-game-launch="european-wheel">European Wheel</button>
+          <button type="button" data-game-launch="golden-diamonds">Golden Diamonds</button>
         </div>
       </section>
 
@@ -143,21 +289,21 @@
 
       <section class="criteria-grid fade-in">
         <article class="criteria-card surface">
-          <h3>Fast Withdraw Feel</h3>
-          <p>Store und Spiele reagieren direkt auf Coin-Änderungen.</p>
+          <h3>Immersive Themes</h3>
+          <p>Jeder Bereich besitzt eigene visuelle Stimmung, Effekte und Launch-Kontext.</p>
         </article>
         <article class="criteria-card surface">
-          <h3>Fair Game Logic</h3>
-          <p>Deterministische Auswertungen und transparente Gewinn-Events in jedem Modus.</p>
+          <h3>Single-Session Flow</h3>
+          <p>Wallet, Status und Navigation bleiben ohne Reload in der laufenden Session stabil.</p>
         </article>
         <article class="criteria-card surface">
-          <h3>Support Ready</h3>
-          <p>Account Center als zentrale Stelle für Profil, Auth und Session-Kontrolle.</p>
+          <h3>Expandable Hub</h3>
+          <p>Neue Spiele konnen als Varianten eingebunden werden, ohne den Kern zu brechen.</p>
         </article>
       </section>
     </main>
 
-    <footer>© 2026 Mongo Casino. Neue Spiele werden laufend erweitert.</footer>
+    <footer>© 2026 Mongo Casino. Hub, Missions und Live-Welten werden laufend erweitert.</footer>
 
     <section id="game-window-modal" class="game-window-modal hidden" aria-hidden="true">
       <div class="game-window-card">
@@ -169,21 +315,21 @@
         <iframe id="game-window-frame" title="Mongo Game Window" loading="lazy"></iframe>
 
         <div class="game-window-switcher" id="game-window-switcher">
-          <button type="button" data-game-switch="slot" class="is-active">
+          <button type="button" data-game-switch="egypt-fire" class="is-active">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKLImqlhsXljBytSwyEX2BpIzEQLXsXVqPow&s" alt="Slot" />
-            <span>Slot</span>
+            <span>Egypt Fire 2</span>
           </button>
-          <button type="button" data-game-switch="poker">
+          <button type="button" data-game-switch="tome-madness">
             <img src="https://media.istockphoto.com/id/538355056/vector/pocker-cards-flush-hearts-hand.jpg?s=612x612&w=0&k=20&c=5uLrcrC_criJK1LvhOZfQdTId0HUD9qlZXKBWn90Sd8=" alt="Poker" />
-            <span>Poker</span>
+            <span>Tome of Madness</span>
           </button>
-          <button type="button" data-game-switch="roulette">
+          <button type="button" data-game-switch="european-wheel">
             <img src="https://gamblebase.com/wp-content/uploads/2022/03/Roulette-Tisch.webp" alt="Roulette" />
-            <span>Roulette</span>
+            <span>European Wheel</span>
           </button>
-          <button type="button" data-game-switch="plinko">
+          <button type="button" data-game-switch="golden-diamonds">
             <img src="https://iconstyle.al/wp-content/uploads/2024/09/6CED10EC-3212-4532-BA8E-F330CF895BD3.jpeg" alt="Plinko" />
-            <span>Plinko</span>
+            <span>Golden Diamonds</span>
           </button>
         </div>
       </div>
@@ -193,27 +339,68 @@
     <script src="../scripts/api.js"></script>
     <script>
       const GAME_MAP = {
-        slot: { title: "Slot Arena", url: "/games/slot.html?embed=1" },
-        poker: { title: "Poker Lounge", url: "/games/poker.html?embed=1" },
-        roulette: { title: "Roulette Hall", url: "/games/roulette.html?embed=1" },
-        plinko: { title: "Plinko Stage", url: "/games/plinko.html?embed=1" },
+        "egypt-fire": { title: "Egypt Fire 2", url: "/games/slot.html?embed=1&theme=egypt-fire" },
+        "mongo-floor": { title: "Mongo Floor", url: "/games/slot.html?embed=1&theme=mongo-floor" },
+        "tome-madness": { title: "Tome of Madness", url: "/games/poker.html?embed=1&theme=tome-madness" },
+        "golden-diamonds": { title: "Golden Diamonds", url: "/games/plinko.html?embed=1&theme=golden-diamonds" },
+        "european-wheel": { title: "European Wheel", url: "/games/roulette.html?embed=1&theme=european-wheel" },
+        "vip-ember-wheel": { title: "VIP Ember Wheel", url: "/games/roulette.html?embed=1&theme=vip-ember-wheel" },
+        "blackjack-prime": { title: "Blackjack Prime Live", url: "/games/poker.html?embed=1&theme=blackjack-prime" },
+        "velocity-football": { title: "Velocity Football", url: "/games/plinko.html?embed=1&theme=velocity-football" },
+        "arena-clash": { title: "Arena Clash MMA", url: "/games/roulette.html?embed=1&theme=arena-clash" },
+        "daily-risk": { title: "Daily Risk Ladder", url: "/games/slot.html?embed=1&theme=daily-risk" },
+        "night-ops": { title: "Night Ops Contracts", url: "/games/poker.html?embed=1&theme=night-ops" },
+        "wheel-grand-prix": { title: "Wheel Grand Prix", url: "/games/roulette.html?embed=1&theme=wheel-grand-prix" },
+        "slot-blitz": { title: "Slot Blitz Cup", url: "/games/slot.html?embed=1&theme=slot-blitz" },
+        "royal-collector": { title: "Royal Collector", url: "/games/plinko.html?embed=1&theme=royal-collector" },
+        "streak-architect": { title: "Streak Architect", url: "/games/poker.html?embed=1&theme=streak-architect" },
       };
+
+      const cards = Array.from(document.querySelectorAll(".world-game-card"));
+      const zones = Array.from(document.querySelectorAll(".hub-zone"));
 
       function searchGames() {
         const input = document.getElementById("search").value.trim().toLowerCase();
-        const games = document.querySelectorAll("#game-list .game");
+        cards.forEach((card) => {
+          const haystack = card.dataset.search || "";
+          const visible = !input || haystack.includes(input);
+          card.style.display = visible ? "grid" : "none";
+        });
 
-        games.forEach((game) => {
-          const title = game.querySelector("p").textContent.toLowerCase();
-          game.style.display = title.includes(input) ? "block" : "none";
+        zones.forEach((zone) => {
+          const hasVisibleCard = Array.from(zone.querySelectorAll(".world-game-card")).some(
+            (card) => card.style.display !== "none",
+          );
+          zone.style.display = hasVisibleCard ? "grid" : "none";
         });
       }
 
-      const query = new URLSearchParams(window.location.search).get("q");
+      function applyCategoryFilter(category) {
+        document.querySelectorAll("[data-hub-filter]").forEach((button) => {
+          button.classList.toggle("is-active", button.dataset.hubFilter === category);
+        });
+
+        zones.forEach((zone) => {
+          zone.style.display = category === "all" || zone.dataset.zone === category ? "grid" : "none";
+        });
+      }
+
+      document.querySelectorAll("[data-hub-filter]").forEach((button) => {
+        button.addEventListener("click", () => {
+          applyCategoryFilter(button.dataset.hubFilter || "all");
+        });
+      });
+
+      const query = new URLSearchParams(window.location.search).get("q") || "";
       if (query) {
         const searchInput = document.getElementById("search");
         searchInput.value = query;
         searchGames();
+      }
+
+      const hash = window.location.hash.replace("#", "");
+      if (hash) {
+        applyCategoryFilter(hash);
       }
 
       const modal = document.getElementById("game-window-modal");
@@ -264,6 +451,23 @@
           closeGameWindow();
         }
       });
+
+      document.querySelectorAll(".world-game-card").forEach((card) => {
+        card.addEventListener("mousemove", (event) => {
+          const rect = card.getBoundingClientRect();
+          const x = ((event.clientX - rect.left) / rect.width - 0.5) * 8;
+          const y = ((event.clientY - rect.top) / rect.height - 0.5) * 8;
+          card.style.transform = `translateY(-2px) rotateX(${-y}deg) rotateY(${x}deg)`;
+        });
+        card.addEventListener("mouseleave", () => {
+          card.style.transform = "";
+        });
+      });
+
+      const launch = new URLSearchParams(window.location.search).get("launch");
+      if (launch && GAME_MAP[launch]) {
+        openGameWindow(launch);
+      }
 
       CasinoStore.requireAccount({ withOverlay: true });
     </script>
