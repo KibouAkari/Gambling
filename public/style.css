@@ -1805,6 +1805,286 @@ body[data-game-theme="royal-collector"] .hero.surface {
   margin-top: 0.9rem;
 }
 
+.game-live-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.game-live-bg canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.game-live-bg--sports {
+  background:
+    radial-gradient(circle at 82% 12%, rgba(68, 195, 255, 0.17), transparent 32%),
+    radial-gradient(circle at 12% 84%, rgba(36, 108, 205, 0.13), transparent 36%),
+    linear-gradient(165deg, rgba(3, 8, 19, 0.97), rgba(5, 11, 24, 0.95));
+}
+
+.sports-live-glow {
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  right: -110px;
+  top: -90px;
+  background: radial-gradient(circle, rgba(105, 214, 255, 0.22), transparent 70%);
+  animation: sportsGlow 9s ease-in-out infinite;
+}
+
+.game-live-bg--missions {
+  background:
+    radial-gradient(circle at 10% 14%, rgba(105, 251, 199, 0.17), transparent 35%),
+    radial-gradient(circle at 90% 90%, rgba(245, 197, 79, 0.12), transparent 38%),
+    linear-gradient(165deg, rgba(4, 16, 19, 0.97), rgba(5, 11, 17, 0.95));
+}
+
+.missions-live-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(4, 10, 15, 0.62));
+}
+
+.game-live-bg--tournaments {
+  background:
+    radial-gradient(circle at 82% 16%, rgba(255, 196, 106, 0.16), transparent 34%),
+    radial-gradient(circle at 16% 84%, rgba(240, 96, 132, 0.1), transparent 36%),
+    linear-gradient(165deg, rgba(20, 10, 6, 0.96), rgba(14, 9, 8, 0.95));
+}
+
+.tournaments-live-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg, rgba(16, 8, 5, 0.28), rgba(3, 2, 2, 0.58));
+}
+
+.sports-live-ticker {
+  margin-bottom: 0.68rem;
+  border-radius: 11px;
+  border: 1px solid rgba(150, 222, 255, 0.26);
+  background: linear-gradient(135deg, rgba(13, 31, 57, 0.86), rgba(7, 18, 33, 0.88));
+  overflow: hidden;
+}
+
+.sports-live-ticker p {
+  margin: 0;
+  padding: 0.52rem 0.75rem;
+  font-size: 0.84rem;
+  letter-spacing: 0.02em;
+  animation: tickerPulse 1.8s ease-in-out infinite;
+}
+
+.sports-market-grid,
+.tournament-setup-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 0.75rem;
+}
+
+.sports-market-panel,
+.sports-bet-panel,
+.sports-history-panel,
+.mission-card,
+.tournament-overview,
+.tournament-round,
+.tournament-log {
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(8, 14, 24, 0.85);
+  transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease;
+}
+
+.sports-market-panel:hover,
+.sports-bet-panel:hover,
+.sports-history-panel:hover,
+.mission-card:hover,
+.tournament-round:hover,
+.tournament-log:hover {
+  transform: translateY(-2px);
+  border-color: rgba(245, 197, 79, 0.38);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+}
+
+.sports-market-panel,
+.sports-bet-panel,
+.sports-history-panel,
+.tournament-setup-grid article,
+.tournament-log {
+  padding: 0.72rem;
+}
+
+.sports-match-list {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 0.55rem;
+}
+
+.sports-match-card {
+  text-align: left;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(19, 31, 51, 0.86);
+  padding: 0.5rem 0.58rem;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.sports-match-card:hover {
+  transform: translateX(2px);
+}
+
+.sports-match-card strong {
+  display: block;
+}
+
+.sports-match-card span {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.sports-match-card.is-active {
+  border-color: rgba(245, 197, 79, 0.68);
+}
+
+.sports-slip-row,
+.mission-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.45rem;
+}
+
+.sports-history-panel {
+  margin-top: 0.74rem;
+}
+
+.sports-history-panel ul,
+.tournament-log ul {
+  margin: 0.4rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.38rem;
+}
+
+.sports-history-panel li,
+.tournament-log li {
+  border-radius: 9px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.4rem 0.5rem;
+  font-size: 0.84rem;
+}
+
+.sports-history-panel li.is-win,
+.tournament-log li.is-win {
+  border-color: rgba(69, 216, 134, 0.44);
+}
+
+.sports-history-panel li.is-loss,
+.tournament-log li.is-loss {
+  border-color: rgba(255, 107, 107, 0.42);
+}
+
+.missions-topbar {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.missions-topbar div {
+  border-radius: 11px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(8, 13, 22, 0.8);
+  padding: 0.45rem 0.55rem;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.missions-action-row {
+  margin-top: 0.65rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.44rem;
+}
+
+.missions-grid {
+  margin-top: 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.6rem;
+}
+
+.mission-card {
+  padding: 0.62rem;
+}
+
+.mission-card h3 {
+  margin: 0;
+}
+
+.mission-progress-track {
+  margin: 0.48rem 0;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+.mission-progress-track div {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #54d8b4, #f1c85f);
+  transition: width 0.35s ease;
+}
+
+.tournament-overview {
+  padding: 0.52rem;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.tournament-overview div {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.tournament-bracket {
+  margin-top: 0.8rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 0.56rem;
+}
+
+.tournament-round {
+  padding: 0.56rem;
+}
+
+.tournament-round h4 {
+  margin: 0 0 0.4rem;
+}
+
+.tournament-round p {
+  margin: 0.3rem 0;
+  font-size: 0.83rem;
+}
+
+.tournament-round p.is-win {
+  color: #87f2be;
+}
+
+.tournament-round p.is-loss {
+  color: #ffb2b2;
+}
+
+.tournament-log {
+  margin-top: 0.8rem;
+}
+
 .game-window-modal {
   position: fixed;
   inset: 0;
@@ -2128,6 +2408,28 @@ footer {
   }
 }
 
+@keyframes sportsGlow {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(-24px, 16px) scale(1.08);
+  }
+}
+
+@keyframes tickerPulse {
+  0%,
+  100% {
+    opacity: 0.82;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
 @media (max-width: 980px) {
   body {
     padding-left: 0;
@@ -2183,6 +2485,12 @@ footer {
 
   .game-toolbar,
   .game-toolbar.compact {
+    grid-template-columns: 1fr;
+  }
+
+  .sports-market-grid,
+  .tournament-setup-grid,
+  .missions-topbar {
     grid-template-columns: 1fr;
   }
 

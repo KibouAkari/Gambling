@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Missions Engine - Mongo Casino</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  </head>
+  <body data-page="games">
+    <div id="navbar-placeholder"></div>
+    <div class="game-live-bg game-live-bg--missions" id="missions-live-bg" aria-hidden="true">
+      <canvas id="missions-live-canvas"></canvas>
+      <div class="missions-live-overlay"></div>
+    </div>
+
+    <main>
+      <section class="hero surface">
+        <h2 id="missions-title">Missions Engine</h2>
+        <p>
+          Eigene Progress-Engine mit Aufgaben, Risiko-Aktionen, Reward-Claims und Session-sicherer
+          Speicherung.
+        </p>
+      </section>
+
+      <section class="game-shell">
+        <div class="missions-topbar">
+          <div><span>Kontostand</span><strong id="missions-coins">-</strong></div>
+          <div><span>XP</span><strong id="missions-xp">0</strong></div>
+          <div><span>Streak</span><strong id="missions-streak">0</strong></div>
+        </div>
+
+        <div class="missions-action-row">
+          <button type="button" data-mission-action="slot">Slot Run (Kosten ₥ 20)</button>
+          <button type="button" data-mission-action="live">Live Table (Kosten ₥ 35)</button>
+          <button type="button" data-mission-action="sports">Sports Pick (Kosten ₥ 25)</button>
+        </div>
+
+        <p id="missions-status" class="muted-line">Fuhre Aktionen aus, um Missionen abzuschliessen.</p>
+
+        <section class="missions-grid" id="missions-grid"></section>
+      </section>
+    </main>
+
+    <footer>© 2026 Mongo Casino - Missions Engine</footer>
+
+    <script src="../../scripts/fx.js"></script>
+    <script src="../../scripts/api.js"></script>
+    <script src="../../scripts/games/missions.js"></script>
+  </body>
+</html>

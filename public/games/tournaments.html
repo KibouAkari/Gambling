@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tournaments Engine - Mongo Casino</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  </head>
+  <body data-page="games">
+    <div id="navbar-placeholder"></div>
+    <div class="game-live-bg game-live-bg--tournaments" id="tournaments-live-bg" aria-hidden="true">
+      <canvas id="tournaments-live-canvas"></canvas>
+      <div class="tournaments-live-overlay"></div>
+    </div>
+
+    <main>
+      <section class="hero surface">
+        <h2 id="tournaments-title">Tournaments Engine</h2>
+        <p>
+          Eigene Bracket-Simulation mit Buy-In, Rundenlogik, Platzierung und dynamischen Rewards.
+        </p>
+      </section>
+
+      <section class="game-shell">
+        <div class="tournament-setup-grid">
+          <article>
+            <h3>Setup</h3>
+            <label for="tournament-size">Bracket Size</label>
+            <select id="tournament-size">
+              <option value="8">8 Players</option>
+              <option value="16">16 Players</option>
+            </select>
+
+            <label for="tournament-buyin">Buy-In</label>
+            <input id="tournament-buyin" type="number" min="20" step="10" value="80" />
+
+            <label for="tournament-style">Style</label>
+            <select id="tournament-style">
+              <option value="wheel">Wheel Grand Prix</option>
+              <option value="slot">Slot Blitz Cup</option>
+            </select>
+
+            <button type="button" id="tournament-start">Turnier starten</button>
+          </article>
+
+          <article>
+            <h3>Overview</h3>
+            <div class="tournament-overview">
+              <div><span>Coins</span><strong id="tournament-coins">-</strong></div>
+              <div><span>Best Place</span><strong id="tournament-best-place">-</strong></div>
+              <div><span>Total Winnings</span><strong id="tournament-total-win">₥ 0</strong></div>
+            </div>
+            <p id="tournament-status" class="muted-line">Noch kein Turnier aktiv.</p>
+          </article>
+        </div>
+
+        <section class="tournament-bracket" id="tournament-bracket"></section>
+        <section class="tournament-log">
+          <h3>Match Log</h3>
+          <ul id="tournament-log-list"></ul>
+        </section>
+      </section>
+    </main>
+
+    <footer>© 2026 Mongo Casino - Tournaments Engine</footer>
+
+    <script src="../../scripts/fx.js"></script>
+    <script src="../../scripts/api.js"></script>
+    <script src="../../scripts/games/tournaments.js"></script>
+  </body>
+</html>

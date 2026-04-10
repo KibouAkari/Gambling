@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sports Engine - Mongo Casino</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  </head>
+  <body data-page="games">
+    <div id="navbar-placeholder"></div>
+    <div class="game-live-bg game-live-bg--sports" id="sports-live-bg" aria-hidden="true">
+      <canvas id="sports-live-canvas"></canvas>
+      <div class="sports-live-glow"></div>
+    </div>
+
+    <main>
+      <section class="hero surface">
+        <h2 id="sports-title">Sports Engine</h2>
+        <p>
+          Live Odds Simulation mit eigenen Match-Markten, gewichteter Ergebnis-Engine und
+          sofortiger Coin-Abrechnung pro Runde.
+        </p>
+      </section>
+
+      <section class="game-shell">
+        <section class="sports-live-ticker" aria-label="Live Sports Ticker">
+          <p id="sports-ticker-line">Warte auf Live-Markt-Update...</p>
+        </section>
+
+        <div class="sports-market-grid">
+          <article class="sports-market-panel">
+            <h3>Match Board</h3>
+            <div id="sports-match-list" class="sports-match-list"></div>
+          </article>
+
+          <article class="sports-bet-panel">
+            <h3>Bet Slip</h3>
+            <div class="sports-slip-row">
+              <span>Kontostand</span>
+              <strong id="sports-coins">-</strong>
+            </div>
+            <div class="sports-slip-row">
+              <span>Aktives Match</span>
+              <strong id="sports-selected-match">-</strong>
+            </div>
+
+            <label for="sports-market">Markt</label>
+            <select id="sports-market">
+              <option value="home">Home Win</option>
+              <option value="draw">Draw</option>
+              <option value="away">Away Win</option>
+            </select>
+
+            <label for="sports-stake">Einsatz</label>
+            <input id="sports-stake" type="number" min="10" step="10" value="50" />
+
+            <div class="sports-slip-row">
+              <span>Odds</span>
+              <strong id="sports-current-odds">-</strong>
+            </div>
+
+            <button id="sports-place-bet" type="button">Match simulieren</button>
+            <p id="sports-status" class="muted-line">Wahle ein Match und setze deinen Markt.</p>
+          </article>
+        </div>
+
+        <article class="sports-history-panel">
+          <h3>Round Log</h3>
+          <ul id="sports-history"></ul>
+        </article>
+      </section>
+    </main>
+
+    <footer>© 2026 Mongo Casino - Sports Engine</footer>
+
+    <script src="../../scripts/fx.js"></script>
+    <script src="../../scripts/api.js"></script>
+    <script src="../../scripts/games/sports.js"></script>
+  </body>
+</html>

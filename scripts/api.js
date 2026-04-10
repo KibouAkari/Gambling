@@ -457,6 +457,53 @@ const CasinoStore = {
 		}
 	},
 
+	async fetchEngineState(engine) {
+		const state = readState();
+		if (!state.sessionToken) {
+			return { ok: false, message: "Session fehlt. Bitte erneut einloggen.", state: {} };
+		}
+
+		try {
+			const response = await requestApi(`/api/game/progress?engine=${encodeURIComponent(engine)}`, {
+				method: "GET",
+				token: state.sessionToken,
+			});
+			return { ok: true, state: response.state || {} };
+		} catch (error) {
+			return { ok: false, message: error.message || "Engine-State konnte nicht geladen werden.", state: {} };
+		}
+	},
+
+	async saveEngineState(engine, patch) {
+		const state = readState();
+		if (!state.sessionToken) {
+			return { ok: false, message: "Session fehlt. Bitte erneut einloggen.", state: {} };
+		}
+
+		try {
+			const response = await requestApi("/api/game/progress", {
+				method: "POST",
+				token: state.sessionToken,
+				body: {
+					engine,
+					state: patch,
+				},
+			});
+			return { ok: true, state: response.state || {} };
+		} catch (error) {
+			return { ok: false, message: error.message || "Engine-State konnte nicht gespeichert werden.", state: {} };
+		}
+	},
+
+	async fetchSportsFeed() {
+		try {
+			const response = await requestApi("/api/game/sports-feed", { method: "GET" });
+			return { ok: true, data: response };
+		} catch (error) {
+			return { ok: false, message: error.message || "Sports Feed nicht erreichbar.", data: null };
+		}
+	},
+
 	requireAccount(options) {
 		const state = readState();
 		if (state.hasAccount && state.isLoggedIn) {
